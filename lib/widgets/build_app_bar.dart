@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:grad_project/home_feature/arabic_screen.dart';
+import 'package:grad_project/home_feature/subject_screen.dart';
 
 class BuildAppBar extends StatelessWidget {
   const BuildAppBar({

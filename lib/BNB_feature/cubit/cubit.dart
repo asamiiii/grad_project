@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:grad_project/BNB_feature/cubit/states.dart';
-import 'package:grad_project/home_feature/subjects_screen.dart';
+import 'package:grad_project/home_feature/home_subjects_screen.dart';
 
 class BNBCubit extends Cubit <BNBStates>{
   BNBCubit ():super(InitialState());

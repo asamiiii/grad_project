@@ -108,11 +108,15 @@ class _LettersViewState extends State<LettersView> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Image.asset(
-                          'assets/images/white_board.png',
-                          height: screenHight * 0.80,
-                          width: screenWidth * 0.80,
-                          fit: BoxFit.fill,
+                        Stack(
+                          children: [
+                            Image.asset(
+                              'assets/images/white_board.png',
+                              height: screenHight * 0.80,
+                              width: screenWidth * 0.80,
+                              fit: BoxFit.fill,
+                            ),
+                          ],
                         ),
                       ],
                     ))),

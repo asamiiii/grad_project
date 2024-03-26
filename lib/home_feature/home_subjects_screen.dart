@@ -1,10 +1,12 @@
 // ignore_for_file: must_be_immutable, use_full_hex_values_for_flutter_colors
 
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:grad_project/helper/build_widgets.dart';
+import 'package:grad_project/models/dummy_data/subject_dummy.dart';
 import 'package:sizer/sizer.dart';
 
-import 'arabic_screen.dart';
+import 'subject_screen.dart';
 
 class SubjectsScreen extends StatefulWidget {
   static String id = 'SubjectsScreen';
@@ -131,7 +133,7 @@ class _SubjectsScreenState extends State<SubjectsScreen> {
                                   SizedBox(
                                     height: 0.5.h,
                                   ),
-                                   Text(
+                                  Text(
                                     "7 active participants",
                                     style: TextStyle(
                                       fontSize: 16.sp,
@@ -146,42 +148,20 @@ class _SubjectsScreenState extends State<SubjectsScreen> {
                             ],
                           ),
                         ),
-                         SizedBox(
-                          height: 2.h,
-                        ),
-                        BuildSubject(
-                          image: "assets/images/arabic.png",
-                          name: "اللغة العربية",
-                          progressBarValue: 1,
-                          onTap: () {
-                            Navigator.pushNamed(context, 'ArabicScreen');
-                          },
-                        ),
-                         SizedBox(
-                          height: 2.h,
-                        ),
-                        BuildSubject(
-                          image: "assets/images/english.png",
-                          name: "English",
-                          progressBarValue: 1,
-                          onTap: () {
-
-                          },
-                        ),
-                         SizedBox(
-                          height: 2.h,
-                        ),
-                        BuildSubject(
-                          image: "assets/images/math.png",
-                          name: "Math",
-                          progressBarValue: 100,
-                          onTap: () {
-
-                          },
-                        ),
-                         SizedBox(
-                          height: 2.h,
-                        ),
+                        
+                        //* Subjects List View
+                        ...subjectList
+                            .map((e) => 
+                                BuildSubject(
+                                  image: e.imageUrl ?? '',
+                                  name: e.subjectName ?? '',
+                                  progressBarValue: e.score ?? 0,
+                                  onTap: () {
+                                    Navigator.pushNamed(
+                                        context, 'SubjectScreen');
+                                  },
+                                ))
+                            
                       ],
                     ),
                   ),
@@ -191,19 +171,17 @@ class _SubjectsScreenState extends State<SubjectsScreen> {
           )
         ],
       ),
-
     );
   }
 }
 
-
 class BuildSubject extends StatelessWidget {
-   BuildSubject({Key? key,
+  BuildSubject({
+    Key? key,
     required this.image,
     required this.name,
     required this.progressBarValue,
     required this.onTap,
-
   }) : super(key: key);
 
   String image;
@@ -212,70 +190,72 @@ class BuildSubject extends StatelessWidget {
   final VoidCallback onTap;
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onTap,
-      child: Container(
-        padding:  EdgeInsets.symmetric(
-            vertical: 1.h, horizontal: 2.w),
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(12),
-            color: Colors.white,
-            border:
-                Border.all(color: const Color(0xffCDCDCD))),
-        child: Row(
-          children: [
-            Image.asset(
-              image,
-              width: 17.w,
-              height: 8.h,
-              fit: BoxFit.cover,
-            ),
-            SizedBox(
-              width: 3.w,
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+    return Column(
+      children: [
+        SizedBox(height: 4,),
+        InkWell(
+          onTap: onTap,
+          child: Container(
+            padding: EdgeInsets.symmetric(vertical: 1.h, horizontal: 2.w),
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(12),
+                color: Colors.white,
+                border: Border.all(color: const Color(0xffCDCDCD))),
+            child: Row(
               children: [
-                 Text(
-                  name,
-                  style:  TextStyle(
-                      fontWeight: FontWeight.w500,
-                      fontSize: 20.sp,
-                      color: Colors.black),
+                Image.asset(
+                  image,
+                  width: 17.w,
+                  height: 8.h,
+                  fit: BoxFit.cover,
                 ),
-                 SizedBox(
-                  height:2.h,
+                SizedBox(
+                  width: 3.w,
                 ),
-                Row(
-                  children:  [
-                    LinearPercenIndicator(
-                        progressBarValue: progressBarValue,
-                      width: 52.w,
-                      lineHeight: 1.5.h,
-                      percent: 0.5,
-                      backgroundColor: Colors.grey[200],
-                      progressColor: Colors.blue[400],
-                    ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
                     Text(
-                      "$progressBarValue%",
-                      style:  TextStyle(
-                        fontWeight: FontWeight.w500,
-                        fontSize: 10.sp,
-                        color: Colors.black,
-                      ),
+                      name,
+                      style: TextStyle(
+                          fontWeight: FontWeight.w500,
+                          fontSize: 20.sp,
+                          color: Colors.black),
                     ),
-                     SizedBox(
-                      width: 2.w,
+                    SizedBox(
+                      height: 2.h,
+                    ),
+                    Row(
+                      children: [
+                        LinearPercenIndicator(
+                          progressBarValue: progressBarValue,
+                          width: 52.w,
+                          lineHeight: 1.5.h,
+                          percent: 0.5,
+                          backgroundColor: Colors.grey[200],
+                          progressColor: Colors.blue[400],
+                        ),
+                        Text(
+                          "$progressBarValue%",
+                          style: TextStyle(
+                            fontWeight: FontWeight.w500,
+                            fontSize: 10.sp,
+                            color: Colors.black,
+                          ),
+                        ),
+                        SizedBox(
+                          width: 2.w,
+                        ),
+                      ],
                     ),
                   ],
                 ),
               ],
             ),
-          ],
+          ),
         ),
-      ),
+        // SizedBox(height: 1,),
+      ],
     );
   }
 }
-
-

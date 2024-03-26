@@ -6,15 +6,15 @@ import 'package:grad_project/helper/build_widgets.dart';
 import 'package:grad_project/widgets/build_app_bar.dart';
 import 'package:simple_progress_indicators/simple_progress_indicators.dart';
 import 'package:sizer/sizer.dart';
-import 'arabic_screen.dart';
-import 'arabic_unit_screen.dart';
+import 'subject_screen.dart';
+import 'unit_details.dart';
 
-class ArabicIntroScreen extends StatelessWidget {
-  ArabicIntroScreen();
+class UnitsScreen extends StatelessWidget {
+  UnitsScreen();
 
-  static String id = 'ArabicIntroScreen';
+  static String id = 'UnitsScreen';
   int? progressBarValue;
-
+    // Unit
   List<Map<String, dynamic>> unitData = [
     {"name": "الوحده 1", "image": "assets/images/Group.png", "number": 0.1},
     {"name": "الوحده 2", "image": "assets/images/lock.png", "number": 0.5},

@@ -9,10 +9,10 @@ import 'package:grad_project/screens/sign_in.dart';
 import 'package:grad_project/screens/sign_up.dart';
 import 'package:sizer/sizer.dart';
 ///test commit
-import 'home_feature/arabic_intro_screen.dart';
-import 'home_feature/arabic_screen.dart';
-import 'home_feature/arabic_unit_screen.dart';
-import 'home_feature/subjects_screen.dart';
+import 'home_feature/units_screen.dart';
+import 'home_feature/subject_screen.dart';
+import 'home_feature/unit_details.dart';
+import 'home_feature/home_subjects_screen.dart';
 import 'screens/onboarding_screen.dart';
 import 'screens/set_new_password.dart';
 Future<void> main()  async {
@@ -45,8 +45,8 @@ class MyApp extends StatelessWidget {
             'AskForName' : (context)=> const AskForName(),
             'AskForAge' : (context)=> const AskForAge(),
             'SubjectsScreen' : (context)=>  const SubjectsScreen(),
-            'ArabicScreen' : (context)=>  const ArabicScreen(),
-            'ArabicIntroScreen' : (context)=>   ArabicIntroScreen(),
+            'SubjectScreen' : (context)=>  const SubjectScreen(),
+            'UnitsScreen' : (context)=>   UnitsScreen(),
             'ArabicUnitScreen' : (context)=>   ArabicUnitScreen(),
           },
           home: AnimatedSplashScreen(

@@ -2,23 +2,24 @@
 
 import 'package:flutter/material.dart';
 import 'package:grad_project/helper/build_widgets.dart';
+import 'package:grad_project/models/dummy_data/subject_dummy.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:simple_progress_indicators/simple_progress_indicators.dart';
 import 'package:sizer/sizer.dart';
 
-import 'arabic_intro_screen.dart';
-import 'arabic_unit_screen.dart';
+import 'units_screen.dart';
+import 'unit_details.dart';
 
-class ArabicScreen extends StatefulWidget {
-  const ArabicScreen();
+class SubjectScreen extends StatefulWidget {
+  const SubjectScreen();
 
-  static String id = 'ArabicScreen';
+  static String id = 'SubjectScreen';
 
   @override
-  State<ArabicScreen> createState() => _ArabicScreenState();
+  State<SubjectScreen> createState() => _ArabicScreenState();
 }
 
-class _ArabicScreenState extends State<ArabicScreen> {
+class _ArabicScreenState extends State<SubjectScreen> {
   int? progressBarValue;
   @override
   Widget build(BuildContext context) {
@@ -48,12 +49,12 @@ class _ArabicScreenState extends State<ArabicScreen> {
             height: 2.h,
           ),
           Image.asset(
-            "assets/images/Arabic2.png",
+            dummySubjectDetails.first.imageUrl??'',
             width: 60.w,
             height: 25.h,
           ),
           Text(
-            "تعلم اللغة العربية",
+            dummySubjectDetails.first.title??'',
             textAlign: TextAlign.center,
             style: TextStyle(
                 fontWeight: FontWeight.w500,
@@ -67,7 +68,7 @@ class _ArabicScreenState extends State<ArabicScreen> {
           Expanded(
             child: ListView.builder(
               padding: EdgeInsets.symmetric(vertical: 0.h, horizontal: 4.w),
-              itemCount: 3,
+              itemCount: dummySubjectDetails.first.levelsList?.length,
               itemBuilder: (context, index) {
                 return InkWell(
                   onTap: () {
@@ -75,11 +76,7 @@ class _ArabicScreenState extends State<ArabicScreen> {
                       MaterialPageRoute(
                         builder: (context) {
                           // --------------------screens depends on index
-                          return index == 0
-                              ?  ArabicIntroScreen()
-                              : index == 1
-                                  ? const ArabicUnitScreen()
-                                  :  ArabicIntroScreen();
+                          return UnitsScreen();
                         },
                       ),
                     );
@@ -111,20 +108,11 @@ class _ArabicScreenState extends State<ArabicScreen> {
                           child: Column(
                             children: [
                               Image.asset(
-                                index == 0
-                                    ? "assets/images/Handshake.png"
-                                    : index == 1
-                                        ? "assets/images/BookBookmark.png"
-                                        : "assets/images/Fire.png",
+                                dummySubjectDetails.first.levelsList?[index].imageUrl??'',
                                 width: 14.w,
                                 height: 5.h,
                               ),
-                              Text(
-                                index == 0
-                                    ? "المستوي 1"
-                                    : index == 1
-                                        ? "المستوي 2"
-                                        : "المستوي 3",
+                              Text(dummySubjectDetails.first.levelsList?[index].levelName??'',
                                 style: TextStyle(
                                   fontSize: 9.sp,
                                   color: Colors.white,
@@ -139,12 +127,7 @@ class _ArabicScreenState extends State<ArabicScreen> {
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
-                              index == 0
-                                  ? "المقدمة"
-                                  : index == 1
-                                      ? "التدريب"
-                                      : "التفاعلات",
+                            Text(dummySubjectDetails.first.levelsList?[index].levelTitle??'',
                               style: TextStyle(
                                 fontWeight: FontWeight.w500,
                                 fontSize: 15.sp,
@@ -154,14 +137,6 @@ class _ArabicScreenState extends State<ArabicScreen> {
                             SizedBox(
                               height: 0.01.h,
                             ),
-
-                            // Text(
-                            //   " 1 ساعه 30 دقيقه",
-                            //   style: TextStyle(
-                            //       fontSize: 9.sp,
-                            //       color: Color(0xff50555C),
-                            //   ),
-                            // ),
                             Row(
                               children: [
                                 ClipRRect(
@@ -180,7 +155,7 @@ class _ArabicScreenState extends State<ArabicScreen> {
                                   ),
                                 ),
                                 Text(
-                                  "$progressBarValue/20",
+                                  "${dummySubjectDetails.first.levelsList?[index].score??''}/20",
                                   style:  TextStyle(
                                     fontWeight: FontWeight.w500,
                                     fontSize: 10.sp,

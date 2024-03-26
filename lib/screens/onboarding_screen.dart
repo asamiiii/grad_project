@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:grad_project/constants/constants.dart';
-import 'package:grad_project/home_feature/subjects_screen.dart';
+import 'package:grad_project/home_feature/home_subjects_screen.dart';
 import 'package:grad_project/screens/sign_in.dart';
 import 'package:grad_project/widgets/custom_button.dart';
 import 'package:sizer/sizer.dart';
