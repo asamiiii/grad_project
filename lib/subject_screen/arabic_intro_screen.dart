@@ -7,7 +7,7 @@ import 'package:grad_project/widgets/build_app_bar.dart';
 import 'package:simple_progress_indicators/simple_progress_indicators.dart';
 import 'package:sizer/sizer.dart';
 // import 'arabic_screen.dart';
-import 'arabic_unit_screen.dart';
+// import 'arabic_unit_screen.dart';
 
 class ArabicIntroScreen extends StatelessWidget {
   ArabicIntroScreen();
