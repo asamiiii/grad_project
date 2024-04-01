@@ -1,6 +1,7 @@
 
   import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:grad_project/constants/constants.dart';
 
 final dio = Dio();
 
@@ -13,11 +14,11 @@ final dio = Dio();
         data: reqBody ?? {},
         queryParameters: queryParameters ?? {}
       );
-      debugPrint('fetchData response : ${response.data}');
+      // debugPrint('fetchData response : ${response.data}');
       return response.data;
     } catch (e) {
       // Handle the error
-      debugPrint('fetchData Error ${e.toString()}');
+      logger.e('fetchData Error ${e.toString()}');
       return null;
     }
   }

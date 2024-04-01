@@ -3,13 +3,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:grad_project/helper/build_widgets.dart';
-import 'package:grad_project/home_feature/subject_view_model.dart';
+import 'package:grad_project/screens/subjects_screen/subject_view_model.dart';
 import 'package:grad_project/models/dummy_data/subject_dummy.dart';
+import 'package:grad_project/widgets/loading_widget.dart';
+import 'package:grad_project/widgets/network_image.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
-import '../models/subject_data_response.dart' as subject;
-import 'levels_of_subject.dart';
+import '../../models/subject_data_response.dart' as subject;
+import '../levels_of_subject/levels_of_subject.dart';
 
 class SubjectsScreen extends StatefulWidget {
   static String id = 'SubjectsScreen';
@@ -26,7 +28,7 @@ class _SubjectsScreenState extends State<SubjectsScreen> {
   void initState() {
     var provider = context.read<SubjectViewModel>();
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      provider.subjectDataResponse = await provider.getSubjectObject();
+      await provider.getSubjectObject();
     });
     super.initState();
   }
@@ -196,9 +198,7 @@ class _SubjectsScreenState extends State<SubjectsScreen> {
                 : const Center(
                     child: Text('Somthing Went Wrong !!'),
                   )
-            : const Center(
-                child: CircularProgressIndicator(),
-              ),
+            : const Loading(),
       ),
     );
   }
@@ -221,7 +221,7 @@ class BuildSubject extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        SizedBox(
+        const SizedBox(
           height: 4,
         ),
         InkWell(
@@ -234,15 +234,16 @@ class BuildSubject extends StatelessWidget {
                 border: Border.all(color: const Color(0xffCDCDCD))),
             child: Row(
               children: [
-                Image.network(
-                  image,
-                  width: 17.w,
-                  height: 8.h,
-                  fit: BoxFit.fill,
+                // Image.network(
+                //   image,
+                //   width: 17.w,
+                //   height: 8.h,
+                //   fit: BoxFit.fill,
                   
-                  errorBuilder: (context, error, stackTrace) => SizedBox(
-                      width: 17.w, height: 8.h, child: const Icon(Icons.error)),
-                ),
+                //   errorBuilder: (context, error, stackTrace) => SizedBox(
+                //       width: 17.w, height: 8.h, child: const Icon(Icons.error)),
+                // ),
+                ImageFromNetwork(imageUrl: image,width: 17.w,height: 8.h,),
                 SizedBox(
                   width: 3.w,
                 ),

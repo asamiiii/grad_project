@@ -3,7 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:grad_project/constants/providers.dart';
-import 'package:grad_project/home_feature/subject_view_model.dart';
+import 'package:grad_project/screens/subjects_screen/subject_view_model.dart';
 import 'package:grad_project/screens/ask_for_age.dart';
 import 'package:grad_project/screens/ask_for_name.dart';
 import 'package:grad_project/screens/forget_password.dart';
@@ -13,10 +13,10 @@ import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
 ///test commit
-import 'home_feature/units_screen.dart';
-import 'home_feature/levels_of_subject.dart';
-import 'home_feature/unit_details.dart';
-import 'home_feature/home_subjects_screen.dart';
+import 'screens/units_of_level/units_screen.dart';
+import 'screens/levels_of_subject/levels_of_subject.dart';
+import 'screens/units_of_level/unit_details.dart';
+import 'screens/subjects_screen/subjects_view.dart';
 import 'screens/onboarding_screen.dart';
 import 'screens/set_new_password.dart';
 
@@ -54,7 +54,7 @@ class MyApp extends StatelessWidget {
               'SubjectsScreen': (context) => const SubjectsScreen(),
               'LevelsOfSubject': (context) => const LevelsOfSubject(),
               'UnitsScreen': (context) => UnitsScreen(),
-              'ArabicUnitScreen': (context) => ArabicUnitScreen(),
+              'ArabicUnitScreen': (context) => const ArabicUnitScreen(),
             },
             home: AnimatedSplashScreen(
               duration: 500,

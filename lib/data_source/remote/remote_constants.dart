@@ -4,6 +4,7 @@ class RemoteConstants{
    static String baseUrl = 'https://smart-edu-for-kids-seven.vercel.app';
    static String subjectUrl = '$baseUrl/subject';
    static String levelsUrl = '$baseUrl/level';
+   static String unitsUrl = '$baseUrl/unit';
 }
 
 

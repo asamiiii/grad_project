@@ -2,16 +2,18 @@
 
 import 'package:flutter/material.dart';
 import 'package:grad_project/helper/build_widgets.dart';
-import 'package:grad_project/home_feature/levels_view_model.dart';
+import 'package:grad_project/screens/levels_of_subject/levels_view_model.dart';
 import 'package:grad_project/models/dummy_data/subject_dummy.dart';
 import 'package:grad_project/models/levels_data_response.dart' as levels;
+import 'package:grad_project/widgets/loading_widget.dart';
+import 'package:grad_project/widgets/network_image.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:provider/provider.dart';
 import 'package:simple_progress_indicators/simple_progress_indicators.dart';
 import 'package:sizer/sizer.dart';
 
-import 'units_screen.dart';
-import 'unit_details.dart';
+import '../units_of_level/units_screen.dart';
+import '../units_of_level/unit_details.dart';
 
 class LevelsOfSubject extends StatefulWidget {
   const LevelsOfSubject();
@@ -74,7 +76,7 @@ class _ArabicScreenState extends State<LevelsOfSubject> {
                         height: 25.h,
                       ),
                       Text(
-                        dummySubjectDetails.first.title ?? '',
+                        "تعلم",
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontWeight: FontWeight.w500,
@@ -93,13 +95,9 @@ class _ArabicScreenState extends State<LevelsOfSubject> {
                           itemBuilder: (context, index) {
                             return InkWell(
                               onTap: () {
-                                Navigator.of(context).push(
-                                  MaterialPageRoute(
-                                    builder: (context) {
-                                      // --------------------screens depends on index
-                                      return UnitsScreen();
-                                    },
-                                  ),
+                                Navigator.of(context).pushNamed(
+                                'UnitsScreen',
+                                arguments: levelsDataResponse?.levels?[index].id
                                 );
                               },
                               child: Container(
@@ -120,29 +118,34 @@ class _ArabicScreenState extends State<LevelsOfSubject> {
                                     Container(
                                       padding: EdgeInsets.all(5.sp),
                                       decoration: BoxDecoration(
-                                          color: index == 0
+                                          color: index.isOdd
                                               ? Color(0xff8BC34A)
-                                              : index == 1
-                                                  ? Color(0xffFBB237)
-                                                  : Color(0xffFF4B4C),
+                                              : Color(0xffFBB237),
                                           borderRadius:
                                               BorderRadius.circular(8)),
                                       child: Column(
                                         children: [
-                                          Image.network(
-                                            levelsDataResponse?.levels?[index]
+                                          ImageFromNetwork(
+                                            imageUrl: levelsDataResponse?.levels?[index]
                                                     .image?.secureUrl ??
                                                 '',
-                                            width: 14.w,
+                                                width: 14.w,
                                             height: 5.h,
-                                            errorBuilder:
-                                                (context, error, stackTrace) =>
-                                                    SizedBox(
-                                                        width: 14.w,
-                                                        height: 5.h,
-                                                        child: const Icon(
-                                                            Icons.error)),
                                           ),
+                                          // Image.network(
+                                          //   levelsDataResponse?.levels?[index]
+                                          //           .image?.secureUrl ??
+                                          //       '',
+                                          //   width: 14.w,
+                                          //   height: 5.h,
+                                          //   errorBuilder:
+                                          //       (context, error, stackTrace) =>
+                                          //           SizedBox(
+                                          //               width: 14.w,
+                                          //               height: 5.h,
+                                          //               child: const Icon(
+                                          //                   Icons.error)),
+                                          // ),
                                           Text(
                                             levelsDataResponse?.levels?[index]
                                                     .levelName ??
@@ -261,9 +264,7 @@ class _ArabicScreenState extends State<LevelsOfSubject> {
                 : const Center(
                     child: Text('Somthing Went Wrong !!'),
                   )
-            : const Center(
-                child: CircularProgressIndicator(),
-              ),
+            : const Loading(),
       ),
     );
   }
