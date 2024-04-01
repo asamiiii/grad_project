@@ -9,7 +9,7 @@ import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
 import '../models/subject_data_response.dart' as subject;
-import 'subject_screen.dart';
+import 'levels_of_subject.dart';
 
 class SubjectsScreen extends StatefulWidget {
   static String id = 'SubjectsScreen';
@@ -21,171 +21,184 @@ class SubjectsScreen extends StatefulWidget {
 }
 
 class _SubjectsScreenState extends State<SubjectsScreen> {
-  subject.SubjectDataResponse? subjectDataResponse;
+  // subject.SubjectDataResponse? subjectDataResponse;
   @override
   void initState() {
     var provider = context.read<SubjectViewModel>();
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      provider.getSubjectObject();
+      provider.subjectDataResponse = await provider.getSubjectObject();
     });
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xff4A4373),
       body: Consumer<SubjectViewModel>(
-        builder: (context, provider, child) => provider.isLoading==false ? Column(
-          children: [
-            SizedBox(
-              height: 4.h,
-            ),
-            Row(
-              children: [
-                SizedBox(
-                  width: 2.w,
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "Hi, Melsayed!",
-                      style: TextStyle(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 16.sp,
-                          color: Colors.white),
-                    ),
-                    SizedBox(
-                      height: 1.5.h,
-                    ),
-                    Text(
-                      "What language would\n you like to learn?",
-                      style: TextStyle(
-                          fontWeight: FontWeight.w400,
-                          fontSize: 10.sp,
-                          color: Colors.white),
-                    ),
-                  ],
-                ),
-                const Spacer(),
-                Image.asset(
-                  "assets/images/hoem_body.png",
-                )
-              ],
-            ),
-            SizedBox(
-              height: 1.h,
-            ),
-            Expanded(
-              child: Container(
-                width: double.infinity,
-                padding: EdgeInsets.symmetric(vertical: 2.h, horizontal: 4.w),
-                decoration: const BoxDecoration(
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(14),
-                    topRight: Radius.circular(14),
-                  ),
-                  color: Color(0xffF5F5F5),
-                ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Container(
-                      width: 20.w,
-                      height: 0.5.h,
-                      color: const Color(0xff2632386E).withOpacity(0.43),
-                    ),
-                    SizedBox(
-                      height: 0.1.h,
-                    ),
-                    Expanded(
-                      child: ListView(
+        builder: (context, subjectProvider, child) => subjectProvider
+                    .isLoading ==
+                false
+            ? subjectProvider.subjectDataResponse!.error!.isEmpty
+                ? Column(
+                    children: [
+                      SizedBox(
+                        height: 4.h,
+                      ),
+                      Row(
                         children: [
-                          Text(
-                            "Language Being Learned",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                                fontWeight: FontWeight.w500,
-                                fontSize: 15.sp,
-                                color: const Color(0xff43463F)),
-                          ),
                           SizedBox(
-                            height: 4.h,
+                            width: 2.w,
                           ),
-                          Container(
-                            padding: EdgeInsets.symmetric(vertical: 1.75.h),
-                            alignment: Alignment.center,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(12),
-                              color: const Color(0xff737070),
-                            ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      "score",
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.w500,
-                                          fontSize: 16.sp,
-                                          color: Colors.white),
-                                    ),
-                                    SizedBox(
-                                      height: 0.5.h,
-                                    ),
-                                    Text(
-                                      "0 Level",
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.w400,
-                                          fontSize: 16.sp,
-                                          color: const Color(0xffEFF8FF)),
-                                    ),
-                                    SizedBox(
-                                      height: 0.5.h,
-                                    ),
-                                    Text(
-                                      "7 active participants",
-                                      style: TextStyle(
-                                        fontSize: 16.sp,
-                                        color: Colors.white,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                Image.asset(
-                                  "assets/images/play.png",
-                                )
-                              ],
-                            ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "Hi, Melsayed!",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 16.sp,
+                                    color: Colors.white),
+                              ),
+                              SizedBox(
+                                height: 1.5.h,
+                              ),
+                              Text(
+                                "What language would\n you like to learn?",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: 10.sp,
+                                    color: Colors.white),
+                              ),
+                            ],
                           ),
-                          
-                          //* Subjects List View
-                          ...subjectList
-                              .map((e) => 
-                                  BuildSubject(
-                                    image: e.imageUrl ?? '',
-                                    name: e.subjectName ?? '',
-                                    progressBarValue: e.score ?? 0,
-                                    onTap: () {
-                                      Navigator.pushNamed(
-                                          context, 'SubjectScreen');
-                                    },
-                                  ))
-                              
+                          const Spacer(),
+                          Image.asset(
+                            "assets/images/hoem_body.png",
+                          )
                         ],
                       ),
-                    ),
-                  ],
-                ),
+                      SizedBox(
+                        height: 1.h,
+                      ),
+                      Expanded(
+                        child: Container(
+                          width: double.infinity,
+                          padding: EdgeInsets.symmetric(
+                              vertical: 2.h, horizontal: 4.w),
+                          decoration: const BoxDecoration(
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(14),
+                              topRight: Radius.circular(14),
+                            ),
+                            color: Color(0xffF5F5F5),
+                          ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Container(
+                                width: 20.w,
+                                height: 0.5.h,
+                                color:
+                                    const Color(0xff2632386E).withOpacity(0.43),
+                              ),
+                              SizedBox(
+                                height: 0.1.h,
+                              ),
+                              Expanded(
+                                child: ListView(
+                                  children: [
+                                    Text(
+                                      "Language Being Learned",
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: 15.sp,
+                                          color: const Color(0xff43463F)),
+                                    ),
+                                    SizedBox(
+                                      height: 4.h,
+                                    ),
+                                    Container(
+                                      padding: EdgeInsets.symmetric(
+                                          vertical: 1.75.h),
+                                      alignment: Alignment.center,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(12),
+                                        color: const Color(0xff737070),
+                                      ),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                "score",
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.w500,
+                                                    fontSize: 16.sp,
+                                                    color: Colors.white),
+                                              ),
+                                              SizedBox(
+                                                height: 0.5.h,
+                                              ),
+                                              Text(
+                                                "0 Level",
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.w400,
+                                                    fontSize: 16.sp,
+                                                    color: const Color(
+                                                        0xffEFF8FF)),
+                                              ),
+                                              SizedBox(
+                                                height: 0.5.h,
+                                              ),
+                                              Text(
+                                                "7 active participants",
+                                                style: TextStyle(
+                                                  fontSize: 16.sp,
+                                                  color: Colors.white,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                          Image.asset(
+                                            "assets/images/play.png",
+                                          )
+                                        ],
+                                      ),
+                                    ),
+
+                                    //* Subjects List View
+                                    ...subjectProvider.subjectDataResponse!.subjects!
+                                        .map((e) => BuildSubject(
+                                              image: e.image?.secureUrl ?? '',
+                                              name: e.name ?? '',
+                                              progressBarValue: 10,
+                                              onTap: () {
+                                                Navigator.pushNamed(
+                                                    context, 'LevelsOfSubject',arguments:e.id);
+                                              },
+                                            ))
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      )
+                    ],
+                  )
+                : const Center(
+                    child: Text('Somthing Went Wrong !!'),
+                  )
+            : const Center(
+                child: CircularProgressIndicator(),
               ),
-            )
-          ],
-        ):const Center(
-          child: CircularProgressIndicator(),
-        ),
       ),
     );
   }
@@ -208,7 +221,9 @@ class BuildSubject extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        SizedBox(height: 4,),
+        SizedBox(
+          height: 4,
+        ),
         InkWell(
           onTap: onTap,
           child: Container(
@@ -219,11 +234,14 @@ class BuildSubject extends StatelessWidget {
                 border: Border.all(color: const Color(0xffCDCDCD))),
             child: Row(
               children: [
-                Image.asset(
+                Image.network(
                   image,
                   width: 17.w,
                   height: 8.h,
-                  fit: BoxFit.cover,
+                  fit: BoxFit.fill,
+                  
+                  errorBuilder: (context, error, stackTrace) => SizedBox(
+                      width: 17.w, height: 8.h, child: const Icon(Icons.error)),
                 ),
                 SizedBox(
                   width: 3.w,

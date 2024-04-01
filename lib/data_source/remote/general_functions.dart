@@ -4,13 +4,14 @@ import 'package:flutter/material.dart';
 
 final dio = Dio();
 
-  Future<dynamic> fetchData({String? url, Map<String,dynamic>? reqBody}) async {
+  Future<dynamic> fetchData({String? url, Map<String,dynamic>? reqBody,Map<String, dynamic>? queryParameters}) async {
     try {
       debugPrint('fetchData URL : $url');
       // final response = await dio.get(url,data: {}, options: Options(headers: {'Authorization': 'Bearer $token'}));
       final response = await dio.get(
         url ?? '' ,
         data: reqBody ?? {},
+        queryParameters: queryParameters ?? {}
       );
       debugPrint('fetchData response : ${response.data}');
       return response.data;

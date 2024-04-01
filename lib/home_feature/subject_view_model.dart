@@ -4,13 +4,14 @@ import 'package:grad_project/models/subject_data_response.dart';
 
 class SubjectViewModel extends ChangeNotifier{
  bool isLoading = true;
+ SubjectDataResponse? subjectDataResponse;
 
- Future<SubjectDataResponse> getSubjectObject()async{
+ Future<SubjectDataResponse?> getSubjectObject()async{
   isLoading = true;
   notifyListeners();
-  SubjectDataResponse subject = await RemoteDataSource.getSubject();
+  subjectDataResponse = await RemoteDataSource.getSubject();
   isLoading = false;
   notifyListeners();
-  return subject;
+  return subjectDataResponse;
  }
 }

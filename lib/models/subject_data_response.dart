@@ -3,7 +3,7 @@ class SubjectDataResponse {
     String? message;
     int? page;
     List<Subjects>? subjects;
-    String? error;
+    String? error='';
 
     SubjectDataResponse({this.message, this.page, this.subjects,this.error});
 
@@ -11,6 +11,7 @@ class SubjectDataResponse {
         message = json["message"];
         page = json["page"];
         subjects = json["subjects"] == null ? null : (json["subjects"] as List).map((e) => Subjects.fromJson(e)).toList();
+        error ='';
     }
 
     Map<String, dynamic> toJson() {

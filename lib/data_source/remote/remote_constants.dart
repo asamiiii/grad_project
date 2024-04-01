@@ -3,4 +3,8 @@
 class RemoteConstants{
    static String baseUrl = 'https://smart-edu-for-kids-seven.vercel.app';
    static String subjectUrl = '$baseUrl/subject';
+   static String levelsUrl = '$baseUrl/level';
 }
+
+
+//https://smart-edu-for-kids-seven.vercel.app/level?subjectId=65eb53d5b09b811dbf5bb9bb

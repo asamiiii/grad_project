@@ -6,7 +6,7 @@ import 'package:grad_project/helper/build_widgets.dart';
 import 'package:grad_project/widgets/build_app_bar.dart';
 import 'package:simple_progress_indicators/simple_progress_indicators.dart';
 import 'package:sizer/sizer.dart';
-import 'subject_screen.dart';
+import 'levels_of_subject.dart';
 import 'unit_details.dart';
 
 class UnitsScreen extends StatelessWidget {
