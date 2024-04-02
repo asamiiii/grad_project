@@ -23,12 +23,9 @@ import 'screens/set_new_password.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   // await Firebase.initializeApp();
-  SystemChrome.setPreferredOrientations([
-    DeviceOrientation.landscapeRight,
-    DeviceOrientation.landscapeLeft,
-    DeviceOrientation.portraitUp,
-    DeviceOrientation.portraitDown,
-  ]);
+  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+    statusBarColor: Colors.transparent,
+ ));
   runApp(const MyApp());
 }
 
@@ -44,6 +41,7 @@ class MyApp extends StatelessWidget {
           providers: AppProviders.appProviders,
           child: MaterialApp(
             debugShowCheckedModeBanner: false,
+            locale: const Locale('ar'),
             routes: {
               // 'LoginScreen' : (context)=> const LoginScreen(),
               // 'RegisterScreen' : (context)=> const RegisterScreen(),

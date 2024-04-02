@@ -1,6 +1,11 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
+import 'package:grad_project/screens/letters_screen/top_bar.dart';
+import 'package:grad_project/utils/size_helper.dart';
+import 'package:grad_project/widgets/close_button.dart';
+import 'package:grad_project/widgets/to_right_left_button.dart';
 import 'package:sizer/sizer.dart';
 
 class LettersView extends StatefulWidget {
@@ -13,161 +18,74 @@ class LettersView extends StatefulWidget {
 class _LettersViewState extends State<LettersView> {
   @override
   void initState() {
-    SystemChrome.setPreferredOrientations([
-      DeviceOrientation.landscapeRight,
-      DeviceOrientation.landscapeLeft,
-    ]);
     super.initState();
   }
 
   @override
-  dispose() {
-    SystemChrome.setPreferredOrientations([
-      DeviceOrientation.landscapeRight,
-      DeviceOrientation.landscapeLeft,
-      DeviceOrientation.portraitUp,
-      DeviceOrientation.portraitDown,
-    ]);
-    super.dispose();
+  Widget build(BuildContext context) {
+    return Scaffold(
+      // appBar: AppBar(),
+
+      body: Stack(
+        children: [
+          Container(
+              width: SizeHelper.getScreenWidth(context: context),
+              height: SizeHelper.getScreenHeight(context: context),
+              padding: EdgeInsets.symmetric(horizontal: 3.w, vertical: 5.h),
+              decoration: const BoxDecoration(
+                image: DecorationImage(
+                    image: AssetImage(
+                      'assets/images/lesson.png',
+                    ),
+                    fit: BoxFit.fill),
+              ),
+              child: Column(
+                children: [
+                  const LettersTopBar(),
+                  SizeHelper.verticalSpace(35.h),
+                  ToRightLeft()
+                ],
+              )),
+          Positioned(
+            left: 7.w,
+            right: 7.w,
+            top: 20.h,
+            bottom: 20.h,
+            child: Container(
+              // color: Colors.red,
+              height: SizeHelper.getScreenHeight(context: context) * 0.65,
+              width: SizeHelper.getScreenWidth(context: context) * 0.85,
+              child: Column(
+                children: [
+                  SizeHelper.verticalSpace(5.h),
+                  const LetterText(),
+                  SizeHelper.verticalSpace(5.h),
+                  Image.asset('assets/images/lion.png')
+                  ],
+              ),
+            ),
+          )
+        ],
+      ),
+    );
   }
+}
+
+class LetterText extends StatelessWidget {
+  const LetterText({super.key});
 
   @override
   Widget build(BuildContext context) {
-    var screenHight = MediaQuery.of(context).size.height;
-    var screenWidth = MediaQuery.of(context).size.width;
-    return Scaffold(
-      // appBar: AppBar(),
-      body: Container(
-        width: double.infinity,
-        height: double.infinity,
-        child: Stack(
-          children: [
-            //! Screen Cover For Letters Screen
-            Image.asset(
-              'assets/images/letters_cover.png',
-              height: double.infinity,
-              width: double.infinity,
-              fit: BoxFit.fill,
-            ),
-            Positioned(
-                top: 30,
-                left: 10,
-                child: Image.asset(
-                  'assets/images/letter_close.png',
-                  height: 40,
-                  width: 40,
-                  fit: BoxFit.fill,
-                )),
-
-            //! To Left Button
-            Positioned(
-                top: 10,
-                left: 10,
-                child: SizedBox(
-                    height: screenHight * 0.90,
-                    width: 50,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Image.asset(
-                          'assets/images/letter_to_left.png',
-                          height: 40,
-                          width: 40,
-                          fit: BoxFit.fill,
-                        ),
-                      ],
-                    ))),
-
-            //! To Right Button
-            Positioned(
-                top: 10,
-                right: 10,
-                child: SizedBox(
-                    height: screenHight * 0.90,
-                    width: 50,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Image.asset(
-                          'assets/images/letter_to_right.png',
-                          height: 40,
-                          width: 40,
-                          fit: BoxFit.fill,
-                        ),
-                      ],
-                    ))),
-
-            //! White borad
-            Positioned(
-                top: 20,
-                // right: 10,
-                child: SizedBox(
-                    height: screenHight * 0.90,
-                    width: screenWidth,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Stack(
-                          children: [
-                            Image.asset(
-                              'assets/images/white_board.png',
-                              height: screenHight * 0.80,
-                              width: screenWidth * 0.80,
-                              fit: BoxFit.fill,
-                            ),
-                          ],
-                        ),
-                      ],
-                    ))),
-
-                    
-            Positioned(
-                bottom: 5,
-                // right: 10,
-                child: SizedBox(
-                    height: screenHight * 0.30,
-                    width: screenWidth,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Image.asset(
-                              'assets/images/letter_duck.png',
-                              height: 80,
-                              width: 130,
-                              fit: BoxFit.fill,
-                            ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Image.asset(
-                              'assets/images/letter_girl_1.png',
-                              height: 125,
-                              width: 85,
-                              fit: BoxFit.fill,
-                            ),
-                            Image.asset(
-                              'assets/images/letter_girl_2.png',
-                              height: 90,
-                              width: 76,
-                              fit: BoxFit.fill,
-                            ),
-                          ],
-                        ),
-                        Image.asset(
-                              'assets/images/letter_girl_3.png',
-                              height: 100,
-                              width: 190,
-                              fit: BoxFit.fill,
-                            ),
-
-                            
-                      ],
-                    )))
-          ],
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      children: [
+        Text('اسد',style: TextStyle(color: Colors.green, fontSize: 50.sp)),
+        // SizeHelper.horizontalSpace(10.w),
+        Text(
+          'ا',
+          style: TextStyle(color: Colors.green, fontSize: 50.sp),
         ),
-      ),
+      ],
     );
   }
 }
