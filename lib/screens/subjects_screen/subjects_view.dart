@@ -1,22 +1,18 @@
 // ignore_for_file: must_be_immutable, use_full_hex_values_for_flutter_colors
 
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:grad_project/helper/build_widgets.dart';
 import 'package:grad_project/screens/subjects_screen/subject_view_model.dart';
-import 'package:grad_project/models/dummy_data/subject_dummy.dart';
 import 'package:grad_project/widgets/loading_widget.dart';
 import 'package:grad_project/widgets/network_image.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
-import '../../models/subject_data_response.dart' as subject;
-import '../levels_of_subject/levels_of_subject.dart';
 
 class SubjectsScreen extends StatefulWidget {
   static String id = 'SubjectsScreen';
 
-  const SubjectsScreen({Key? key}) : super(key: key);
+  const SubjectsScreen({super.key});
 
   @override
   State<SubjectsScreen> createState() => _SubjectsScreenState();
@@ -206,12 +202,12 @@ class _SubjectsScreenState extends State<SubjectsScreen> {
 
 class BuildSubject extends StatelessWidget {
   BuildSubject({
-    Key? key,
+    super.key,
     required this.image,
     required this.name,
     required this.progressBarValue,
     required this.onTap,
-  }) : super(key: key);
+  });
 
   String image;
   String name;

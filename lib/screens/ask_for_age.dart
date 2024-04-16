@@ -7,7 +7,7 @@ import 'package:grad_project/widgets/custom_text_form_field.dart';
 import 'package:sizer/sizer.dart';
 
 class AskForAge extends StatefulWidget {
-  const AskForAge({Key? key}) : super(key: key);
+  const AskForAge({super.key});
   static String id = 'AskForAge';
 
   @override

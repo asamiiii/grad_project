@@ -6,8 +6,7 @@ import 'package:sizer/sizer.dart';
 
 class CustomTextFormField extends StatelessWidget {
   CustomTextFormField(this.label, this.hintText, this.onChanged, this.type,
-      {Key? key})
-      : super(key: key);
+      {super.key});
   String? label;
   String? hintText;
   Function(String)? onChanged;
@@ -24,6 +23,7 @@ class CustomTextFormField extends StatelessWidget {
           if (data!.isEmpty) {
             return 'field is required';
           }
+          return null;
         },
         style: const TextStyle(color: blueColor),
         onChanged: onChanged,
@@ -71,8 +71,8 @@ class BuildTextFormFeild extends StatelessWidget {
     this.hintText,
     this.label,
     this.suffixIcon,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
   IconData? prefixIcon;
   IconData? suffixIcon;
   TextInputType? keyboardType;
@@ -95,6 +95,7 @@ class BuildTextFormFeild extends StatelessWidget {
           if (data!.isEmpty) {
             return 'field is required';
           }
+          return null;
         },
         onChanged: onChanged,
         style: TextStyle(

@@ -3,12 +3,11 @@
 import 'package:flutter/material.dart';
 import 'package:grad_project/constants/constants.dart';
 import 'package:grad_project/screens/subjects_screen/subjects_view.dart';
-import 'package:grad_project/screens/sign_in.dart';
 import 'package:grad_project/widgets/custom_button.dart';
 import 'package:sizer/sizer.dart';
 
 class OnboardingScreen extends StatefulWidget {
-  const OnboardingScreen({Key? key}) : super(key: key);
+  const OnboardingScreen({super.key});
 
   @override
   State<OnboardingScreen> createState() => _OnboardingScreenState();
@@ -156,10 +155,10 @@ class CreatePage extends StatelessWidget {
   final String title;
 
   const CreatePage({
-    Key? key,
+    super.key,
     required this.image,
     required this.title,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

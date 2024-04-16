@@ -8,13 +8,10 @@ import 'package:grad_project/widgets/build_app_bar.dart';
 import 'package:grad_project/widgets/loading_widget.dart';
 import 'package:grad_project/widgets/network_image.dart';
 import 'package:provider/provider.dart';
-import 'package:simple_progress_indicators/simple_progress_indicators.dart';
 import 'package:sizer/sizer.dart';
-import '../levels_of_subject/levels_of_subject.dart';
-import 'unit_details.dart';
 
 class UnitsScreen extends StatefulWidget {
-  UnitsScreen();
+  const UnitsScreen();
 
   static String id = 'UnitsScreen';
 
@@ -128,7 +125,7 @@ class _UnitsScreenState extends State<UnitsScreen> {
                   style: TextStyle(
                     fontWeight: FontWeight.w500,
                     fontSize: 22.sp,
-                    color: Color(0xff4A4373),
+                    color: const Color(0xff4A4373),
                   ),
                 ),
                 SizedBox(
@@ -195,8 +192,8 @@ class UnitContainer extends StatelessWidget {
     this.progressBarValue,
     this.vectorImage,
     this.percent,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   final VoidCallback onTap;
   String name;
@@ -238,7 +235,7 @@ class UnitContainer extends StatelessWidget {
             //   width: 20.w,
             //   errorBuilder: (context, error, stackTrace) => SizedBox(width: 20.w,child: Icon(Icons.error),),
             // ),
-           Spacer(),
+           const Spacer(),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -252,7 +249,7 @@ class UnitContainer extends StatelessWidget {
                   lineHeight: 1.5.h,
                   percent: 0.2,
                   backgroundColor: Colors.grey[200],
-                  progressColor: Color(0xffFBB237),
+                  progressColor: const Color(0xffFBB237),
                 ),
                 Text(
                   "20/20",

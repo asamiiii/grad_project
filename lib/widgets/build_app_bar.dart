@@ -3,8 +3,8 @@ import 'package:grad_project/screens/levels_of_subject/levels_of_subject.dart';
 
 class BuildAppBar extends StatelessWidget {
   const BuildAppBar({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {

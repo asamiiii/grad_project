@@ -7,13 +7,9 @@ import 'package:grad_project/models/dummy_data/subject_dummy.dart';
 import 'package:grad_project/models/levels_data_response.dart' as levels;
 import 'package:grad_project/widgets/loading_widget.dart';
 import 'package:grad_project/widgets/network_image.dart';
-import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:provider/provider.dart';
-import 'package:simple_progress_indicators/simple_progress_indicators.dart';
 import 'package:sizer/sizer.dart';
 
-import '../units_of_level/units_screen.dart';
-import '../units_of_level/unit_details.dart';
 
 class LevelsOfSubject extends StatefulWidget {
   const LevelsOfSubject();
@@ -272,10 +268,10 @@ class _ArabicScreenState extends State<LevelsOfSubject> {
 
 class BuildButton extends StatelessWidget {
   BuildButton({
-    Key? key,
+    super.key,
     required this.onTap,
     required this.icon,
-  }) : super(key: key);
+  });
   final VoidCallback onTap;
   IconData icon;
   @override

@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:grad_project/constants/constants.dart';
 import 'package:grad_project/helper/build_widgets.dart';
 import 'package:grad_project/widgets/build_app_bar.dart';
-import 'package:simple_progress_indicators/simple_progress_indicators.dart';
 import 'package:sizer/sizer.dart';
 // import 'arabic_screen.dart';
 // import 'arabic_unit_screen.dart';
@@ -101,7 +100,7 @@ class ArabicIntroScreen extends StatelessWidget {
                 style: TextStyle(
                   fontWeight: FontWeight.w500,
                   fontSize: 22.sp,
-                  color: Color(0xff4A4373),
+                  color: const Color(0xff4A4373),
                 ),
               ),
               SizedBox(
@@ -164,8 +163,8 @@ class UnitContainer extends StatelessWidget {
     this.progressBarValue,
     this.vectorImage,
     this.percent,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   final VoidCallback onTap;
   String name;
@@ -205,7 +204,7 @@ class UnitContainer extends StatelessWidget {
               mainImage,
               width: 20.w,
             ),
-           Spacer(),
+           const Spacer(),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -219,7 +218,7 @@ class UnitContainer extends StatelessWidget {
                   lineHeight: 1.5.h,
                   percent: 0.2,
                   backgroundColor: Colors.grey[200],
-                  progressColor: Color(0xffFBB237),
+                  progressColor: const Color(0xffFBB237),
                 ),
                 Text(
                   "20/20",

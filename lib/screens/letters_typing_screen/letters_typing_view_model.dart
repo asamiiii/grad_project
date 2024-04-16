@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:grad_project/constants/constants.dart';
 import 'package:grad_project/screens/letters_screen/dummy_letters.dart';
 
-class LettersViewModel extends ChangeNotifier {
+class LettersTypingViewModel extends ChangeNotifier {
   bool isLoading = true;
   int index = 0;
 

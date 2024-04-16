@@ -4,7 +4,7 @@ import 'package:grad_project/widgets/custom_button.dart';
 import 'package:grad_project/widgets/custom_text_form_field.dart';
 import 'package:sizer/sizer.dart';
 class AskForName extends StatefulWidget {
-  const AskForName({Key? key}) : super(key: key);
+  const AskForName({super.key});
   static String id = 'AskForName';
 
   @override

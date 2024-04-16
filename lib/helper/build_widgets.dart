@@ -16,7 +16,7 @@ void showSnackBar(BuildContext context, String text) {
 
 class LinearPercenIndicator extends StatelessWidget {
   LinearPercenIndicator({
-    Key? key,
+    super.key,
     required this.progressBarValue,
     required this.width,
     required this.lineHeight,
@@ -24,7 +24,7 @@ class LinearPercenIndicator extends StatelessWidget {
     this.backgroundColor,
     this.progressColor,
 
-  }) : super(key: key);
+  });
 
   final int progressBarValue;
   double width;

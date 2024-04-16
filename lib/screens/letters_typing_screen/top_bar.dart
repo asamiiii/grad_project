@@ -3,8 +3,8 @@ import 'package:grad_project/screens/letters_screen/menu_dialog.dart';
 import 'package:grad_project/utils/size_helper.dart';
 import 'package:grad_project/widgets/close_button.dart';
 
-class LettersTopBar extends StatelessWidget {
-  const LettersTopBar({super.key});
+class LettersTypingTopBar extends StatelessWidget {
+  const LettersTypingTopBar({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -15,8 +15,8 @@ class LettersTopBar extends StatelessWidget {
         Image.asset('assets/images/audio.png'),
         SizeHelper.horizontalSpace(10),
         Image.asset('assets/images/refresh.png'),
-        SizeHelper.horizontalSpace(10),
-        const MenuButton(),
+        // SizeHelper.horizontalSpace(10),
+        // const MenuButton(),
       ],
     );
   }

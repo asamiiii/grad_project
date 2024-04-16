@@ -8,14 +8,14 @@ import 'package:grad_project/widgets/to_right_left_button.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
-class LettersView extends StatefulWidget {
-  const LettersView({super.key});
+class LettersTypingView extends StatefulWidget {
+  const LettersTypingView({super.key});
 
   @override
-  State<LettersView> createState() => _LettersViewState();
+  State<LettersTypingView> createState() => _LettersViewState();
 }
 
-class _LettersViewState extends State<LettersView> {
+class _LettersViewState extends State<LettersTypingView> {
   @override
   void initState() {
     super.initState();
@@ -42,7 +42,7 @@ class _LettersViewState extends State<LettersView> {
               ),
               child: Column(
                 children: [
-                  const LettersTopBar(),
+                  const LettersTypingTopBar(),
                   SizeHelper.verticalSpace(35.h),
                   ToRightLeft(
                     toRight: () {
@@ -64,7 +64,7 @@ class _LettersViewState extends State<LettersView> {
               height: SizeHelper.getScreenHeight(context: context) * 0.65,
               width: SizeHelper.getScreenWidth(context: context) * 0.85,
               child: Consumer<LettersViewModel>(
-                  builder: (context, provider, child) => LetterItem(
+                  builder: (context, provider, child) => LetterTypingItem(
                         letter: dummyLetters[provider.index],
                       )),
             ),
@@ -75,9 +75,9 @@ class _LettersViewState extends State<LettersView> {
   }
 }
 
-class LetterItem extends StatelessWidget {
+class LetterTypingItem extends StatelessWidget {
   Letter? letter;
-  LetterItem({super.key, this.letter});
+  LetterTypingItem({super.key, this.letter});
 
   @override
   Widget build(BuildContext context) {
@@ -87,8 +87,8 @@ class LetterItem extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            Text(letter?.word ?? '',
-                style: TextStyle(color: Colors.green, fontSize: 50.sp)),
+            // Text(letter?.word ?? '',
+            //     style: TextStyle(color: Colors.green, fontSize: 50.sp)),
             // SizeHelper.horizontalSpace(10.w),
             Text(
               letter?.letter ?? '',
@@ -96,8 +96,15 @@ class LetterItem extends StatelessWidget {
             ),
           ],
         ),
-        SizeHelper.verticalSpace(5.h),
-        Image.asset(letter?.image ?? '')
+        SizeHelper.verticalSpace(25.h),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            Image.asset(letter?.image ?? '',width: 30.w,height: 15.h,),
+             Text(letter?.word ?? '',
+                style: TextStyle(color: Colors.green, fontSize: 50.sp)),
+          ],
+        )
       ],
     );
   }

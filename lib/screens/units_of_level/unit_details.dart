@@ -1,9 +1,8 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, use_key_in_widget_constructors
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:grad_project/screens/letters_screen/letters_view.dart';
+import 'package:grad_project/screens/letters_typing_screen/letters_typing_view.dart';
 import 'package:grad_project/widgets/build_app_bar.dart';
 import 'package:simple_progress_indicators/simple_progress_indicators.dart';
 import 'package:sizer/sizer.dart';
@@ -152,7 +151,13 @@ class ArabicUnitScreen extends StatelessWidget {
                    children: [
                      GestureDetector(
                                    onTap: (){
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => LettersView(),));
+                                    //For Testing 
+                                    if(index==0){
+                                    Navigator.push(context, MaterialPageRoute(builder: (context) => const LettersView(),));
+                                    }else{
+                                      Navigator.push(context, MaterialPageRoute(builder: (context) => const LettersTypingView(),));
+                                    }
+                      
                                    },
                      child: Column(
                        children: [

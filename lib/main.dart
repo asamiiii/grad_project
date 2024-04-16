@@ -1,14 +1,9 @@
 import 'package:animated_splash_screen/animated_splash_screen.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:grad_project/constants/providers.dart';
-import 'package:grad_project/screens/subjects_screen/subject_view_model.dart';
 import 'package:grad_project/screens/ask_for_age.dart';
 import 'package:grad_project/screens/ask_for_name.dart';
-import 'package:grad_project/screens/forget_password.dart';
-import 'package:grad_project/screens/sign_in.dart';
-import 'package:grad_project/screens/sign_up.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
@@ -17,20 +12,18 @@ import 'screens/units_of_level/units_screen.dart';
 import 'screens/levels_of_subject/levels_of_subject.dart';
 import 'screens/units_of_level/unit_details.dart';
 import 'screens/subjects_screen/subjects_view.dart';
-import 'screens/onboarding_screen.dart';
-import 'screens/set_new_password.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   // await Firebase.initializeApp();
-  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
     statusBarColor: Colors.transparent,
  ));
   runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  const MyApp({super.key});
 
   // This widget is the root of your application.
   @override
@@ -51,7 +44,7 @@ class MyApp extends StatelessWidget {
               'AskForAge': (context) => const AskForAge(),
               'SubjectsScreen': (context) => const SubjectsScreen(),
               'LevelsOfSubject': (context) => const LevelsOfSubject(),
-              'UnitsScreen': (context) => UnitsScreen(),
+              'UnitsScreen': (context) => const UnitsScreen(),
               'ArabicUnitScreen': (context) => const ArabicUnitScreen(),
             },
             home: AnimatedSplashScreen(

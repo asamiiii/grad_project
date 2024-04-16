@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
 class CustomButton extends StatelessWidget {
-  CustomButton(this.title, this.onTap,this.buttonColor,this.titleColor, {Key? key}) : super(key: key);
+  CustomButton(this.title, this.onTap,this.buttonColor,this.titleColor, {super.key});
   String? title;
   VoidCallback onTap;
   Color buttonColor;
@@ -19,6 +19,8 @@ class CustomButton extends StatelessWidget {
           child: Container(
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(16), color: buttonColor),
+            height: 65,
+            width: 344,
             child: Center(
               child: Text(
                 title!,
@@ -28,8 +30,6 @@ class CustomButton extends StatelessWidget {
                 ),
               ),
             ),
-            height: 65,
-            width: 344,
           ),
         ),
       ),
@@ -41,7 +41,7 @@ class CustomButton extends StatelessWidget {
 
 class BuildButton extends StatelessWidget {
    BuildButton({
-    Key? key,
+    super.key,
     required this.onTap,
     required this.title,
     required this.buttonColor,
@@ -49,7 +49,7 @@ class BuildButton extends StatelessWidget {
      this.height,
      this.width,
 
-  }) : super(key: key);
+  });
 
 
   final VoidCallback onTap;

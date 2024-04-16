@@ -1,5 +1,3 @@
-import 'package:dio/dio.dart';
-import 'package:flutter/material.dart';
 import 'package:grad_project/constants/constants.dart';
 import 'package:grad_project/data_source/remote/general_functions.dart';
 import 'package:grad_project/data_source/remote/remote_constants.dart';
