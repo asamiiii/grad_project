@@ -12,7 +12,7 @@ final dio = Dio();
       final response = await dio.get(
         url ?? '' ,
         data: reqBody ?? {},
-        queryParameters: queryParameters ?? {}
+        queryParameters: queryParameters ?? {},
       );
       // debugPrint('fetchData response : ${response.data}');
       return response.data;

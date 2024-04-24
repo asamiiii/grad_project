@@ -5,6 +5,8 @@ import 'package:grad_project/models/levels_data_response.dart';
 import 'package:grad_project/models/subject_data_response.dart';
 import 'package:grad_project/models/units_data_response.dart';
 
+import '../../models/lessons_data_response.dart';
+
 class RemoteDataSource {
   //! get subject
   static Future<SubjectDataResponse> getSubject() async {
@@ -40,6 +42,19 @@ class RemoteDataSource {
     } catch (error) {
       logger.e(error.toString());
       return UnitsDataResponse(error: error.toString());
+    }
+  }
+
+    //! get Lessons
+  static Future<LessonsDataResponse> getLessons({required String? unitId}) async {
+    try {
+      var response = await fetchData(url: RemoteConstants.lessonsUrl,queryParameters: {'unitId':unitId});
+      logger.w('Units Response : $response');
+      LessonsDataResponse levels = LessonsDataResponse.fromJson(response);
+      return levels;
+    } catch (error) {
+      logger.e(error.toString());
+      return LessonsDataResponse(error: error.toString());
     }
   }
 }
