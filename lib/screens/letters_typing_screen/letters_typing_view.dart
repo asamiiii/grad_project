@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:grad_project/screens/letters_screen/dummy_letters.dart';
 import 'package:grad_project/screens/letters_screen/letters_view_model.dart';
 import 'package:grad_project/screens/letters_screen/top_bar.dart';
+import 'package:grad_project/screens/letters_typing_screen/image_painter.dart';
 import 'package:grad_project/screens/letters_typing_screen/top_bar.dart';
 import 'package:grad_project/utils/size_helper.dart';
 import 'package:grad_project/widgets/to_right_left_button.dart';
@@ -100,7 +101,7 @@ class LetterTypingItem extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            Image.asset(letter?.image ?? '',width: 30.w,height: 15.h,),
+            ImagePainter(imageUrl: 'https://res.cloudinary.com/deypvyqod/image/upload/v1709922935/smartEducational/unit/65eb5a427673d796b7bd4c9f/image/bfxomubfcj0ld5g2d6h8.jpg}',),
              Text(letter?.word ?? '',
                 style: TextStyle(color: Colors.green, fontSize: 50.sp)),
           ],
