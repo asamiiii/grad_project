@@ -1,17 +1,38 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, use_key_in_widget_constructors
 
+
+//https://smart-edu-for-kids-seven.vercel.app/cat?unitId=6634be950d0e4e8858b7531a
+
+
 import 'package:flutter/material.dart';
 import 'package:grad_project/screens/letters_screen/letters_view.dart';
 import 'package:grad_project/screens/letters_typing_screen/letters_typing_view.dart';
+import 'package:grad_project/screens/units_of_level/units_view_model.dart';
 import 'package:grad_project/widgets/build_app_bar.dart';
+import 'package:provider/provider.dart';
 import 'package:simple_progress_indicators/simple_progress_indicators.dart';
 import 'package:sizer/sizer.dart';
 
-class ArabicUnitScreen extends StatelessWidget {
-  const ArabicUnitScreen();
+class LessonsScreen extends StatefulWidget {
+  const LessonsScreen();
 
-  static String id = 'ArabicUnitScreen';
+  static String id = 'LessonsScreen';
 
+
+  @override
+  State<LessonsScreen> createState() => _LessonsScreenState();
+}
+
+class _LessonsScreenState extends State<LessonsScreen> {
+  String? unitId;
+  @override
+  void initState() {
+    var provider = context.read<UnitsViewModel>();
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      await provider.getLessonsObject(unitId: unitId);
+    });
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -138,12 +159,12 @@ class ArabicUnitScreen extends StatelessWidget {
              ],
            ),
            const SizedBox(height: 30,),
-           
+
            Expanded(
              child: ListView.builder(
               itemCount: 3,
               itemBuilder: (context, index) {
-                       
+
                return Padding(
                  padding:  EdgeInsets.symmetric(horizontal: 20.w),
                  child: Row(
@@ -151,13 +172,13 @@ class ArabicUnitScreen extends StatelessWidget {
                    children: [
                      GestureDetector(
                                    onTap: (){
-                                    //For Testing 
+                                    //For Testing
                                     if(index==0){
                                     Navigator.push(context, MaterialPageRoute(builder: (context) => const LettersView(),));
                                     }else{
                                       Navigator.push(context, MaterialPageRoute(builder: (context) => const LettersTypingView(),));
                                     }
-                      
+
                                    },
                      child: Column(
                        children: [

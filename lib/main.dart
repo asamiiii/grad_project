@@ -10,7 +10,7 @@ import 'package:sizer/sizer.dart';
 ///test commit
 import 'screens/units_of_level/units_screen.dart';
 import 'screens/levels_of_subject/levels_of_subject.dart';
-import 'screens/units_of_level/unit_details.dart';
+import 'screens/units_of_level/lessons.dart';
 import 'screens/subjects_screen/subjects_view.dart';
 
 Future<void> main() async {
@@ -45,7 +45,7 @@ class MyApp extends StatelessWidget {
               'SubjectsScreen': (context) => const SubjectsScreen(),
               'LevelsOfSubject': (context) => const LevelsOfSubject(),
               'UnitsScreen': (context) => const UnitsScreen(),
-              'ArabicUnitScreen': (context) => const ArabicUnitScreen(),
+              'LessonsScreen': (context) => const LessonsScreen(),
             },
             home: AnimatedSplashScreen(
               duration: 500,

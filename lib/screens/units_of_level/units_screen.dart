@@ -22,14 +22,13 @@ class UnitsScreen extends StatefulWidget {
 class _UnitsScreenState extends State<UnitsScreen> {
   int? progressBarValue;
   String? levelsId;
-    // Unit
+  // Unit
   List<Map<String, dynamic>> unitData = [
     {"name": "الوحده 1", "image": "assets/images/Group.png", "number": 0.1},
     {"name": "الوحده 2", "image": "assets/images/lock.png", "number": 0.5},
     {"name": "الوحده 3", "image": "assets/images/lock.png", "number": 0.3},
     {"name": "الوحده 4", "image": "assets/images/lock.png", "number": 0.8},
   ];
-
 
   @override
   void initState() {
@@ -45,134 +44,142 @@ class _UnitsScreenState extends State<UnitsScreen> {
     levelsId = ModalRoute.of(context)!.settings.arguments as String?;
     return Scaffold(
       body: Consumer<UnitsViewModel>(
-        builder: (context, unitsProvider, child) =>unitsProvider
-                    .isLoading ==
+        builder: (context, unitsProvider, child) => unitsProvider.isLoading ==
                 false
             ? unitsProvider.unitDataResponse!.error!.isEmpty
                 ? Column(
-          children: [
-            Padding(
-              padding:
-                  EdgeInsets.only(left: 4.w, right: 4.w, top: 7.h, bottom: 4.h),
-              child: const BuildAppBar(),
-            ),
-            Container(
-              height: 10.h,
-              color: const Color(0xffE8E8E8),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Row(
                     children: [
-                      Icon(
-                        Icons.local_fire_department_outlined,
-                        color: const Color(0xffEB9F4A),
-                        size: 35.sp,
+                      Padding(
+                        padding: EdgeInsets.only(
+                            left: 4.w, right: 4.w, top: 7.h, bottom: 4.h),
+                        child: const BuildAppBar(),
                       ),
-                      Text(
-                        '3',
-                        style: TextStyle(
-                          fontSize: 20.sp,
-                          color: const Color(0xffEB9F4A),
+                      Container(
+                        height: 10.h,
+                        color: const Color(0xffE8E8E8),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            Row(
+                              children: [
+                                Icon(
+                                  Icons.local_fire_department_outlined,
+                                  color: const Color(0xffEB9F4A),
+                                  size: 35.sp,
+                                ),
+                                Text(
+                                  '3',
+                                  style: TextStyle(
+                                    fontSize: 20.sp,
+                                    color: const Color(0xffEB9F4A),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Row(
+                              children: [
+                                Image.asset(
+                                  'assets/images/ttt.jpg',
+                                  height: 8.h,
+                                  width: 8.w,
+                                ),
+                                Text(
+                                  '1432 XP',
+                                  style: TextStyle(
+                                    fontSize: 20.sp,
+                                    color: const Color(0xff726C90),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Row(
+                              children: [
+                                Icon(
+                                  Icons.favorite_outlined,
+                                  color: const Color(0xffDC3F00),
+                                  size: 35.sp,
+                                ),
+                                Text(
+                                  '3',
+                                  style: TextStyle(
+                                    fontSize: 20.sp,
+                                    color: const Color(0xffDC3F00),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        height: 3.h,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Text(
+                            "تعلم اللغة العربية",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontWeight: FontWeight.w500,
+                              fontSize: 22.sp,
+                              color: const Color(0xff4A4373),
+                            ),
+                          ),
+                          SizedBox(
+                            width: 2.w,
+                          ),
+                          Image.asset(
+                            "assets/images/Vector.png",
+                            width: 10.w,
+                            height: 5.h,
+                          ),
+                          Text(
+                            "18/50",
+                            style: TextStyle(
+                              fontSize: 15.sp,
+                              color: miniBlackColor,
+                            ),
+                          ),
+                        ],
+                      ),
+                      Expanded(
+                        child: Padding(
+                          padding: EdgeInsets.only(
+                            left: 4.w,
+                            right: 4.w,
+                          ),
+                          child: GridView.builder(
+                            itemCount:
+                                unitsProvider.unitDataResponse?.units?.length ??
+                                    0,
+                            clipBehavior: Clip.none,
+                            gridDelegate:
+                                SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 2, // number of items in each row
+                              mainAxisSpacing: 5.h, // spacing between columns
+                              crossAxisSpacing: 5.w, // spacing between rows
+                              mainAxisExtent: 25.h,
+                            ),
+                            itemBuilder: (context, index) => UnitContainer(
+                              onTap: () {
+                                Navigator.pushNamed(
+                                    context, 'ArabicUnitScreen');
+                              },
+                              name: unitsProvider.unitDataResponse
+                                      ?.units?[index].unitName ??
+                                  '',
+                              mainImage: unitsProvider.unitDataResponse
+                                      ?.units?[index].image?.secureUrl ??
+                                  '',
+                              vectorImage: 'assets/images/Vector.png',
+                            ),
+                          ),
                         ),
                       ),
                     ],
-                  ),
-                  Row(
-                    children: [
-                      Image.asset(
-                        'assets/images/ttt.jpg',
-                        height: 8.h,
-                        width: 8.w,
-                      ),
-                      Text(
-                        '1432 XP',
-                        style: TextStyle(
-                          fontSize: 20.sp,
-                          color: const Color(0xff726C90),
-                        ),
-                      ),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      Icon(
-                        Icons.favorite_outlined,
-                        color: const Color(0xffDC3F00),
-                        size: 35.sp,
-                      ),
-                      Text(
-                        '3',
-                        style: TextStyle(
-                          fontSize: 20.sp,
-                          color: const Color(0xffDC3F00),
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-            SizedBox(
-              height: 3.h,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Text(
-                  "تعلم اللغة العربية",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontWeight: FontWeight.w500,
-                    fontSize: 22.sp,
-                    color: const Color(0xff4A4373),
-                  ),
-                ),
-                SizedBox(
-                  width: 2.w,
-                ),
-                Image.asset(
-                  "assets/images/Vector.png",
-                  width: 10.w,
-                  height: 5.h,
-                ),
-                Text(
-                  "18/50",
-                  style: TextStyle(
-                    fontSize: 15.sp,
-                    color: miniBlackColor,
-                  ),
-                ),
-              ],
-            ),
-            Expanded(
-              child: Padding(
-                padding: EdgeInsets.only(
-                  left: 4.w,
-                  right: 4.w,
-                ),
-                child: GridView.builder(
-                  itemCount: unitsProvider.unitDataResponse?.units?.length??0,
-                  clipBehavior: Clip.none,
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2, // number of items in each row
-                    mainAxisSpacing: 5.h, // spacing between columns
-                    crossAxisSpacing: 5.w, // spacing between rows
-                    mainAxisExtent: 25.h,
-                  ),
-                  itemBuilder: (context, index) => UnitContainer(
-                    onTap: () {
-                      Navigator.pushNamed(context, 'ArabicUnitScreen');
-                    },
-                    name:unitsProvider.unitDataResponse?.units?[index].unitName??'',
-                    mainImage: unitsProvider.unitDataResponse?.units?[index].image?.secureUrl??'',
-                    vectorImage: 'assets/images/Vector.png',
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ):const Center(
+                  )
+                : const Center(
                     child: Text('Somthing Went Wrong !!'),
                   )
             : const Loading(),
@@ -180,8 +187,6 @@ class _UnitsScreenState extends State<UnitsScreen> {
     );
   }
 }
-
-
 
 class UnitContainer extends StatelessWidget {
   UnitContainer({
@@ -216,7 +221,7 @@ class UnitContainer extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                 name,
+                  name,
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontWeight: FontWeight.w500,
@@ -229,13 +234,16 @@ class UnitContainer extends StatelessWidget {
             SizedBox(
               height: 1.h,
             ),
-            ImageFromNetwork(imageUrl: mainImage,width: 20.w,),
+            ImageFromNetwork(
+              imageUrl: mainImage,
+              width: 20.w,
+            ),
             // Image.network(
             //   mainImage,
             //   width: 20.w,
             //   errorBuilder: (context, error, stackTrace) => SizedBox(width: 20.w,child: Icon(Icons.error),),
             // ),
-           const Spacer(),
+            const Spacer(),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
