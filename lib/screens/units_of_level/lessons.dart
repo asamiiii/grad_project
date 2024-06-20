@@ -14,7 +14,8 @@ import 'package:simple_progress_indicators/simple_progress_indicators.dart';
 import 'package:sizer/sizer.dart';
 
 class LessonsScreen extends StatefulWidget {
-  const LessonsScreen();
+String? unitId;
+   LessonsScreen({this.unitId});
 
   static String id = 'LessonsScreen';
 
@@ -24,12 +25,12 @@ class LessonsScreen extends StatefulWidget {
 }
 
 class _LessonsScreenState extends State<LessonsScreen> {
-  String? unitId;
+  // 
   @override
   void initState() {
     var provider = context.read<UnitsViewModel>();
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      await provider.getLessonsObject(unitId: unitId);
+      await provider.getLessonsObject(unitId:widget.unitId);
     });
     super.initState();
   }

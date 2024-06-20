@@ -45,7 +45,7 @@ class MyApp extends StatelessWidget {
               'SubjectsScreen': (context) => const SubjectsScreen(),
               'LevelsOfSubject': (context) => const LevelsOfSubject(),
               'UnitsScreen': (context) => const UnitsScreen(),
-              'LessonsScreen': (context) => const LessonsScreen(),
+              'LessonsScreen': (context) =>  LessonsScreen(),
             },
             home: AnimatedSplashScreen(
               duration: 500,

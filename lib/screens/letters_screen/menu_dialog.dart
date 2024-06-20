@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:grad_project/screens/letters_screen/dummy_letters.dart';
 import 'package:grad_project/screens/letters_screen/letters_view_model.dart';
+import 'package:grad_project/screens/units_of_level/units_view_model.dart';
 import 'package:grad_project/utils/size_helper.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
@@ -33,33 +34,39 @@ class MenuDialog extends StatelessWidget {
                 Image.asset('assets/images/Home_icon.png',height: 85,width: 85,)
               ],),
               SizeHelper.verticalSpace(20),
-              GridView.builder(
-                shrinkWrap: true,
-                gridDelegate:  SliverGridDelegateWithFixedCrossAxisCount(
-                   crossAxisCount: 6,
-                   crossAxisSpacing: 10,
-                   mainAxisSpacing: 10
-                   ),
-                itemCount: dummyLetters.length,
-                itemBuilder: (context, index) {
-                  return InkWell(
-                    onTap: () {
-                      Navigator.pop(context);
-                      var provider = context.read<LettersViewModel>();
-                      provider.setIndex(indexx: index);
-                      
+              Consumer<UnitsViewModel>(
+                builder: (context, value, child) => SizedBox(
+                  height: 33.h,
+                  child: GridView.builder(
+                    shrinkWrap: true,
+                    scrollDirection: Axis.vertical,
+                    gridDelegate:  const SliverGridDelegateWithFixedCrossAxisCount(
+                       crossAxisCount: 3,
+                       crossAxisSpacing: 10,
+                       mainAxisSpacing: 10
+                       ),
+                    itemCount: value.lessonsDataResponse?.categs?.length,
+                    itemBuilder: (context, index) {
+                      return InkWell(
+                        onTap: () {
+                          Navigator.pop(context);
+                          var provider = context.read<UnitsViewModel>();
+                          provider.setIndex(indexx: index);
+                          
+                        },
+                        child: Container(
+                          // width: 5,
+                          // height: 5,
+                          decoration: BoxDecoration(
+                            color: Colors.white54,
+                            border: Border.all(color: Colors.black,)
+                          ),
+                          child: Center(child:Text(value.lessonsDataResponse?.categs?[index].text??'',textAlign: TextAlign.center,)),
+                        ),
+                      );
                     },
-                    child: Container(
-                      // width: 5,
-                      // height: 5,
-                      decoration: BoxDecoration(
-                        color: Colors.white54,
-                        border: Border.all(color: Colors.black,)
-                      ),
-                      child: Center(child:Text(dummyLetters[index].letter??'')),
-                    ),
-                  );
-                },
+                  ),
+                ),
               ),
             ],
           )),

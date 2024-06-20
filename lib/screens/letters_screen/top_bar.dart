@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:grad_project/screens/letters_screen/letters_view.dart';
 import 'package:grad_project/screens/letters_screen/menu_dialog.dart';
 import 'package:grad_project/utils/size_helper.dart';
 import 'package:grad_project/widgets/close_button.dart';
@@ -22,18 +23,3 @@ class LettersTopBar extends StatelessWidget {
   }
 }
 
-class MenuButton extends StatelessWidget {
-  const MenuButton({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-        onTap: () {
-          showDialog(
-            context: context,
-            builder: (context) => MenuDialog(),
-          );
-        },
-        child: Image.asset('assets/images/menu.png'));
-  }
-}

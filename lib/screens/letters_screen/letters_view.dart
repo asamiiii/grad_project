@@ -1,12 +1,19 @@
+import 'package:audioplayers/audioplayers.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:grad_project/screens/letters_screen/dummy_letters.dart';
 import 'package:grad_project/screens/letters_screen/letters_view_model.dart';
+import 'package:grad_project/screens/letters_screen/menu_dialog.dart';
 import 'package:grad_project/screens/letters_screen/top_bar.dart';
 import 'package:grad_project/screens/letters_typing_screen/top_bar.dart';
+import 'package:grad_project/screens/units_of_level/units_view_model.dart';
 import 'package:grad_project/utils/size_helper.dart';
+import 'package:grad_project/widgets/close_button.dart';
 import 'package:grad_project/widgets/to_right_left_button.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
+
+import '../../models/lessons_data_response.dart';
 
 class LettersView extends StatefulWidget {
   const LettersView({super.key});
@@ -24,6 +31,7 @@ class _LettersViewState extends State<LettersView> {
   @override
   Widget build(BuildContext context) {
     var lettersViewModel = context.read<LettersViewModel>();
+    var unitsViewModel = context.read<UnitsViewModel>();
     return Scaffold(
       // appBar: AppBar(),
 
@@ -42,14 +50,46 @@ class _LettersViewState extends State<LettersView> {
               ),
               child: Column(
                 children: [
-                  const LettersTopBar(),
+                  Row(
+                    children: [
+                      XCloseButton(),
+                      SizeHelper.expandedSpace(),
+                      InkWell(
+                          onTap: () async {
+                            var soundUrl= unitsViewModel.lessonsDataResponse
+                                ?.categs?[unitsViewModel.index].video?.secureUrl;
+                            final player = AudioPlayer();
+                            await player.play(UrlSource(soundUrl??''));
+                          },
+                          child: Image.asset('assets/images/audio.png')),
+                      SizeHelper.horizontalSpace(10),
+                      Image.asset('assets/images/refresh.png'),
+                      SizeHelper.horizontalSpace(10),
+                      const MenuButton(),
+                    ],
+                  ),
                   SizeHelper.verticalSpace(35.h),
                   ToRightLeft(
                     toRight: () {
-                      lettersViewModel.increaseIndex();
+                      // final player = AudioPlayer();
+                      // player.dispose();
+                      // player.stop();
+                      unitsViewModel.increaseIndex(context);
+                      // var soundUrl= unitsViewModel.lessonsDataResponse
+                      //           ?.categs?[lettersViewModel.index].video?.secureUrl;
+                            
+                            //  player.play(UrlSource(soundUrl??''));
+                            // player.stop();
                     },
-                    toLeft: (){
-                      lettersViewModel.decreaseIndex();
+                    toLeft: () {
+                      // final player = AudioPlayer();
+                      // player.stop();
+                      unitsViewModel.decreaseIndex();
+                      // var soundUrl= unitsViewModel.lessonsDataResponse
+                      //           ?.categs?[lettersViewModel.index].video?.secureUrl;
+                            
+                      //        player.play(UrlSource(soundUrl??''));
+                            // player.stop();
                     },
                   )
                 ],
@@ -65,7 +105,8 @@ class _LettersViewState extends State<LettersView> {
               width: SizeHelper.getScreenWidth(context: context) * 0.85,
               child: Consumer<LettersViewModel>(
                   builder: (context, provider, child) => LetterItem(
-                        letter: dummyLetters[provider.index],
+                        letter: unitsViewModel
+                            .lessonsDataResponse?.categs?[unitsViewModel.index],
                       )),
             ),
           )
@@ -76,7 +117,7 @@ class _LettersViewState extends State<LettersView> {
 }
 
 class LetterItem extends StatelessWidget {
-  Letter? letter;
+  Categs? letter;
   LetterItem({super.key, this.letter});
 
   @override
@@ -87,17 +128,22 @@ class LetterItem extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            Text(letter?.word ?? '',
+            Text(letter?.text ?? '',
                 style: TextStyle(color: Colors.green, fontSize: 50.sp)),
             // SizeHelper.horizontalSpace(10.w),
-            Text(
-              letter?.letter ?? '',
-              style: TextStyle(color: Colors.green, fontSize: 50.sp),
-            ),
+            // Text(
+            //   letter?.text ?? '',
+            //   style: TextStyle(color: Colors.green, fontSize: 50.sp),
+            // ),
           ],
         ),
         SizeHelper.verticalSpace(5.h),
-        Image.asset(letter?.image ?? '')
+        CachedNetworkImage(
+          imageUrl: letter?.image?.secureUrl ?? '',
+          width: 200.w,
+          height: 30.h,
+          fit: BoxFit.fill,
+        )
       ],
     );
   }
@@ -119,5 +165,21 @@ class LetterText extends StatelessWidget {
         ),
       ],
     );
+  }
+}
+
+class MenuButton extends StatelessWidget {
+  const MenuButton({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+        onTap: () {
+          showDialog(
+            context: context,
+            builder: (context) => MenuDialog(),
+          );
+        },
+        child: Image.asset('assets/images/menu.png'));
   }
 }

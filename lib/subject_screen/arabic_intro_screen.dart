@@ -137,7 +137,7 @@ class ArabicIntroScreen extends StatelessWidget {
                 ),
                 itemBuilder: (context, index) => UnitContainer(
                   onTap: () {
-                    Navigator.pushNamed(context, 'ArabicUnitScreen');
+                    Navigator.pushNamed(context, 'LessonsScreen');
                   },
                   name: unitData[index]["name"],
                   mainImage: unitData[index]["image"],

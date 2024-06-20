@@ -22,7 +22,7 @@ class LessonsDataResponse {
 }
 
 class Categs {
-  Image? image;
+  Imagee? image;
   Video? video;
   String? id;
   String? lessonName;
@@ -32,7 +32,7 @@ class Categs {
   Categs({this.image, this.video, this.id, this.lessonName, this.text, this.v});
 
   Categs.fromJson(Map<String, dynamic> json) {
-    image = json["image"] == null ? null : Image.fromJson(json["image"]);
+    image = json["image"] == null ? null : Imagee.fromJson(json["image"]);
     video = json["video"] == null ? null : Video.fromJson(json["video"]);
     id = json["_id"];
     lessonName = json["lessonName"];
@@ -75,13 +75,13 @@ class Video {
   }
 }
 
-class Image {
+class Imagee {
   String? publicId;
   String? secureUrl;
 
-  Image({this.publicId, this.secureUrl});
+  Imagee({this.publicId, this.secureUrl});
 
-  Image.fromJson(Map<String, dynamic> json) {
+  Imagee.fromJson(Map<String, dynamic> json) {
     publicId = json["public_id"];
     secureUrl = json["secure_url"];
   }

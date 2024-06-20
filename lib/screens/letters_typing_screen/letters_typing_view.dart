@@ -3,6 +3,7 @@ import 'package:grad_project/screens/letters_screen/dummy_letters.dart';
 import 'package:grad_project/screens/letters_screen/letters_view_model.dart';
 import 'package:grad_project/screens/letters_screen/top_bar.dart';
 import 'package:grad_project/screens/letters_typing_screen/top_bar.dart';
+import 'package:grad_project/screens/units_of_level/units_view_model.dart';
 import 'package:grad_project/utils/size_helper.dart';
 import 'package:grad_project/widgets/to_right_left_button.dart';
 import 'package:provider/provider.dart';
@@ -23,7 +24,7 @@ class _LettersViewState extends State<LettersTypingView> {
 
   @override
   Widget build(BuildContext context) {
-    var lettersViewModel = context.read<LettersViewModel>();
+    var unitsViewModel = context.read<UnitsViewModel>();
     return Scaffold(
       // appBar: AppBar(),
 
@@ -46,10 +47,10 @@ class _LettersViewState extends State<LettersTypingView> {
                   SizeHelper.verticalSpace(35.h),
                   ToRightLeft(
                     toRight: () {
-                      lettersViewModel.increaseIndex();
+                      unitsViewModel.increaseIndex(context);
                     },
                     toLeft: (){
-                      lettersViewModel.decreaseIndex();
+                      unitsViewModel.decreaseIndex();
                     },
                   )
                 ],
@@ -59,15 +60,16 @@ class _LettersViewState extends State<LettersTypingView> {
             right: 13.w,
             top: 20.h,
             bottom: 20.h,
-            child: SizedBox(
-              // color: Colors.red,
-              height: SizeHelper.getScreenHeight(context: context) * 0.65,
-              width: SizeHelper.getScreenWidth(context: context) * 0.85,
-              child: Consumer<LettersViewModel>(
-                  builder: (context, provider, child) => LetterTypingItem(
-                        letter: dummyLetters[provider.index],
-                      )),
-            ),
+            child: const SizedBox(),
+            // child: SizedBox(
+            //   // color: Colors.red,
+            //   height: SizeHelper.getScreenHeight(context: context) * 0.65,
+            //   width: SizeHelper.getScreenWidth(context: context) * 0.85,
+            //   child: Consumer2<LettersViewModel,UnitsViewModel>(
+            //       builder: (context, provider,unitsViewModel, child) => LetterTypingItem(
+            //             letter: unitsViewModel.lessonsDataResponse.categs[provider.index],
+            //           )),
+            // ),
           )
         ],
       ),

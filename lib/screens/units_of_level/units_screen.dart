@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:grad_project/constants/constants.dart';
 import 'package:grad_project/helper/build_widgets.dart';
+import 'package:grad_project/screens/units_of_level/lessons.dart';
 import 'package:grad_project/screens/units_of_level/units_view_model.dart';
 import 'package:grad_project/widgets/build_app_bar.dart';
 import 'package:grad_project/widgets/loading_widget.dart';
@@ -163,8 +164,10 @@ class _UnitsScreenState extends State<UnitsScreen> {
                             ),
                             itemBuilder: (context, index) => UnitContainer(
                               onTap: () {
-                                Navigator.pushNamed(
-                                    context, 'ArabicUnitScreen');
+                                // Navigator.pushNamed(
+                                //     context, 'LessonsScreen');
+                                Navigator.push(context, MaterialPageRoute(builder: (context) => LessonsScreen(unitId:unitsProvider.unitDataResponse
+                                      ?.units?[index].id ,),));
                               },
                               name: unitsProvider.unitDataResponse
                                       ?.units?[index].unitName ??

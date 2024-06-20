@@ -48,10 +48,10 @@ class RemoteDataSource {
     //! get Lessons
   static Future<LessonsDataResponse> getLessons({required String? unitId}) async {
     try {
-      var response = await fetchData(url: RemoteConstants.lessonsUrl,queryParameters: {'unitId':unitId});
+      var response = await fetchData(url: '${RemoteConstants.lessonsUrl}?unitId=$unitId',);
       logger.w('Units Response : $response');
-      LessonsDataResponse levels = LessonsDataResponse.fromJson(response);
-      return levels;
+      LessonsDataResponse lessons = LessonsDataResponse.fromJson(response);
+      return lessons;
     } catch (error) {
       logger.e(error.toString());
       return LessonsDataResponse(error: error.toString());
