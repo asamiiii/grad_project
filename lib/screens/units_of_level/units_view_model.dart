@@ -3,6 +3,7 @@ import 'package:grad_project/constants/constants.dart';
 import 'package:grad_project/data_source/remote/repository_data_source.dart';
 import 'package:grad_project/models/lessons_data_response.dart';
 import 'package:grad_project/models/units_data_response.dart';
+import 'package:grad_project/screens/ques_screen/model/ques_response.dart';
 import 'package:provider/provider.dart';
 
 
@@ -35,7 +36,22 @@ class UnitsViewModel extends ChangeNotifier{
   return lessonsDataResponse;
  }
 
+
+  QuesResponse? quesResponse;
+
+ Future<QuesResponse?> getQuesObject({required String? unitId})async{
+  quesResponse = null;
+  quesIndex=0;
+  isLoading = true;
+  notifyListeners();
+  quesResponse = await RemoteDataSource.getQues(unitId: unitId);
+  isLoading = false;
+  notifyListeners();
+  return quesResponse;
+ }
+
    int index = 0;
+   int quesIndex = 0;
 
   void setIndex({required int indexx}) {
     index = indexx;
@@ -44,8 +60,8 @@ class UnitsViewModel extends ChangeNotifier{
   }
 
   void increaseIndex(BuildContext ctx) {
-    var length= ctx.read<UnitsViewModel>().lessonsDataResponse?.categs?.length;
-    if (length! - 1 != index) {
+    // var length= ctx.read<UnitsViewModel>().lessonsDataResponse?.categs?.length;
+    if ((lessonsDataResponse?.categs?.length)! - 1 != index) {
       index++;
       logger.d('Letter index : $index');
       notifyListeners();

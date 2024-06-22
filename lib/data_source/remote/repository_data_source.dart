@@ -4,6 +4,7 @@ import 'package:grad_project/data_source/remote/remote_constants.dart';
 import 'package:grad_project/models/levels_data_response.dart';
 import 'package:grad_project/models/subject_data_response.dart';
 import 'package:grad_project/models/units_data_response.dart';
+import 'package:grad_project/screens/ques_screen/model/ques_response.dart';
 
 import '../../models/lessons_data_response.dart';
 
@@ -55,6 +56,20 @@ class RemoteDataSource {
     } catch (error) {
       logger.e(error.toString());
       return LessonsDataResponse(error: error.toString());
+    }
+  }
+
+
+      //! get ques
+  static Future<QuesResponse> getQues({required String? unitId}) async {
+    try {
+      var response = await fetchData(url: '${RemoteConstants.quesUrl}?catId=$unitId',);
+      logger.w('Units Response : $response');
+      QuesResponse ques = QuesResponse.fromJson(response);
+      return ques;
+    } catch (error) {
+      logger.e(error.toString());
+      return QuesResponse(error: error.toString());
     }
   }
 }

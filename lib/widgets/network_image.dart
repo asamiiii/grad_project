@@ -13,13 +13,13 @@ class ImageFromNetwork extends StatelessWidget {
   Widget build(BuildContext context) {
     return CachedNetworkImage(
       imageUrl: imageUrl ?? '',
-      height: height,
+      // height: height,
       width: width,
       fit: BoxFit.fill,
       key: Key(imageUrl??''),
       // placeholder: (context, url) => const CircularProgressIndicator(),
       errorWidget: (context, url, error) => SizedBox(
-          width: width, height: height, child: const Icon(Icons.error)),
+          width: width, child: const Icon(Icons.error)),
     );
   }
 }

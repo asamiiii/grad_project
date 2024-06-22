@@ -112,38 +112,38 @@ class _UnitsScreenState extends State<UnitsScreen> {
                           ],
                         ),
                       ),
-                      SizedBox(
-                        height: 3.h,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Text(
-                            "تعلم اللغة العربية",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontWeight: FontWeight.w500,
-                              fontSize: 22.sp,
-                              color: const Color(0xff4A4373),
-                            ),
-                          ),
-                          SizedBox(
-                            width: 2.w,
-                          ),
-                          Image.asset(
-                            "assets/images/Vector.png",
-                            width: 10.w,
-                            height: 5.h,
-                          ),
-                          Text(
-                            "18/50",
-                            style: TextStyle(
-                              fontSize: 15.sp,
-                              color: miniBlackColor,
-                            ),
-                          ),
-                        ],
-                      ),
+                      // SizedBox(
+                      //   height: 3.h,
+                      // ),
+                      // Row(
+                      //   mainAxisAlignment: MainAxisAlignment.start,
+                      //   children: [
+                      //     Text(
+                      //       "تعلم اللغة العربية",
+                      //       textAlign: TextAlign.center,
+                      //       style: TextStyle(
+                      //         fontWeight: FontWeight.w500,
+                      //         fontSize: 22.sp,
+                      //         color: const Color(0xff4A4373),
+                      //       ),
+                      //     ),
+                      //     SizedBox(
+                      //       width: 2.w,
+                      //     ),
+                      //     Image.asset(
+                      //       "assets/images/Vector.png",
+                      //       width: 10.w,
+                      //       height: 5.h,
+                      //     ),
+                      //     Text(
+                      //       "18/50",
+                      //       style: TextStyle(
+                      //         fontSize: 15.sp,
+                      //         color: miniBlackColor,
+                      //       ),
+                      //     ),
+                      //   ],
+                      // ),
                       Expanded(
                         child: Padding(
                           padding: EdgeInsets.only(
@@ -167,7 +167,8 @@ class _UnitsScreenState extends State<UnitsScreen> {
                                 // Navigator.pushNamed(
                                 //     context, 'LessonsScreen');
                                 Navigator.push(context, MaterialPageRoute(builder: (context) => LessonsScreen(unitId:unitsProvider.unitDataResponse
-                                      ?.units?[index].id ,),));
+                                      ?.units?[index].id ,unitName: unitsProvider.unitDataResponse
+                                      ?.units?[index].unitName,),));
                               },
                               name: unitsProvider.unitDataResponse
                                       ?.units?[index].unitName ??
@@ -240,6 +241,7 @@ class UnitContainer extends StatelessWidget {
             ImageFromNetwork(
               imageUrl: mainImage,
               width: 20.w,
+              height: 20.h,
             ),
             // Image.network(
             //   mainImage,

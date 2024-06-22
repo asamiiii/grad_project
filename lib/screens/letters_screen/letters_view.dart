@@ -1,11 +1,8 @@
 import 'package:audioplayers/audioplayers.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:grad_project/screens/letters_screen/dummy_letters.dart';
 import 'package:grad_project/screens/letters_screen/letters_view_model.dart';
 import 'package:grad_project/screens/letters_screen/menu_dialog.dart';
-import 'package:grad_project/screens/letters_screen/top_bar.dart';
-import 'package:grad_project/screens/letters_typing_screen/top_bar.dart';
 import 'package:grad_project/screens/units_of_level/units_view_model.dart';
 import 'package:grad_project/utils/size_helper.dart';
 import 'package:grad_project/widgets/close_button.dart';
@@ -56,10 +53,13 @@ class _LettersViewState extends State<LettersView> {
                       SizeHelper.expandedSpace(),
                       InkWell(
                           onTap: () async {
-                            var soundUrl= unitsViewModel.lessonsDataResponse
-                                ?.categs?[unitsViewModel.index].video?.secureUrl;
+                            var soundUrl = unitsViewModel
+                                .lessonsDataResponse
+                                ?.categs?[unitsViewModel.index]
+                                .video
+                                ?.secureUrl;
                             final player = AudioPlayer();
-                            await player.play(UrlSource(soundUrl??''));
+                            await player.play(UrlSource(soundUrl ?? ''));
                           },
                           child: Image.asset('assets/images/audio.png')),
                       SizeHelper.horizontalSpace(10),
@@ -77,9 +77,9 @@ class _LettersViewState extends State<LettersView> {
                       unitsViewModel.increaseIndex(context);
                       // var soundUrl= unitsViewModel.lessonsDataResponse
                       //           ?.categs?[lettersViewModel.index].video?.secureUrl;
-                            
-                            //  player.play(UrlSource(soundUrl??''));
-                            // player.stop();
+
+                      //  player.play(UrlSource(soundUrl??''));
+                      // player.stop();
                     },
                     toLeft: () {
                       // final player = AudioPlayer();
@@ -87,9 +87,9 @@ class _LettersViewState extends State<LettersView> {
                       unitsViewModel.decreaseIndex();
                       // var soundUrl= unitsViewModel.lessonsDataResponse
                       //           ?.categs?[lettersViewModel.index].video?.secureUrl;
-                            
+
                       //        player.play(UrlSource(soundUrl??''));
-                            // player.stop();
+                      // player.stop();
                     },
                   )
                 ],
@@ -103,10 +103,10 @@ class _LettersViewState extends State<LettersView> {
               // color: Colors.red,
               height: SizeHelper.getScreenHeight(context: context) * 0.65,
               width: SizeHelper.getScreenWidth(context: context) * 0.85,
-              child: Consumer<LettersViewModel>(
+              child: Consumer<UnitsViewModel>(
                   builder: (context, provider, child) => LetterItem(
-                        letter: unitsViewModel
-                            .lessonsDataResponse?.categs?[unitsViewModel.index],
+                        letter: provider
+                            .lessonsDataResponse?.categs?[provider.index],
                       )),
             ),
           )
