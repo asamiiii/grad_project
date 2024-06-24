@@ -72,4 +72,18 @@ class RemoteDataSource {
       return QuesResponse(error: error.toString());
     }
   }
+
+  // static Future<RegisterDataResponse> register({required Map<String,dynamic>}) async {
+  //   try {
+  //     var response = await sendData(url: '${RemoteConstants.registerUrl}');
+  //     logger.w('Register Response : $response');
+  //     RegisterDataResponse register = RegisterDataResponse.fromJson(response);
+  //     return register;
+  //   } catch (error) {
+  //     logger.e(error.toString());
+  //     return RegisterDataResponse(error: error.toString());
+  //   }
+  // }
+
 }
+

@@ -2,11 +2,13 @@ import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:grad_project/constants/providers.dart';
-import 'package:grad_project/screens/ask_for_age.dart';
-import 'package:grad_project/screens/ask_for_name.dart';
+import 'package:grad_project/auth/ask_for_name.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
+import 'auth/ask_for_age.dart';
+import 'auth/register_screen/sign_up_screen.dart';
+import 'auth/login_screen/sign_in.dart';
 ///test commit
 import 'screens/units_of_level/units_screen.dart';
 import 'screens/levels_of_subject/levels_of_subject.dart';
@@ -36,8 +38,8 @@ class MyApp extends StatelessWidget {
             debugShowCheckedModeBanner: false,
             locale: const Locale('ar'),
             routes: {
-              // 'LoginScreen' : (context)=> const LoginScreen(),
-              // 'RegisterScreen' : (context)=> const RegisterScreen(),
+              'LoginScreen' : (context)=> const LoginScreen(),
+              'RegisterScreen' : (context)=> const RegisterScreen(),
               // 'ForgetPassword' : (context)=> const ForgetPassword(),
               // 'SetNewPassword' : (context)=> const SetNewPassword(),
               'AskForName': (context) => const AskForName(),
@@ -49,7 +51,7 @@ class MyApp extends StatelessWidget {
             },
             home: AnimatedSplashScreen(
               duration: 500,
-              nextScreen: const SubjectsScreen(),
+              nextScreen: const RegisterScreen(),
               splash: Image.asset(
                 'assets/images/splash1.jpg',
                 fit: BoxFit.fill,
