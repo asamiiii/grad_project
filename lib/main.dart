@@ -4,6 +4,8 @@ import 'package:flutter/services.dart';
 import 'package:grad_project/constants/providers.dart';
 import 'package:grad_project/screens/ask_for_age.dart';
 import 'package:grad_project/screens/ask_for_name.dart';
+import 'package:grad_project/screens/sign_in.dart';
+import 'package:grad_project/screens/sign_up.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
@@ -36,8 +38,8 @@ class MyApp extends StatelessWidget {
             debugShowCheckedModeBanner: false,
             locale: const Locale('ar'),
             routes: {
-              // 'LoginScreen' : (context)=> const LoginScreen(),
-              // 'RegisterScreen' : (context)=> const RegisterScreen(),
+              'LoginScreen' : (context)=> const LoginScreen(),
+              'RegisterScreen' : (context)=> const RegisterScreen(),
               // 'ForgetPassword' : (context)=> const ForgetPassword(),
               // 'SetNewPassword' : (context)=> const SetNewPassword(),
               'AskForName': (context) => const AskForName(),
@@ -49,7 +51,7 @@ class MyApp extends StatelessWidget {
             },
             home: AnimatedSplashScreen(
               duration: 500,
-              nextScreen: const SubjectsScreen(),
+              nextScreen: const RegisterScreen(),
               splash: Image.asset(
                 'assets/images/splash1.jpg',
                 fit: BoxFit.fill,
