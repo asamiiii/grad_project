@@ -1,6 +1,9 @@
 // ignore_for_file: must_be_immutable, avoid_print, unused_element, unused_local_variable
 
 import 'package:flutter/material.dart';
+import 'package:grad_project/auth/auth_provider/register_provider.dart';
+import 'package:grad_project/auth/login_screen/sign_in.dart';
+import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 import 'package:grad_project/constants/constants.dart';
 import 'package:grad_project/widgets/custom_button.dart';
@@ -45,200 +48,217 @@ class _RegisterScreenState extends State<RegisterScreen> {
             color: cyanBlueColor,
           ),
         ),
-        body: Padding(
-          padding: const EdgeInsets.only(
-            top: 20.0,
-            right: 8,
-            left: 8,
-          ),
-          child: SingleChildScrollView(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                SizedBox(
-                  height: MediaQuery.of(context).size.height / 117,
-                ),
-                Row(
-                  children: [
-                    Text(
-                      'Sign Up',
-                      style: TextStyle(
-                        fontSize: 23.sp,
-                        color: blueColor,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(
-                  height: MediaQuery.of(context).size.height / 23,
-                ),
-                BuildTextFormFeild(
-                  onChanged: (data) {
-                    name = data;
-                    setState(() {
-                      if (data.length < 7) {
-                        isNameValid = true;
-                      } else {
-                        isNameValid = false;
-                      }
-                    });
-                  },
-                  prefixIcon: Icons.person_outline,
-                  keyboardType: TextInputType.name,
-                  isPassword: false,
-                  hintText: 'Full Name',
-                ),
-                SizedBox(
-                  height: MediaQuery.of(context).size.height / 32,
-                ),
-                BuildTextFormFeild(
-                  onChanged: (data) {
-                    email = data;
-                    setState(() {
-                      if (data.length < 10) {
-                        isEmailValid = true;
-                      } else {
-                        isEmailValid = false;
-                      }
-                    });
-                  },
-                  prefixIcon: Icons.email_outlined,
-                  keyboardType: TextInputType.emailAddress,
-                  isPassword: false,
-                  hintText: 'Email',
-                ),
-                SizedBox(
-                  height: MediaQuery.of(context).size.height / 32,
-                ),
-                BuildTextFormFeild(
-                  onChanged: (data) {
-                    pass = data;
-                    setState(() {
-                      if (data.length < 6 && pass != confirmPass) {
-                        isPasswordValid = true;
-                      } else {
-                        isPasswordValid = false;
-                      }
-                    });
-                  },
-                  prefixIcon: Icons.lock_outline,
-                  keyboardType: TextInputType.visiblePassword,
-                  suffixIcon: visible1
-                      ? Icons.visibility_outlined
-                      : Icons.visibility_off_outlined,
-                  visibilityTaped: () {
-                    setState(() {
-                      visible1 = !visible1;
-                    });
-                  },
-                  isPassword: visible1,
-                  hintText: 'Password',
-                ),
-                SizedBox(
-                  height: MediaQuery.of(context).size.height / 32,
-                ),
-                BuildTextFormFeild(
-                  onChanged: (data) {
-                    confirmPass = data;
-                    setState(() {
-                      if (pass != confirmPass) {
-                        isConfirmPasswordValid = true;
-                      } else {
-                        isConfirmPasswordValid = false;
-                      }
-                    });
-                  },
-                  prefixIcon: Icons.lock_outline,
-                  keyboardType: TextInputType.emailAddress,
-                  suffixIcon: visible2
-                      ? Icons.visibility_outlined
-                      : Icons.visibility_off_outlined,
-                  visibilityTaped: () {
-                    setState(() {
-                      visible2 = !visible2;
-                    });
-                  },
-                  isPassword: visible2,
-                  hintText: 'Confirm Password',
-                ),
-                SizedBox(
-                  height: MediaQuery.of(context).size.height / 25,
-                ),
-                BuildButton(
-                  title: 'Sign Up',
-                  titleColor: whitColor,
-                  buttonColor: (isEmailValid ||
-                          isPasswordValid ||
-                          isNameValid ||
-                          isConfirmPasswordValid)
-                      ? maxGrayColor
-                      : blueColor,
-                  height: 7.h,
-                  width: 100.w,
-                   onTap: (){} //async {
-                  //   if (formKey.currentState!.validate()) {
-                  //     try {
-                  //       await registerUser();
-                  //       Navigator.pushNamed(context, 'LoginScreen');
-                  //     } on FirebaseAuthException catch (e) {
-                  //       print('Failed with error code: ${e.code}');
-                  //       print('Message: ${e.message}');
-                  //       if (e.code == 'weak-password') {
-                  //         showSnackBar(
-                  //           context,
-                  //           'The password provided is too weak.\npassword must be at least 6 characters',
-                  //         );
-                  //       } else if (e.code == 'email-already-in-use') {
-                  //         showSnackBar(
-                  //           context,
-                  //           'The account already exists for that email.',
-                  //         );
-                  //       } else if (e.code == 'invalid-email') {
-                  //         showSnackBar(
-                  //           context,
-                  //           'Pleas enter correct email address',
-                  //         );
-                  //       } else if (pass != confirmPass) {
-                  //         showSnackBar(
-                  //           context,
-                  //           'Pleas enter correct email address',
-                  //         );
-                  //       }
-                  //     }
-                  //   }
-                  // },
-                ),
-                 SizedBox(
-                  height: MediaQuery.of(context).size.height/25,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                     Text(
-                      'Already have an account ? ',
-                      style: TextStyle(
-                        fontSize: 13.sp,
-                        color: blueColor,
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.pushNamed(context, 'LoginScreen');
-                      },
-                      child:  Text(
-                        'Sing In',
+        body: Consumer<RegisterViewModel>(
+          builder: (context, registerViewModel, child) => Padding(
+            padding: const EdgeInsets.only(
+              top: 20.0,
+              right: 8,
+              left: 8,
+            ),
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height / 117,
+                  ),
+                  Row(
+                    children: [
+                      Text(
+                        'Sign Up',
                         style: TextStyle(
-                          fontSize: 13.sp,
+                          fontSize: 23.sp,
                           color: blueColor,
                           fontWeight: FontWeight.w700,
                         ),
                       ),
-                    ),
-                  ],
-                ),
-              ],
+                    ],
+                  ),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height / 23,
+                  ),
+                  BuildTextFormFeild(
+                    onChanged: (data) {
+                      name = data;
+                      setState(() {
+                        if (data.length < 7) {
+                          isNameValid = true;
+                        } else {
+                          isNameValid = false;
+                        }
+                      });
+                    },
+                    prefixIcon: Icons.person_outline,
+                    keyboardType: TextInputType.name,
+                    isPassword: false,
+                    hintText: 'Full Name',
+                  ),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height / 32,
+                  ),
+                  BuildTextFormFeild(
+                    onChanged: (data) {
+                      email = data;
+                      setState(() {
+                        if (data.length < 10) {
+                          isEmailValid = true;
+                        } else {
+                          isEmailValid = false;
+                        }
+                      });
+                    },
+                    prefixIcon: Icons.email_outlined,
+                    keyboardType: TextInputType.emailAddress,
+                    isPassword: false,
+                    hintText: 'Email',
+                  ),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height / 32,
+                  ),
+                  BuildTextFormFeild(
+                    onChanged: (data) {
+                      pass = data;
+                      setState(() {
+                        if (data.length < 6 && pass != confirmPass) {
+                          isPasswordValid = true;
+                        } else {
+                          isPasswordValid = false;
+                        }
+                      });
+                    },
+                    prefixIcon: Icons.lock_outline,
+                    keyboardType: TextInputType.visiblePassword,
+                    suffixIcon: visible1
+                        ? Icons.visibility_outlined
+                        : Icons.visibility_off_outlined,
+                    visibilityTaped: () {
+                      setState(() {
+                        visible1 = !visible1;
+                      });
+                    },
+                    isPassword: visible1,
+                    hintText: 'Password',
+                  ),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height / 32,
+                  ),
+                  BuildTextFormFeild(
+                    onChanged: (data) {
+                      confirmPass = data;
+                      setState(() {
+                        if (pass != confirmPass) {
+                          isConfirmPasswordValid = true;
+                        } else {
+                          isConfirmPasswordValid = false;
+                        }
+                      });
+                    },
+                    prefixIcon: Icons.lock_outline,
+                    keyboardType: TextInputType.emailAddress,
+                    suffixIcon: visible2
+                        ? Icons.visibility_outlined
+                        : Icons.visibility_off_outlined,
+                    visibilityTaped: () {
+                      setState(() {
+                        visible2 = !visible2;
+                      });
+                    },
+                    isPassword: visible2,
+                    hintText: 'Confirm Password',
+                  ),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height / 25,
+                  ),
+                  BuildButton(
+                      title: 'Sign Up',
+                      titleColor: whitColor,
+                      buttonColor: (isEmailValid ||
+                              isPasswordValid ||
+                              isNameValid ||
+                              isConfirmPasswordValid)
+                          ? maxGrayColor
+                          : blueColor,
+                      height: 7.h,
+                      width: 100.w,
+                      onTap: () async {
+                        var reqData = {
+                          "name": name,
+                          "email": email,
+                          "confirmPassword": pass,
+                          "password": pass
+                        };
+                        await context
+                            .read<RegisterViewModel>()
+                            .register(reqData: reqData);
+
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const LoginScreen()));
+                      } //async {
+                      //   if (formKey.currentState!.validate()) {
+                      //     try {
+                      //       await registerUser();
+                      //       Navigator.pushNamed(context, 'LoginScreen');
+                      //     } on FirebaseAuthException catch (e) {
+                      //       print('Failed with error code: ${e.code}');
+                      //       print('Message: ${e.message}');
+                      //       if (e.code == 'weak-password') {
+                      //         showSnackBar(
+                      //           context,
+                      //           'The password provided is too weak.\npassword must be at least 6 characters',
+                      //         );
+                      //       } else if (e.code == 'email-already-in-use') {
+                      //         showSnackBar(
+                      //           context,
+                      //           'The account already exists for that email.',
+                      //         );
+                      //       } else if (e.code == 'invalid-email') {
+                      //         showSnackBar(
+                      //           context,
+                      //           'Pleas enter correct email address',
+                      //         );
+                      //       } else if (pass != confirmPass) {
+                      //         showSnackBar(
+                      //           context,
+                      //           'Pleas enter correct email address',
+                      //         );
+                      //       }
+                      //     }
+                      //   }
+                      // },
+                      ),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height / 25,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'Already have an account ? ',
+                        style: TextStyle(
+                          fontSize: 13.sp,
+                          color: blueColor,
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.pushNamed(context, 'LoginScreen');
+                        },
+                        child: Text(
+                          'Sing In',
+                          style: TextStyle(
+                            fontSize: 13.sp,
+                            color: blueColor,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
         ),

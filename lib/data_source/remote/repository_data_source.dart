@@ -1,7 +1,10 @@
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:grad_project/constants/constants.dart';
 import 'package:grad_project/data_source/remote/general_functions.dart';
 import 'package:grad_project/data_source/remote/remote_constants.dart';
 import 'package:grad_project/models/levels_data_response.dart';
+import 'package:grad_project/models/login_data_response.dart';
+import 'package:grad_project/models/register_data_response.dart';
 import 'package:grad_project/models/subject_data_response.dart';
 import 'package:grad_project/models/units_data_response.dart';
 import 'package:grad_project/screens/ques_screen/model/ques_response.dart';
@@ -73,17 +76,35 @@ class RemoteDataSource {
     }
   }
 
-  // static Future<RegisterDataResponse> register({required Map<String,dynamic>}) async {
-  //   try {
-  //     var response = await sendData(url: '${RemoteConstants.registerUrl}');
-  //     logger.w('Register Response : $response');
-  //     RegisterDataResponse register = RegisterDataResponse.fromJson(response);
-  //     return register;
-  //   } catch (error) {
-  //     logger.e(error.toString());
-  //     return RegisterDataResponse(error: error.toString());
-  //   }
-  // }
+  static Future<RegisterDataResponse> register({required Map<String,dynamic> body}) async {
+    try {
+      var response = await sendData(url: RemoteConstants.registerUrl,data: body);
+      logger.w('Register Response : $response');
+      RegisterDataResponse register = RegisterDataResponse.fromJson(response);
+      Fluttertoast.showToast(msg: "تم التسجيل بنجاح");
+      return register;
+    } catch (error) {
+      logger.e(error.toString());
+      Fluttertoast.showToast(msg: error.toString());
+      return RegisterDataResponse(message: error.toString());
+    }
+
+    
+  }
+
+  static Future<LoginDataResponse> login({required Map<String,dynamic> body}) async {
+    try {
+      var response = await sendData(url: RemoteConstants.loginUrl,data:body);
+      logger.w('Login Response : $response');
+      LoginDataResponse login = LoginDataResponse.fromJson(response);
+      Fluttertoast.showToast(msg: 'تم تسجيل الدخول بنجاح');
+      return login;
+    } catch (error) {
+      logger.e(error.toString());
+      Fluttertoast.showToast(msg: error.toString());
+      return LoginDataResponse(message: error.toString());
+    }
 
 }
 
+}
