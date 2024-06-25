@@ -38,6 +38,7 @@ class User {
   String? updatedAt;
   String? firstName;
   int? v;
+  String? token;
 
   User(
       {this.id,
@@ -52,7 +53,8 @@ class User {
       this.createdAt,
       this.updatedAt,
       this.firstName,
-      this.v});
+      this.v,
+      this.token});
 
   User.fromJson(Map<String, dynamic> json) {
     id = json["_id"];

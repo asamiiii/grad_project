@@ -1,6 +1,8 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:flutter/material.dart';
-import 'package:grad_project/screens/letters_screen/letters_view_model.dart';
-import 'package:provider/provider.dart';
+
+import 'package:sizer/sizer.dart';
 
 class ToRightLeft extends StatelessWidget {
   Function toRight;
@@ -9,7 +11,7 @@ class ToRightLeft extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var lettersViewModel = context.read<LettersViewModel>();
+   // var lettersViewModel = context.read<LettersViewModel>();
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -21,8 +23,8 @@ class ToRightLeft extends StatelessWidget {
               },
               child: Image.asset(
                 'assets/images/letter_to_left.png',
-                height: 40,
-                width: 40,
+                height: 10.h,
+                width: 15.w,
                 fit: BoxFit.fill,
               ),
             ),
@@ -35,8 +37,8 @@ class ToRightLeft extends StatelessWidget {
               },
               child: Image.asset(
                 'assets/images/letter_to_right.png',
-                height: 40,
-                width: 40,
+                height: 10.h,
+                width: 15.w,
                 fit: BoxFit.fill,
               ),
             ),
