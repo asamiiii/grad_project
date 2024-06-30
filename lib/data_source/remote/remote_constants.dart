@@ -7,6 +7,7 @@ class RemoteConstants{
    static String unitsUrl = '$baseUrl/unit';
    static String lessonsUrl = '$baseUrl/cat';
    static String quesUrl = '$baseUrl/ques';
+   static String typingLetterUrl = '$baseUrl/typingLetter';
    static String registerUrl = '$baseUrl/auth/signup';
    static String loginUrl = '$baseUrl/auth/signin';
 }

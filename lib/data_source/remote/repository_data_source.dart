@@ -7,6 +7,7 @@ import 'package:grad_project/models/levels_data_response.dart';
 import 'package:grad_project/models/login_data_response.dart';
 import 'package:grad_project/models/register_data_response.dart';
 import 'package:grad_project/models/subject_data_response.dart';
+import 'package:grad_project/models/typing_letters_data_response.dart';
 import 'package:grad_project/models/units_data_response.dart';
 import 'package:grad_project/screens/ques_screen/model/ques_response.dart';
 
@@ -107,5 +108,18 @@ class RemoteDataSource {
     }
 
 }
+
+  //! get typing letters ques
+  static Future<TypingLettersDataResponse> getTypingLettersQues({required String? unitId}) async {
+    try {
+      var response = await fetchData(url: '${RemoteConstants.typingLetterUrl}?unitId=$unitId',);
+      logger.w('Typing Letters Response : $response');
+      TypingLettersDataResponse typingLetter = TypingLettersDataResponse.fromJson(response);
+      return typingLetter;
+    } catch (error) {
+      logger.e(error.toString());
+      return TypingLettersDataResponse(error: error.toString());
+    }
+  }
 
 }
