@@ -187,7 +187,24 @@ class _LessonsScreenState extends State<LessonsScreen> {
                             } else {
                               Fluttertoast.showToast(msg: "لا يوجد محتوي");
                             }
-                          } else if (index == 1) {
+                          }else if (index == 1) {
+                            // if (provider.quesResponse?.ques != null &&
+                            //     provider.quesResponse!.ques!.isNotEmpty) {
+                            //   // Navigator.push(
+                            //   //     context,
+                            //   //     MaterialPageRoute(
+                            //   //       builder: (context) => const LettersView(),
+                            //   //     ));
+                            // } else {
+                            //   Fluttertoast.showToast(msg: "لا يوجد محتوي");
+                            // }
+                            Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => const LettersTypingView(),
+                                  ));
+                          } 
+                          else if (index == 2) {
                             if (provider.quesResponse?.ques != null &&
                                 provider.quesResponse!.ques!.isNotEmpty) {
                               // Navigator.push(
@@ -253,8 +270,8 @@ class _LessonsScreenState extends State<LessonsScreen> {
                               index == 0
                                   ? "الحروف"
                                   : index == 1
-                                      ? "الأسئلة"
-                                      : "التوصيل",
+                                      ? "كتابة الحروف" 
+                                      : index==2?"الأسئلة": "التوصيل",
                               textAlign: TextAlign.center,
                               style: const TextStyle(
                                   fontSize: 18,

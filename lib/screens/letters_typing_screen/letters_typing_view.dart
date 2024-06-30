@@ -1,11 +1,16 @@
+import 'dart:io';
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart';
 import 'package:grad_project/screens/letters_screen/dummy_letters.dart';
-import 'package:grad_project/screens/letters_screen/letters_view_model.dart';
-import 'package:grad_project/screens/letters_screen/top_bar.dart';
+import 'package:grad_project/screens/letters_typing_screen/letters_typing_view_model.dart';
 import 'package:grad_project/screens/letters_typing_screen/top_bar.dart';
 import 'package:grad_project/screens/units_of_level/units_view_model.dart';
 import 'package:grad_project/utils/size_helper.dart';
 import 'package:grad_project/widgets/to_right_left_button.dart';
+import 'package:image_painter/image_painter.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
@@ -49,7 +54,7 @@ class _LettersViewState extends State<LettersTypingView> {
                     toRight: () {
                       unitsViewModel.increaseIndex(context);
                     },
-                    toLeft: (){
+                    toLeft: () {
                       unitsViewModel.decreaseIndex();
                     },
                   )
@@ -60,17 +65,21 @@ class _LettersViewState extends State<LettersTypingView> {
             right: 13.w,
             top: 20.h,
             bottom: 20.h,
-            child: const SizedBox(),
-            // child: SizedBox(
-            //   // color: Colors.red,
-            //   height: SizeHelper.getScreenHeight(context: context) * 0.65,
-            //   width: SizeHelper.getScreenWidth(context: context) * 0.85,
-            //   child: Consumer2<LettersViewModel,UnitsViewModel>(
-            //       builder: (context, provider,unitsViewModel, child) => LetterTypingItem(
-            //             letter: unitsViewModel.lessonsDataResponse.categs[provider.index],
-            //           )),
-            // ),
-          )
+            child: LetterTypingItem(
+              letter: Letter(
+                  image: 'assets/images/trcaing_n.jpg', letter: 'N', word: 'N'),
+            ),
+          ),
+
+          Positioned(
+            bottom: 10,
+            left: 10,
+            right: 10,
+            child: ElevatedButton(onPressed: ()async{
+                Uint8List?  image= await context.read<LettersTypingViewModel>().imagePainterController.exportImage();
+                File fileimage=await context.read<LettersTypingViewModel>().convertUint8ListToFile(image!, 'test');
+                context.read<LettersTypingViewModel>().chechLetterTracing(InputImage.fromFile(fileimage));
+            }, child: const Text('التحقق')))
         ],
       ),
     );
@@ -83,31 +92,34 @@ class LetterTypingItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        SizeHelper.verticalSpace(5.h),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            // Text(letter?.word ?? '',
-            //     style: TextStyle(color: Colors.green, fontSize: 50.sp)),
-            // SizeHelper.horizontalSpace(10.w),
-            Text(
-              letter?.letter ?? '',
-              style: TextStyle(color: Colors.green, fontSize: 50.sp),
-            ),
-          ],
-        ),
-        SizeHelper.verticalSpace(25.h),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            Image.asset(letter?.image ?? '',width: 30.w,height: 15.h,),
-             Text(letter?.word ?? '',
-                style: TextStyle(color: Colors.green, fontSize: 50.sp)),
-          ],
-        )
-      ],
+    /// Initialize `ImagePainterController`.
+
+    return Consumer<LettersTypingViewModel>(
+      builder: (context, value, child) =>  Column(
+        children: [
+          SizeHelper.verticalSpace(5.h),
+          //
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              ImagePainter.asset(letter?.image ?? '',
+              width: 70.w,
+              height: 50.h,
+                  controller:value.imagePainterController, scalable: true),
+              // Image.asset(
+              //   letter?.image ?? '',
+              //   width: 30.w,
+              //   height: 15.h,
+              // ),
+              // Text(letter?.word ?? '',
+              //     style: TextStyle(color: Colors.green, fontSize: 50.sp)),
+      
+              
+            ],
+          ),
+          
+        ],
+      ),
     );
   }
 }
