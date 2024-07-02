@@ -1,13 +1,10 @@
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:grad_project/auth/auth_services/auth_services.dart';
 import 'package:grad_project/constants/providers.dart';
-
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
-
-
-import 'auth/auth_services/auth_services.dart';
 import 'auth/register_screen/sign_up_screen.dart';
 import 'auth/login_screen/sign_in.dart';
 
