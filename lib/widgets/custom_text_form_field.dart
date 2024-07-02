@@ -65,7 +65,7 @@ class BuildTextFormFeild extends StatelessWidget {
   BuildTextFormFeild({
     this.keyboardType,
     this.isPassword,
-    required this.onChanged,
+    required this.onSaved,
     this.prefixIcon,
     this.visibilityTaped,
     this.hintText,
@@ -77,7 +77,7 @@ class BuildTextFormFeild extends StatelessWidget {
   IconData? suffixIcon;
   TextInputType? keyboardType;
   bool? isPassword;
-  Function(String) onChanged;
+  final void Function(String?)? onSaved;
   final VoidCallback? visibilityTaped;
   String? label;
   String? hintText;
@@ -91,13 +91,14 @@ class BuildTextFormFeild extends StatelessWidget {
         cursorColor: blueColor,
         keyboardType: keyboardType,
         obscureText: isPassword!,
-        validator: (data) {
-          if (data!.isEmpty) {
-            return 'field is required';
+        validator: (value){
+          if(value?.isEmpty ?? true ){
+            return "Feild is required";
+          }else{
+            return null;
           }
-          return null;
         },
-        onChanged: onChanged,
+       onSaved: onSaved,
         style: TextStyle(
           color: blackColor,
           fontWeight: FontWeight.w400,
@@ -116,48 +117,12 @@ class BuildTextFormFeild extends StatelessWidget {
               size: 20.sp,
             ),
           ),
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(15),
-            borderSide: const BorderSide(
-              color: blueColor,
-              width: 1.5,
-            ),
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(15),
-            borderSide: const BorderSide(
-              color: blueColor,
-              width: 1.5,
-            ),
-          ),
-          disabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(15),
-            borderSide: const BorderSide(
-              color: blueColor,
-              width: 1.5,
-            ),
-          ),
-          enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(15),
-            borderSide: const BorderSide(
-              color: blueColor,
-              width: 1.5,
-            ),
-          ),
-          errorBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(15),
-            borderSide: const BorderSide(
-              color: blueColor,
-              width: 1.5,
-            ),
-          ),
-          focusedErrorBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(15),
-            borderSide: const BorderSide(
-              color: blueColor,
-              width: 1.5,
-            ),
-          ),
+          border:  buildOutlineInputBorder(),
+          focusedBorder:  buildOutlineInputBorder(),
+          disabledBorder:  buildOutlineInputBorder(),
+          enabledBorder:  buildOutlineInputBorder(),
+          errorBorder:  buildOutlineInputBorder(),
+          focusedErrorBorder: buildOutlineInputBorder(),
           labelText: label,
           labelStyle: const TextStyle(
             color: blueColor,
@@ -171,6 +136,16 @@ class BuildTextFormFeild extends StatelessWidget {
             fontWeight: FontWeight.w400,
           ),
         ),
+      ),
+    );
+  }
+
+  OutlineInputBorder buildOutlineInputBorder([color]) {
+    return OutlineInputBorder(
+      borderRadius: BorderRadius.circular(15),
+      borderSide:  BorderSide(
+        color:color?? blueColor,
+        width: 1.5,
       ),
     );
   }

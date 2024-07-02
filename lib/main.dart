@@ -2,10 +2,14 @@ import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:grad_project/constants/providers.dart';
-import 'package:grad_project/screens/ask_for_age.dart';
-import 'package:grad_project/screens/ask_for_name.dart';
+
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
+
+
+import 'auth/auth_services/auth_services.dart';
+import 'auth/register_screen/sign_up_screen.dart';
+import 'auth/login_screen/sign_in.dart';
 
 ///test commit
 import 'screens/units_of_level/units_screen.dart';
@@ -18,13 +22,13 @@ Future<void> main() async {
   // await Firebase.initializeApp();
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
     statusBarColor: Colors.transparent,
- ));
+  ));
   runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-
+//  static final AuthService _authService = AuthService();
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -36,20 +40,19 @@ class MyApp extends StatelessWidget {
             debugShowCheckedModeBanner: false,
             locale: const Locale('ar'),
             routes: {
-              // 'LoginScreen' : (context)=> const LoginScreen(),
-              // 'RegisterScreen' : (context)=> const RegisterScreen(),
+              'LoginScreen': (context) => const LoginScreen(),
+              'RegisterScreen': (context) => const RegisterScreen(),
               // 'ForgetPassword' : (context)=> const ForgetPassword(),
               // 'SetNewPassword' : (context)=> const SetNewPassword(),
-              'AskForName': (context) => const AskForName(),
-              'AskForAge': (context) => const AskForAge(),
+              // 'AskForName': (context) => const AskForName(),
+              // 'AskForAge': (context) => const AskForAge(),
               'SubjectsScreen': (context) => const SubjectsScreen(),
               'LevelsOfSubject': (context) => const LevelsOfSubject(),
               'UnitsScreen': (context) => const UnitsScreen(),
-              'LessonsScreen': (context) =>  LessonsScreen(),
+              'LessonsScreen': (context) => LessonsScreen(),
             },
             home: AnimatedSplashScreen(
               duration: 500,
-              nextScreen: const SubjectsScreen(),
               splash: Image.asset(
                 'assets/images/splash1.jpg',
                 fit: BoxFit.fill,
@@ -58,7 +61,23 @@ class MyApp extends StatelessWidget {
               centered: true,
               animationDuration: const Duration(seconds: 1),
               splashIconSize: double.infinity,
-              
+              nextScreen: FutureBuilder<String?>(
+                future: AuthService.getToken(),
+                builder: (context, snapshot) {
+                  // Check if the future is completed
+                  if (snapshot.connectionState == ConnectionState.done) {
+                    if (snapshot.data == null) {
+                      // Token is null, navigate to RegisterScreen
+                      return const RegisterScreen();
+                    } else {
+                      // Token is not null, navigate to HomeScreen
+                      return const SubjectsScreen();
+                    }
+                  }
+                  // Show a loading indicator while checking the token
+                  return const CircularProgressIndicator();
+                },
+              ),
             ),
           ),
         );

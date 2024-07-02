@@ -1,7 +1,9 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:audioplayers/audioplayers.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:grad_project/screens/letters_screen/letters_view_model.dart';
+
 import 'package:grad_project/screens/letters_screen/menu_dialog.dart';
 import 'package:grad_project/screens/units_of_level/units_view_model.dart';
 import 'package:grad_project/utils/size_helper.dart';
@@ -27,17 +29,16 @@ class _LettersViewState extends State<LettersView> {
 
   @override
   Widget build(BuildContext context) {
-    var lettersViewModel = context.read<LettersViewModel>();
+    //var lettersViewModel = context.read<LettersViewModel>();
     var unitsViewModel = context.read<UnitsViewModel>();
     return Scaffold(
       // appBar: AppBar(),
-
       body: Stack(
         children: [
           Container(
               width: SizeHelper.getScreenWidth(context: context),
               height: SizeHelper.getScreenHeight(context: context),
-              padding: EdgeInsets.symmetric(horizontal: 3.w, vertical: 5.h),
+              padding: EdgeInsets.symmetric(horizontal: 2.w, vertical: 5.h),
               decoration: const BoxDecoration(
                 image: DecorationImage(
                     image: AssetImage(
@@ -61,7 +62,8 @@ class _LettersViewState extends State<LettersView> {
                             final player = AudioPlayer();
                             await player.play(UrlSource(soundUrl ?? ''));
                           },
-                          child: Image.asset('assets/images/audio.png')),
+                          child: Image.asset('assets/images/audio.png'),
+                      ),
                       SizeHelper.horizontalSpace(10),
                       Image.asset('assets/images/refresh.png'),
                       SizeHelper.horizontalSpace(10),
@@ -86,8 +88,8 @@ class _LettersViewState extends State<LettersView> {
                       // player.stop();
                       unitsViewModel.decreaseIndex();
                       // var soundUrl= unitsViewModel.lessonsDataResponse
-                      //           ?.categs?[lettersViewModel.index].video?.secureUrl;
-
+                      //           ?.categs?[unitsViewModel.index].video?.secureUrl;
+                      //
                       //        player.play(UrlSource(soundUrl??''));
                       // player.stop();
                     },
@@ -95,10 +97,10 @@ class _LettersViewState extends State<LettersView> {
                 ],
               )),
           Positioned(
-            left: 13.w,
-            right: 13.w,
-            top: 20.h,
-            bottom: 20.h,
+            left: 12.w,
+            right: 12.w,
+            top: 18.h,
+            bottom: 18.h,
             child: SizedBox(
               // color: Colors.red,
               height: SizeHelper.getScreenHeight(context: context) * 0.65,
@@ -129,7 +131,7 @@ class LetterItem extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             Text(letter?.text ?? '',
-                style: TextStyle(color: Colors.green, fontSize: 50.sp)),
+                style: TextStyle(color: Colors.green, fontSize: 35.sp,fontWeight: FontWeight.bold)),
             // SizeHelper.horizontalSpace(10.w),
             // Text(
             //   letter?.text ?? '',
@@ -137,12 +139,16 @@ class LetterItem extends StatelessWidget {
             // ),
           ],
         ),
-        SizeHelper.verticalSpace(5.h),
-        CachedNetworkImage(
-          imageUrl: letter?.image?.secureUrl ?? '',
-          width: 200.w,
-          height: 30.h,
-          fit: BoxFit.fill,
+        SizeHelper.verticalSpace(8.h),
+        Container(
+          height: 200,
+          width: 230,
+          child: CachedNetworkImage(
+            imageUrl: letter?.image?.secureUrl ?? 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fsticker.ly%2Fs%2FH2PL9G&psig=AOvVaw0sfuMjjq70VYU34SzD65F-&ust=1719519753536000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCODLvMSM-oYDFQAAAAAdAAAAABAR',
+            width: 150.w,
+            height: 30.h,
+            fit: BoxFit.fill,
+          ),
         )
       ],
     );

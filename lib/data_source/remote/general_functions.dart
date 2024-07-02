@@ -23,9 +23,9 @@ final dio = Dio();
     }
   }
 
-  Future<dynamic> sendData(String url, dynamic data, String token) async {
+  Future<dynamic> sendData({String? url, dynamic data, String? token}) async {
     try {
-      final response = await dio.post(url,
+      final response = await dio.post(url??'',
           data: data,
           options: Options(headers: {'Authorization': 'Bearer $token'}));
       return response.data;
