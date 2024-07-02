@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:grad_project/constants/providers.dart';
 import 'package:grad_project/screens/ask_for_age.dart';
 import 'package:grad_project/screens/ask_for_name.dart';
+import 'package:grad_project/screens/choice_ques_screen/choice_ques_view.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
@@ -49,7 +50,7 @@ class MyApp extends StatelessWidget {
             },
             home: AnimatedSplashScreen(
               duration: 500,
-              nextScreen: const SubjectsScreen(),
+              nextScreen: const ChoiceQuestionView(),
               splash: Image.asset(
                 'assets/images/splash1.jpg',
                 fit: BoxFit.fill,
