@@ -17,7 +17,7 @@ class LoginViewModel extends ChangeNotifier{
  Future<LoginDataResponse?> login({required Map<String,dynamic> reqData})async{
   isLoading = true;
   notifyListeners();
-
+  debugPrint("Login Req body : $reqData");
   loginDataResponse = await RemoteDataSource.login(body:reqData );
   
   isLoading = false;

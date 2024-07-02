@@ -22,6 +22,8 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   String? email;
   String? pass;
+  TextEditingController? mailController=TextEditingController();
+  TextEditingController? passController=TextEditingController();
   AutovalidateMode autoValidateMode = AutovalidateMode.disabled;
 
   GlobalKey<FormState> formKey = GlobalKey();
@@ -72,6 +74,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     height: MediaQuery.of(context).size.height / 54,
                   ),
                   BuildTextFormFeild(
+                    controller: mailController,
                     onSaved: (data) {
                       email = data;
                       setState(() {
@@ -91,14 +94,11 @@ class _LoginScreenState extends State<LoginScreen> {
                     height: MediaQuery.of(context).size.height / 45,
                   ),
                   BuildTextFormFeild(
+                    controller: passController,
                     onSaved: (data) {
                       pass = data;
                       setState(() {
-                        if (data!.length < 6) {
-                          isPasswordValid = true;
-                        } else {
-                          isPasswordValid = false;
-                        }
+                       
                       });
                     },
                     prefixIcon: Icons.lock_outline,
@@ -148,7 +148,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           width: 100.w,
                           onTap: () async {
                             if (formKey.currentState!.validate()) {
-                              var reqData = {"email": email, "password": pass};
+                              var reqData = {"email": mailController?.text, "password": passController?.text};
                               await context
                                   .read<LoginViewModel>()
                                   .login(reqData: reqData);

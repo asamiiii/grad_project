@@ -71,11 +71,13 @@ class BuildTextFormFeild extends StatelessWidget {
     this.hintText,
     this.label,
     this.suffixIcon,
+    required this.controller,
     super.key,
   });
   IconData? prefixIcon;
   IconData? suffixIcon;
   TextInputType? keyboardType;
+  TextEditingController? controller;
   bool? isPassword;
   final void Function(String?)? onSaved;
   final VoidCallback? visibilityTaped;
@@ -87,6 +89,7 @@ class BuildTextFormFeild extends StatelessWidget {
       // height: 50,
       width: 100.w,
       child: TextFormField(
+        controller: controller,
         maxLines: 1,
         cursorColor: blueColor,
         keyboardType: keyboardType,

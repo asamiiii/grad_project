@@ -33,6 +33,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
   String email = '';
   String pass = '';
 
+    TextEditingController? nameController;
+  TextEditingController? mailController;
+    TextEditingController? passController;
+  // TextEditingController? passController;
+
   bool isEmailValid(String? value) {
     const pattern = r"(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'"
         r'+/=?^_`{|}~-]+)|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-'
@@ -93,6 +98,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     height: MediaQuery.of(context).size.height / 23,
                   ),
                   BuildTextFormFeild(
+                    controller: nameController,
                     onSaved: (data) {
                       name = data!;
                       setState(() {
@@ -112,6 +118,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     height: MediaQuery.of(context).size.height / 32,
                   ),
                   BuildTextFormFeild(
+                        controller: mailController,
                     onSaved: (data) {
                       email = data!;
 
@@ -125,6 +132,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     height: MediaQuery.of(context).size.height / 32,
                   ),
                   BuildTextFormFeild(
+                        controller: passController,
                     onSaved: (data) {
                       pass = data!;
                       setState(() {
@@ -152,6 +160,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     height: MediaQuery.of(context).size.height / 32,
                   ),
                   BuildTextFormFeild(
+                    controller: passController,
                     onSaved: (data) {
                       confirmPass = data;
                       setState(() {
