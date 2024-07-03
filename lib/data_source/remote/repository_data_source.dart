@@ -68,7 +68,7 @@ class RemoteDataSource {
       //! get ques
   static Future<QuesResponse> getQues({required String? unitId}) async {
     try {
-      var response = await fetchData(url: '${RemoteConstants.quesUrl}?catId=$unitId',);
+      var response = await fetchData(url: '${RemoteConstants.quesUrl}',);
       logger.w('Units Response : $response');
       QuesResponse ques = QuesResponse.fromJson(response);
       return ques;
@@ -112,7 +112,7 @@ class RemoteDataSource {
   //! get typing letters ques
   static Future<TypingLettersDataResponse> getTypingLettersQues({required String? unitId}) async {
     try {
-      var response = await fetchData(url: '${RemoteConstants.typingLetterUrl}?unitId=$unitId',);
+      var response = await fetchData(url: '${RemoteConstants.typingLetterUrl}',);
       logger.w('Typing Letters Response : $response');
       TypingLettersDataResponse typingLetter = TypingLettersDataResponse.fromJson(response);
       return typingLetter;

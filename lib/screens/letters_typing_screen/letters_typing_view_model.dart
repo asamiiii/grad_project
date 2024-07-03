@@ -3,6 +3,7 @@ import 'dart:math';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart';
 import 'package:grad_project/constants/constants.dart';
 import 'package:grad_project/screens/letters_screen/dummy_letters.dart';
@@ -13,15 +14,17 @@ class LettersTypingViewModel extends ChangeNotifier {
   bool isLoading = true;
   int index = 0;
 
-  final imagePainterController =
-      ImagePainterController(mode: PaintMode.freeStyle);
-  // final InputImage inputImage;
   final textRecognizer = TextRecognizer(script: TextRecognitionScript.latin);
-  chechLetterTracing(InputImage image) async {
-    
+  chechLetterTracing(InputImage image, String? letter) async {
     final RecognizedText recognizedText =
         await textRecognizer.processImage(image);
-    debugPrint('Recognized text : ${recognizedText.text}');
+    if (letter == recognizedText.text) {
+      Fluttertoast.showToast(msg: "شااااطر ..", backgroundColor: Colors.green,fontSize: 80);
+    } else {
+      Fluttertoast.showToast(
+          msg: "حاول مره تانيه", backgroundColor: Colors.red,fontSize: 80);
+    }
+    debugPrint('Recognized text : $letter');
   }
 
   // Convert Uint8List to File

@@ -1,3 +1,4 @@
+import 'package:image_painter/image_painter.dart';
 
 class TypingLettersDataResponse {
   String? message;
@@ -27,10 +28,11 @@ class Ques {
   String? lessonName;
   String? titleOfQues;
   String? text;
+  ImagePainterController? imagePainterController;
   int? score;
   int? v;
 
-  Ques({this.image, this.id, this.lessonName, this.titleOfQues, this.text, this.score, this.v});
+  Ques({this.image, this.id, this.lessonName, this.titleOfQues, this.text, this.score, this.v,required this.imagePainterController});
 
   Ques.fromJson(Map<String, dynamic> json) {
     image = json["image"] == null ? null : Image.fromJson(json["image"]);
@@ -40,6 +42,7 @@ class Ques {
     text = json["text"];
     score = json["score"];
     v = json["__v"];
+    imagePainterController=ImagePainterController(mode: PaintMode.freeStyle);
   }
 
   Map<String, dynamic> toJson() {

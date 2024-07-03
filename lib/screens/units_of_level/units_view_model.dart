@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:grad_project/constants/constants.dart';
 import 'package:grad_project/data_source/remote/repository_data_source.dart';
 import 'package:grad_project/models/lessons_data_response.dart';
+import 'package:grad_project/models/typing_letters_data_response.dart';
 import 'package:grad_project/models/units_data_response.dart';
 import 'package:grad_project/screens/ques_screen/model/ques_response.dart';
 import 'package:provider/provider.dart';
@@ -48,6 +49,19 @@ class UnitsViewModel extends ChangeNotifier{
   isLoading = false;
   notifyListeners();
   return quesResponse;
+ }
+
+ TypingLettersDataResponse? typingLettersDataResponse;
+
+ Future<TypingLettersDataResponse?> getTypingLettersQues({required String? unitId})async{
+  typingLettersDataResponse = null;
+  quesIndex=0;
+  isLoading = true;
+  notifyListeners();
+  typingLettersDataResponse = await RemoteDataSource.getTypingLettersQues(unitId: unitId);
+  isLoading = false;
+  notifyListeners();
+  return typingLettersDataResponse;
  }
 
    int index = 0;

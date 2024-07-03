@@ -3,13 +3,16 @@
 //https://smart-edu-for-kids-seven.vercel.app/cat?unitId=6634be950d0e4e8858b7531a
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter/material.dart';
+import 'package:grad_project/models/choises_question_data_response.dart';
 import 'package:grad_project/screens/letters_screen/letters_view.dart';
 import 'package:grad_project/screens/letters_typing_screen/letters_typing_view.dart';
 import 'package:grad_project/screens/units_of_level/units_view_model.dart';
+// import 'package:grad_project/screens/units_of_level/units_view_model.dart';
 import 'package:grad_project/widgets/build_app_bar.dart';
 import 'package:provider/provider.dart';
 import 'package:simple_progress_indicators/simple_progress_indicators.dart';
 import 'package:sizer/sizer.dart';
+//D:\grad_project\lib\models\typing_letters_data_response.dart
 
 class LessonsScreen extends StatefulWidget {
   String? unitId;
@@ -30,6 +33,7 @@ class _LessonsScreenState extends State<LessonsScreen> {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       await provider.getLessonsObject(unitId: widget.unitId);
       await provider.getQuesObject(unitId: widget.unitId);
+      await provider.getTypingLettersQues(unitId: widget.unitId);
     });
     super.initState();
   }
@@ -188,30 +192,30 @@ class _LessonsScreenState extends State<LessonsScreen> {
                               Fluttertoast.showToast(msg: "لا يوجد محتوي");
                             }
                           }else if (index == 1) {
-                            // if (provider.quesResponse?.ques != null &&
-                            //     provider.quesResponse!.ques!.isNotEmpty) {
-                            //   // Navigator.push(
-                            //   //     context,
-                            //   //     MaterialPageRoute(
-                            //   //       builder: (context) => const LettersView(),
-                            //   //     ));
-                            // } else {
-                            //   Fluttertoast.showToast(msg: "لا يوجد محتوي");
-                            // }
-                            Navigator.push(
+                            if (provider.typingLettersDataResponse?.ques != null &&
+                                provider.typingLettersDataResponse!.ques!.isNotEmpty) {
+                              Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => const LettersTypingView(),
+                                    builder: (context) =>  LettersTypingView(ques: provider.typingLettersDataResponse!.ques ,),
                                   ));
+                            } else {
+                              Fluttertoast.showToast(msg: "لا يوجد محتوي");
+                            }
+                            // Navigator.push(
+                            //       context,
+                            //       MaterialPageRoute(
+                            //         builder: (context) => const LettersTypingView(),
+                            //       ));
                           } 
                           else if (index == 2) {
                             if (provider.quesResponse?.ques != null &&
                                 provider.quesResponse!.ques!.isNotEmpty) {
-                              // Navigator.push(
-                              //     context,
-                              //     MaterialPageRoute(
-                              //       builder: (context) => const LettersView(),
-                              //     ));
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => const LettersView(),
+                                  ));
                             } else {
                               Fluttertoast.showToast(msg: "لا يوجد محتوي");
                             }

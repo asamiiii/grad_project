@@ -1,9 +1,12 @@
 import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart';
+import 'package:grad_project/models/choises_question_data_response.dart';
+import 'package:grad_project/models/typing_letters_data_response.dart';
 import 'package:grad_project/screens/letters_screen/dummy_letters.dart';
 import 'package:grad_project/screens/letters_typing_screen/letters_typing_view_model.dart';
 import 'package:grad_project/screens/letters_typing_screen/top_bar.dart';
@@ -14,8 +17,11 @@ import 'package:image_painter/image_painter.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
+// ImagePainterController imagePainterController= ImagePainterController(mode: PaintMode.freeStyle);
+ScrollPhysics scrollPhysicsZ =const AlwaysScrollableScrollPhysics();
 class LettersTypingView extends StatefulWidget {
-  const LettersTypingView({super.key});
+  List<Ques>? ques;
+  LettersTypingView({super.key, required this.ques});
 
   @override
   State<LettersTypingView> createState() => _LettersViewState();
@@ -26,6 +32,12 @@ class _LettersViewState extends State<LettersTypingView> {
   void initState() {
     super.initState();
   }
+  @override
+  void dispose() {
+    
+    super.dispose();
+  }
+    // int index = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -52,10 +64,26 @@ class _LettersViewState extends State<LettersTypingView> {
                   SizeHelper.verticalSpace(35.h),
                   ToRightLeft(
                     toRight: () {
-                      unitsViewModel.increaseIndex(context);
+                      // debugPrint('Index : $index');
+                      // if ((widget.ques!.length)  != index) {
+                        // index= index+1;
+                      // }
+                      // debugPrint('Index : $index');
+                      debugPrint('Index Length : ${widget.ques?.length}');
+                      // imagePainterController.notifyListeners();
+                      setState(() {});
                     },
                     toLeft: () {
-                      unitsViewModel.decreaseIndex();
+                      // if (index > 0) {
+                        // index= index-1;
+                      // }
+                      //  debugPrint('Index : $index');
+                       debugPrint('Index Length : ${widget.ques?.length}');
+                      //  imagePainterController.notifyListeners();
+                       setState(() {
+                         
+                       });
+                      // unitsViewModel.decreaseIndex();
                     },
                   )
                 ],
@@ -65,64 +93,110 @@ class _LettersViewState extends State<LettersTypingView> {
             right: 13.w,
             top: 20.h,
             bottom: 20.h,
-            child: LetterTypingItem(
-              letter: Letter(
-                  image: 'assets/images/trcaing_n.jpg', letter: 'N', word: 'N'),
-            ),
-          ),
+            child: Column(
+      children: [
+        SizeHelper.verticalSpace(5.h),
+        //
+        Expanded(
+          child: ListView.builder(
+            physics:scrollPhysicsZ ,
+            itemCount:widget.ques?.length ,
+            shrinkWrap: true,
+            itemBuilder:(context, index) {
+              // final imagePainterController=ImagePainterController();
+              return  Container(
+                padding: EdgeInsets.all(15),
+                child: Stack(
+                children: [
+                
+                  ImagePainter.network(widget.ques?[index].image?.secureUrl ?? '',
+                      width: 70.w,
+                      height: 50.h,
+                      controller: widget.ques?[index].imagePainterController??ImagePainterController(),
+                  
+                      scalable: true),
+                      Positioned( 
+                      bottom: 10,
+                      right: 10,
+                      child: ElevatedButton(
+                    onPressed: () async {
+                      if(scrollPhysicsZ is AlwaysScrollableScrollPhysics){
+                        scrollPhysicsZ =const NeverScrollableScrollPhysics();
+                      }else{
+                        scrollPhysicsZ =const AlwaysScrollableScrollPhysics();
 
-          Positioned(
-            bottom: 10,
-            left: 10,
-            right: 10,
-            child: ElevatedButton(onPressed: ()async{
-                Uint8List?  image= await context.read<LettersTypingViewModel>().imagePainterController.exportImage();
-                File fileimage=await context.read<LettersTypingViewModel>().convertUint8ListToFile(image!, 'test');
-                context.read<LettersTypingViewModel>().chechLetterTracing(InputImage.fromFile(fileimage));
-            }, child: const Text('التحقق')))
+                      }
+                      setState(() {
+                        
+                      });
+                    },
+                    child: scrollPhysicsZ is AlwaysScrollableScrollPhysics? Text('قف'):Text('أكمل '))),
+                    Positioned( 
+                      bottom: 10,
+                      left: 10,
+                      child: ElevatedButton(
+                    onPressed: () async {
+                      Uint8List? image = await widget.ques?[index].imagePainterController!.exportImage();
+                      File fileimage = await context
+                          .read<LettersTypingViewModel>()
+                          .convertUint8ListToFile(image!, 'test');
+                      context
+                          .read<LettersTypingViewModel>()
+                          .chechLetterTracing(InputImage.fromFile(fileimage,),widget.ques?[index].text);
+                    },
+                    child: const Text('التحقق')))
+                ],
+                            ),
+              );},
+          ),
+        ),
+      ],
+    ),
+          ),
         ],
       ),
     );
   }
 }
 
-class LetterTypingItem extends StatelessWidget {
-  Letter? letter;
-  LetterTypingItem({super.key, this.letter});
+// class LetterTypingItem extends StatefulWidget {
+//   Letter? letter;
+//   LetterTypingItem({super.key, this.letter});
 
-  @override
-  Widget build(BuildContext context) {
-    /// Initialize `ImagePainterController`.
+//   @override
+//   State<LetterTypingItem> createState() => _LetterTypingItemState();
+// }
 
-    return Consumer<LettersTypingViewModel>(
-      builder: (context, value, child) =>  Column(
-        children: [
-          SizeHelper.verticalSpace(5.h),
-          //
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              ImagePainter.asset(letter?.image ?? '',
-              width: 70.w,
-              height: 50.h,
-                  controller:value.imagePainterController, scalable: true),
-              // Image.asset(
-              //   letter?.image ?? '',
-              //   width: 30.w,
-              //   height: 15.h,
-              // ),
-              // Text(letter?.word ?? '',
-              //     style: TextStyle(color: Colors.green, fontSize: 50.sp)),
-      
-              
-            ],
-          ),
-          
-        ],
-      ),
-    );
-  }
-}
+// class _LetterTypingItemState extends State<LetterTypingItem> {
+//   @override
+//   Widget build(BuildContext context) {
+//     /// Initialize `ImagePainterController`.
+
+//     return Column(
+//       children: [
+//         SizeHelper.verticalSpace(5.h),
+//         //
+//         Row(
+//           mainAxisAlignment: MainAxisAlignment.spaceAround,
+//           children: [
+//             ImagePainter.network(widget.letter?.image ?? '',
+//                 width: 70.w,
+//                 height: 50.h,
+//                 controller: ImagePainterController(mode: PaintMode.freeStyle),
+//                 scalable: true),
+//             // Image.asset(
+//             //   letter?.image ?? '',
+//             //   width: 30.w,
+//             //   height: 15.h,
+//             // ),
+//             // Text(letter?.word ?? '',
+//             //     style: TextStyle(color: Colors.green, fontSize: 50.sp)),
+//           ],
+//         ),
+//       ],
+//     );
+//   }
+// }
 
 class LetterText extends StatelessWidget {
   const LetterText({super.key});
@@ -141,4 +215,9 @@ class LetterText extends StatelessWidget {
       ],
     );
   }
+  
+}
+
+changeScrollPhysics(ScrollPhysics scrollPhysics){
+  
 }

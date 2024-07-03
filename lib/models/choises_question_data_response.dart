@@ -1,14 +1,14 @@
 
 class ChoicesQuestionDataResponse {
   String? message;
-  List<Ques>? ques;
+  List<QuesChois>? ques;
   String? error;
 
   ChoicesQuestionDataResponse({this.message, this.ques,this.error});
 
   ChoicesQuestionDataResponse.fromJson(Map<String, dynamic> json) {
     message = json["message"];
-    ques = json["ques"] == null ? null : (json["ques"] as List).map((e) => Ques.fromJson(e)).toList();
+    ques = json["ques"] == null ? null : (json["ques"] as List).map((e) => QuesChois.fromJson(e)).toList();
   }
 
   Map<String, dynamic> toJson() {
@@ -21,7 +21,7 @@ class ChoicesQuestionDataResponse {
   }
 }
 
-class Ques {
+class QuesChois {
   String? id;
   String? lessonName;
   String? quesName;
@@ -32,9 +32,9 @@ class Ques {
   List<Images>? images;
   int? v;
 
-  Ques({this.id, this.lessonName, this.quesName, this.content, this.answer, this.score, this.titleOfQues, this.images, this.v});
+  QuesChois({this.id, this.lessonName, this.quesName, this.content, this.answer, this.score, this.titleOfQues, this.images, this.v});
 
-  Ques.fromJson(Map<String, dynamic> json) {
+  QuesChois.fromJson(Map<String, dynamic> json) {
     id = json["_id"];
     lessonName = json["lessonName"];
     quesName = json["quesName"];
