@@ -1,16 +1,13 @@
+// ignore_for_file: must_be_immutable
+
 import 'dart:io';
 import 'dart:typed_data';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart';
-import 'package:grad_project/models/choises_question_data_response.dart';
 import 'package:grad_project/models/typing_letters_data_response.dart';
-import 'package:grad_project/screens/letters_screen/dummy_letters.dart';
 import 'package:grad_project/screens/letters_typing_screen/letters_typing_view_model.dart';
 import 'package:grad_project/screens/letters_typing_screen/top_bar.dart';
-import 'package:grad_project/screens/units_of_level/units_view_model.dart';
 import 'package:grad_project/utils/size_helper.dart';
 import 'package:grad_project/widgets/to_right_left_button.dart';
 import 'package:image_painter/image_painter.dart';
@@ -34,14 +31,14 @@ class _LettersViewState extends State<LettersTypingView> {
   }
   @override
   void dispose() {
-    
+
     super.dispose();
   }
     // int index = 0;
 
   @override
   Widget build(BuildContext context) {
-    var unitsViewModel = context.read<UnitsViewModel>();
+   // var unitsViewModel = context.read<UnitsViewModel>();
     return Scaffold(
       // appBar: AppBar(),
 
@@ -81,7 +78,7 @@ class _LettersViewState extends State<LettersTypingView> {
                        debugPrint('Index Length : ${widget.ques?.length}');
                       //  imagePainterController.notifyListeners();
                        setState(() {
-                         
+
                        });
                       // unitsViewModel.decreaseIndex();
                     },
@@ -89,9 +86,9 @@ class _LettersViewState extends State<LettersTypingView> {
                 ],
               )),
           Positioned(
-            left: 13.w,
-            right: 13.w,
-            top: 20.h,
+            left: 10.w,
+            right: 5.w,
+            top: 15.h,
             bottom: 20.h,
             child: Column(
       children: [
@@ -108,15 +105,16 @@ class _LettersViewState extends State<LettersTypingView> {
                 padding: EdgeInsets.all(15),
                 child: Stack(
                 children: [
-                
+
                   ImagePainter.network(widget.ques?[index].image?.secureUrl ?? '',
                       width: 70.w,
                       height: 50.h,
                       controller: widget.ques?[index].imagePainterController??ImagePainterController(),
-                  
+
                       scalable: true),
-                      Positioned( 
-                      bottom: 10,
+                  SizeHelper.verticalSpace(5.h),
+                      Positioned(
+                      bottom: 0,
                       right: 10,
                       child: ElevatedButton(
                     onPressed: () async {
@@ -127,12 +125,12 @@ class _LettersViewState extends State<LettersTypingView> {
 
                       }
                       setState(() {
-                        
+
                       });
                     },
                     child: scrollPhysicsZ is AlwaysScrollableScrollPhysics? Text('قف'):Text('أكمل '))),
-                    Positioned( 
-                      bottom: 10,
+                    Positioned(
+                      bottom: 0,
                       left: 10,
                       child: ElevatedButton(
                     onPressed: () async {
@@ -215,9 +213,9 @@ class LetterText extends StatelessWidget {
       ],
     );
   }
-  
+
 }
 
 changeScrollPhysics(ScrollPhysics scrollPhysics){
-  
+
 }
