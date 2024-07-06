@@ -144,7 +144,7 @@ class LetterItem extends StatelessWidget {
           height: 200,
           width: 230,
           child: CachedNetworkImage(
-            imageUrl: letter?.image?.secureUrl ?? 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fsticker.ly%2Fs%2FH2PL9G&psig=AOvVaw0sfuMjjq70VYU34SzD65F-&ust=1719519753536000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCODLvMSM-oYDFQAAAAAdAAAAABAR',
+            imageUrl: letter?.image?.secureUrl ?? '',
             width: 150.w,
             height: 30.h,
             fit: BoxFit.fill,

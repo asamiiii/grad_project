@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:grad_project/constants/constants.dart';
 import 'package:grad_project/data_source/remote/repository_data_source.dart';
+import 'package:grad_project/models/choises_question_data_response.dart';
 import 'package:grad_project/models/lessons_data_response.dart';
 import 'package:grad_project/models/typing_letters_data_response.dart';
 import 'package:grad_project/models/units_data_response.dart';
 import 'package:grad_project/screens/ques_screen/model/ques_response.dart';
-import 'package:provider/provider.dart';
 
 
 class UnitsViewModel extends ChangeNotifier{
@@ -49,6 +49,19 @@ class UnitsViewModel extends ChangeNotifier{
   isLoading = false;
   notifyListeners();
   return quesResponse;
+ }
+
+ ChoicesQuestionDataResponse? choiceQuesResponse;
+
+ Future<ChoicesQuestionDataResponse?> getChoiceQuesObject({required String? unitId})async{
+   choiceQuesResponse = null;
+   index=0;
+  isLoading = true;
+  notifyListeners();
+   choiceQuesResponse = await RemoteDataSource.getChoiceQues(unitId: unitId);
+  isLoading = false;
+  notifyListeners();
+  return choiceQuesResponse;
  }
 
  TypingLettersDataResponse? typingLettersDataResponse;

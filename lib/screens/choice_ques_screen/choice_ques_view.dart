@@ -1,5 +1,9 @@
+// ignore_for_file: must_be_immutable
+
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:grad_project/constants/constants.dart';
+import 'package:grad_project/models/choises_question_data_response.dart';
 import 'package:grad_project/screens/choice_ques_screen/top_bar.dart';
 import 'package:grad_project/screens/units_of_level/units_view_model.dart';
 import 'package:grad_project/utils/size_helper.dart';
@@ -7,8 +11,12 @@ import 'package:grad_project/widgets/custom_button.dart';
 import 'package:grad_project/widgets/to_right_left_button.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
+
+ScrollPhysics scrollPhysicsZ = const AlwaysScrollableScrollPhysics();
+
 class ChoiceQuestionView extends StatefulWidget {
-  const ChoiceQuestionView({super.key});
+  List<QuesChoice>? quesChoice;
+  ChoiceQuestionView({super.key, required this.quesChoice});
 
   @override
   State<ChoiceQuestionView> createState() => _ChoiceQuestionViewState();
@@ -43,14 +51,33 @@ class _ChoiceQuestionViewState extends State<ChoiceQuestionView> {
                 children: [
                   const ChoiceQuestionTopBar(),
                   SizeHelper.verticalSpace(5.h),
-                  const QuestionName(quesName: ':اختر الحرف الذي تبدأ به الصوره'),
+                  QuestionName(
+                    quesName: unitsViewModel.choiceQuesResponse
+                        ?.quesChoice?[unitsViewModel.index].quesName,
+                  ),
                   SizeHelper.verticalSpace(25.h),
                   ToRightLeft(
                     toRight: () {
+                      // debugPrint('Index : $index');
+                      // if ((widget.ques!.length)  != index) {
+                      // index= index+1;
+                      // }
+                      // debugPrint('Index : $index');
                       unitsViewModel.increaseIndex(context);
+                      debugPrint('Index Length : ${widget.quesChoice?.length}');
+                      // imagePainterController.notifyListeners();
+                      setState(() {});
                     },
                     toLeft: () {
+                      // if (index > 0) {
+                      // index= index-1;
+                      // }
+                      //  debugPrint('Index : $index');
                       unitsViewModel.decreaseIndex();
+                      debugPrint('Index Length : ${widget.quesChoice?.length}');
+                      //  imagePainterController.notifyListeners();
+                      setState(() {});
+                      // unitsViewModel.decreaseIndex();
                     },
                   )
                 ],
@@ -58,35 +85,111 @@ class _ChoiceQuestionViewState extends State<ChoiceQuestionView> {
           Positioned(
             left: 13.w,
             right: 13.w,
-            top: 20.h,
+            top: 30.h,
             bottom: 20.h,
-            child: const SingleChildScrollView(
-              child:  Column(
-                children: [
-                  SingleChildScrollView(
-                    child: Column(
-                      children: [
-                        ChoiceQuestionItem(
-                          image: 'assets/images/camel.png',
-                          letter1: 'A',
-                          letter2: 'B',
-                        ),
-                        ChoiceQuestionItem(
-                          image: 'assets/images/camel.png',
-                          letter1: 'A',
-                          letter2: 'B',
-                        ),
-                        ChoiceQuestionItem(
-                          image: 'assets/images/camel.png',
-                          letter1: 'A',
-                          letter2: 'B',
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
+            child: SizedBox(
+              // color: Colors.red,
+              height: SizeHelper.getScreenHeight(context: context) * 0.65,
+              width: SizeHelper.getScreenWidth(context: context) * 0.85,
+              child: Consumer<UnitsViewModel>(
+                  builder: (context, provider, child) {
+                    final choiceQuesResponse = provider.choiceQuesResponse;
+
+                    // Check if choiceQuesResponse and quesChoice are not null
+                    if (choiceQuesResponse == null) {
+                      return Text('choiceQuesResponse is null');
+                    }
+                    final quesChoice = choiceQuesResponse.quesChoice;
+                    if (quesChoice == null) {
+                      return Text('quesChoice is null');
+                    }
+
+                    // Check if index is within bounds for quesChoice
+                    if (provider.index >= quesChoice.length) {
+                      return Text('Index out of bounds for quesChoice: ${provider.index} / ${quesChoice.length}');
+                    }
+
+                    final choice = quesChoice[provider.index];
+                    final images = choice.images;
+
+                    // Check if images is not null
+                    if (images == null) {
+                      return Text('images is null for index: ${provider.index}');
+                    }
+
+                    // Check if index is within bounds for images
+                    if (provider.index >= images.length) {
+                      return Text('Index out of bounds for images: ${provider.index} / ${images.length}');
+                    }
+
+                    final content = choice.content;
+
+                    // Check if content is not null and has enough characters for substring operations
+                    if (content == null) {
+                      return Text('content is null for index: ${provider.index}');
+                    }
+                    if (content.length < 2) {
+                      return Text('content too short for index: ${provider.index}, length: ${content.length}');
+                    }
+
+                    return ChoiceQuestionItem(
+                      image: images[provider.index].secureUrl ?? '',
+                      letter1: content.first,
+                      letter2: content.last,
+                    );
+                  }
+              )
+
+
             ),
+
+            // Expanded(
+            //   child: ListView.builder(
+            //     physics: scrollPhysicsZ,
+            //     itemCount: widget.quesChoice?.length,
+            //     shrinkWrap: true,
+            //     itemBuilder: (context, index) {
+            //       // final imagePainterController=ImagePainterController();
+            //       return ChoiceQuestionItem(
+            //         image: 'assets/images/camel.png',
+            //         letter1: widget.quesChoice?[index].content
+            //                 .toString()
+            //                 .substring(1, 2) ??
+            //             '',
+            //         letter2: widget.quesChoice?[index].content
+            //                 .toString()
+            //                 .substring(4, 5) ??
+            //             '',
+            //       );
+            //     },
+            //   ),
+            // ),
+
+            // Column(
+            //   children: [
+            //     SingleChildScrollView(
+            //       child: Column(
+            //         children: [
+            //           ChoiceQuestionItem(
+            //             image: 'assets/images/camel.png',
+            //             letter1: 'A',
+            //             letter2: 'B',
+            //           ),
+            //           ChoiceQuestionItem(
+            //             image: 'assets/images/camel.png',
+            //             letter1: 'A',
+            //             letter2: 'B',
+            //           ),
+            //           ChoiceQuestionItem(
+            //             image: 'assets/images/camel.png',
+            //             letter1: 'A',
+            //             letter2: 'B',
+            //           ),
+            //         ],
+            //       ),
+            //     ),
+            //   ],
+            // ),
             // child: SizedBox(
             //   // color: Colors.red,
             //   height: SizeHelper.getScreenHeight(context: context) * 0.65,
@@ -104,10 +207,10 @@ class _ChoiceQuestionViewState extends State<ChoiceQuestionView> {
             // top: 22.h,
             bottom: 3.h,
             child: BuildButton(
-                title: 'تأكيد',
-                titleColor: blueColor,
-                buttonColor: whitColor,
-                onTap: () {},
+              title: 'تأكيد',
+              titleColor: blueColor,
+              buttonColor: whitColor,
+              onTap: () {},
             ),
           ),
         ],
@@ -133,18 +236,19 @@ class ChoiceQuestionItem extends StatelessWidget {
     return SingleChildScrollView(
       child: Column(
         children: [
-         // SizeHelper.verticalSpace(1.h),
+          // SizeHelper.verticalSpace(1.h),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              Image.asset(
-                image,
-                width: 35.w,
-                height: 15.h,
+              CachedNetworkImage(
+                imageUrl: image,
+                width: 40.w,
+                height: 20.h,
+                fit: BoxFit.fill,
               ),
             ],
           ),
-          SizeHelper.verticalSpace(2.h),
+          SizeHelper.verticalSpace(5.h),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
@@ -173,7 +277,6 @@ class QuestionName extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
-
         Text(
           quesName!,
           style: TextStyle(

@@ -1,13 +1,12 @@
-// ignore_for_file: prefer_const_literals_to_create_immutables, use_key_in_widget_constructors
+// ignore_for_file: prefer_const_literals_to_create_immutables, use_key_in_widget_constructors, must_be_immutable
 
 //https://smart-edu-for-kids-seven.vercel.app/cat?unitId=6634be950d0e4e8858b7531a
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter/material.dart';
-import 'package:grad_project/models/choises_question_data_response.dart';
+import 'package:grad_project/screens/choice_ques_screen/choice_ques_view.dart';
 import 'package:grad_project/screens/letters_screen/letters_view.dart';
 import 'package:grad_project/screens/letters_typing_screen/letters_typing_view.dart';
 import 'package:grad_project/screens/units_of_level/units_view_model.dart';
-// import 'package:grad_project/screens/units_of_level/units_view_model.dart';
 import 'package:grad_project/widgets/build_app_bar.dart';
 import 'package:provider/provider.dart';
 import 'package:simple_progress_indicators/simple_progress_indicators.dart';
@@ -34,6 +33,7 @@ class _LessonsScreenState extends State<LessonsScreen> {
       await provider.getLessonsObject(unitId: widget.unitId);
       await provider.getQuesObject(unitId: widget.unitId);
       await provider.getTypingLettersQues(unitId: widget.unitId);
+      await provider.getChoiceQuesObject(unitId: widget.unitId);
     });
     super.initState();
   }
@@ -209,12 +209,12 @@ class _LessonsScreenState extends State<LessonsScreen> {
                             //       ));
                           } 
                           else if (index == 2) {
-                            if (provider.quesResponse?.ques != null &&
-                                provider.quesResponse!.ques!.isNotEmpty) {
+                            if (provider.choiceQuesResponse?.quesChoice != null &&
+                                provider.choiceQuesResponse!.quesChoice!.isNotEmpty) {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => const LettersView(),
+                                    builder: (context) =>  ChoiceQuestionView(quesChoice: provider.choiceQuesResponse!.quesChoice,),
                                   ));
                             } else {
                               Fluttertoast.showToast(msg: "لا يوجد محتوي");

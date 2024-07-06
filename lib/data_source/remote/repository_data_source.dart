@@ -3,6 +3,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:grad_project/constants/constants.dart';
 import 'package:grad_project/data_source/remote/general_functions.dart';
 import 'package:grad_project/data_source/remote/remote_constants.dart';
+import 'package:grad_project/models/choises_question_data_response.dart';
 import 'package:grad_project/models/levels_data_response.dart';
 import 'package:grad_project/models/login_data_response.dart';
 import 'package:grad_project/models/register_data_response.dart';
@@ -75,6 +76,19 @@ class RemoteDataSource {
     } catch (error) {
       logger.e(error.toString());
       return QuesResponse(error: error.toString());
+    }
+  }
+
+  //! get choice ques
+  static Future<ChoicesQuestionDataResponse> getChoiceQues({required String? unitId}) async {
+    try {
+      var response = await fetchData(url: '${RemoteConstants.quesUrl}',);
+      logger.w('Units Response : $response');
+      ChoicesQuestionDataResponse choiceQues = ChoicesQuestionDataResponse.fromJson(response);
+      return choiceQues;
+    } catch (error) {
+      logger.e(error.toString());
+      return ChoicesQuestionDataResponse(error: error.toString());
     }
   }
 
