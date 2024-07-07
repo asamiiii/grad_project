@@ -1,5 +1,6 @@
 // ignore_for_file: must_be_immutable
 
+import 'package:audioplayers/audioplayers.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:grad_project/constants/constants.dart';
@@ -7,7 +8,6 @@ import 'package:grad_project/models/choises_question_data_response.dart';
 import 'package:grad_project/screens/choice_ques_screen/top_bar.dart';
 import 'package:grad_project/screens/units_of_level/units_view_model.dart';
 import 'package:grad_project/utils/size_helper.dart';
-import 'package:grad_project/widgets/custom_button.dart';
 import 'package:grad_project/widgets/to_right_left_button.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
@@ -86,7 +86,7 @@ class _ChoiceQuestionViewState extends State<ChoiceQuestionView> {
             left: 13.w,
             right: 13.w,
             top: 30.h,
-            bottom: 20.h,
+            bottom: 10.h,
             child: SizedBox(
               // color: Colors.red,
               height: SizeHelper.getScreenHeight(context: context) * 0.65,
@@ -117,10 +117,10 @@ class _ChoiceQuestionViewState extends State<ChoiceQuestionView> {
                       return Text('images is null for index: ${provider.index}');
                     }
 
-                    // Check if index is within bounds for images
-                    if (provider.index >= images.length) {
-                      return Text('Index out of bounds for images: ${provider.index} / ${images.length}');
-                    }
+                    // // Check if index is within bounds for images
+                    // if (provider.index <= images.length) {
+                    //   return Text('Index out of bounds for images: ${provider.index} / ${images.length}');
+                    // }
 
                     final content = choice.content;
 
@@ -133,9 +133,7 @@ class _ChoiceQuestionViewState extends State<ChoiceQuestionView> {
                     }
 
                     return ChoiceQuestionItem(
-                      image: images[provider.index].secureUrl ?? '',
-                      letter1: content.first,
-                      letter2: content.last,
+                      image: images[0].secureUrl ?? '',
                     );
                   }
               )
@@ -200,19 +198,19 @@ class _ChoiceQuestionViewState extends State<ChoiceQuestionView> {
             //           )),
             // ),
           ),
-          Positioned(
-            left: 3.w,
-            right: 3.w,
-            height: 5.h,
-            // top: 22.h,
-            bottom: 3.h,
-            child: BuildButton(
-              title: 'تأكيد',
-              titleColor: blueColor,
-              buttonColor: whitColor,
-              onTap: () {},
-            ),
-          ),
+          // Positioned(
+          //   left: 3.w,
+          //   right: 3.w,
+          //   height: 5.h,
+          //   // top: 22.h,
+          //   bottom: 3.h,
+          //   child: BuildButton(
+          //     title: 'تأكيد',
+          //     titleColor: blueColor,
+          //     buttonColor: whitColor,
+          //     onTap: () {},
+          //   ),
+          // ),
         ],
       ),
     );
@@ -220,18 +218,23 @@ class _ChoiceQuestionViewState extends State<ChoiceQuestionView> {
 }
 
 //! ChoiceQuestionItem
-class ChoiceQuestionItem extends StatelessWidget {
+class ChoiceQuestionItem extends StatefulWidget {
   final String image;
-  final String letter1;
-  final String letter2;
   const ChoiceQuestionItem({
     super.key,
     required this.image,
-    required this.letter1,
-    required this.letter2,
   });
 
   @override
+  State<ChoiceQuestionItem> createState() => _ChoiceQuestionItemState();
+}
+
+class _ChoiceQuestionItemState extends State<ChoiceQuestionItem> {
+  final AudioPlayer _audioPlayer = AudioPlayer();
+  @override
+  void initState() {
+    super.initState();
+  }
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Column(
@@ -241,24 +244,82 @@ class ChoiceQuestionItem extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               CachedNetworkImage(
-                imageUrl: image,
+                imageUrl: widget.image,
                 width: 40.w,
                 height: 20.h,
                 fit: BoxFit.fill,
               ),
             ],
           ),
-          SizeHelper.verticalSpace(5.h),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              ChoiceQuestionLetter(
-                letter: letter1,
+          SizeHelper.verticalSpace(0.h),
+
+          Consumer<UnitsViewModel>(
+            builder: (context, value, child) => SizedBox(
+              width: 40.w,
+
+              child: GridView.builder(
+                shrinkWrap: true,
+                scrollDirection: Axis.vertical,
+                gridDelegate:
+                 SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    crossAxisSpacing: 5.w,
+                    mainAxisSpacing: 3.h),
+                itemCount: value.choiceQuesResponse?.quesChoice?[value.index].content?.length,
+                itemBuilder: (context, index) {
+                  String? choice =value.choiceQuesResponse?.quesChoice?[value.index].content?[index];
+                  String? answer =value.choiceQuesResponse?.quesChoice?[value.index].answer;
+                  int? choiceLenth =value.choiceQuesResponse?.quesChoice?[value.index].content?.length;
+                  List<Color> containerColors = List<Color>.filled(choiceLenth!, Colors.white);
+
+                  return GestureDetector(
+                    onTap: () async {
+                      bool isCorrect=choice==answer;
+                     if(choice==answer){
+                       setState(() {
+                         containerColors[index] = isCorrect? Colors.green : Colors.red;
+                         print(choiceLenth);
+                       });
+                       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Center(child: Text('شااطر'))));
+                       await _audioPlayer.play(AssetSource('audio/assets_audios_3.mp3'));
+                     }else{
+                       setState(() {
+                         containerColors[index] =  Colors.red;
+                         print(choiceLenth);
+                       });
+                       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Center(child: Text('خطأ'))));
+                       await _audioPlayer.play(AssetSource('audio/assets_audios_2X.mp3'));
+                       final player = AudioPlayer();
+                       await player.play(AssetSource(heymp31));
+                     }
+                    },
+                    child: Container(
+                      // width: 10.w,
+                      // height: 5.h,
+                      decoration: BoxDecoration(
+                          color:containerColors[index] ,
+                          border: Border.all(
+                            color: Colors.black,
+                            width: 0.5,
+                          ),
+                      borderRadius: BorderRadius.circular(5)),
+                      child: Center(
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(vertical: 0.5.h, horizontal: 1.w),
+                          child: Text(
+                            value.choiceQuesResponse?.quesChoice?[value.index].content?[index] ?? '',
+                            style: TextStyle(
+                              fontSize: 15.sp,
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                      ),
+                    ),
+                  );
+                },
               ),
-              ChoiceQuestionLetter(
-                letter: letter2,
-              ),
-            ],
+            ),
           ),
           SizeHelper.verticalSpace(8.h),
         ],

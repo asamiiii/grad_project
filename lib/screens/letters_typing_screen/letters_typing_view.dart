@@ -15,7 +15,8 @@ import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
 // ImagePainterController imagePainterController= ImagePainterController(mode: PaintMode.freeStyle);
-ScrollPhysics scrollPhysicsZ =const AlwaysScrollableScrollPhysics();
+ScrollPhysics scrollPhysicsZ = const AlwaysScrollableScrollPhysics();
+
 class LettersTypingView extends StatefulWidget {
   List<Ques>? ques;
   LettersTypingView({super.key, required this.ques});
@@ -29,16 +30,16 @@ class _LettersViewState extends State<LettersTypingView> {
   void initState() {
     super.initState();
   }
+
   @override
   void dispose() {
-
     super.dispose();
   }
-    // int index = 0;
+  // int index = 0;
 
   @override
   Widget build(BuildContext context) {
-   // var unitsViewModel = context.read<UnitsViewModel>();
+    // var unitsViewModel = context.read<UnitsViewModel>();
     return Scaffold(
       // appBar: AppBar(),
 
@@ -63,7 +64,7 @@ class _LettersViewState extends State<LettersTypingView> {
                     toRight: () {
                       // debugPrint('Index : $index');
                       // if ((widget.ques!.length)  != index) {
-                        // index= index+1;
+                      // index= index+1;
                       // }
                       // debugPrint('Index : $index');
                       debugPrint('Index Length : ${widget.ques?.length}');
@@ -72,14 +73,12 @@ class _LettersViewState extends State<LettersTypingView> {
                     },
                     toLeft: () {
                       // if (index > 0) {
-                        // index= index-1;
+                      // index= index-1;
                       // }
                       //  debugPrint('Index : $index');
-                       debugPrint('Index Length : ${widget.ques?.length}');
+                      debugPrint('Index Length : ${widget.ques?.length}');
                       //  imagePainterController.notifyListeners();
-                       setState(() {
-
-                       });
+                      setState(() {});
                       // unitsViewModel.decreaseIndex();
                     },
                   )
@@ -91,65 +90,78 @@ class _LettersViewState extends State<LettersTypingView> {
             top: 15.h,
             bottom: 20.h,
             child: Column(
-      children: [
-        SizeHelper.verticalSpace(5.h),
-        //
-        Expanded(
-          child: ListView.builder(
-            physics:scrollPhysicsZ ,
-            itemCount:widget.ques?.length ,
-            shrinkWrap: true,
-            itemBuilder:(context, index) {
-              // final imagePainterController=ImagePainterController();
-              return  Container(
-                padding: EdgeInsets.all(15),
-                child: Stack(
-                children: [
-
-                  ImagePainter.network(widget.ques?[index].image?.secureUrl ?? '',
-                      width: 70.w,
-                      height: 50.h,
-                      controller: widget.ques?[index].imagePainterController??ImagePainterController(),
-
-                      scalable: true),
-                  SizeHelper.verticalSpace(5.h),
-                      Positioned(
-                      bottom: 0,
-                      right: 10,
-                      child: ElevatedButton(
-                    onPressed: () async {
-                      if(scrollPhysicsZ is AlwaysScrollableScrollPhysics){
-                        scrollPhysicsZ =const NeverScrollableScrollPhysics();
-                      }else{
-                        scrollPhysicsZ =const AlwaysScrollableScrollPhysics();
-
-                      }
-                      setState(() {
-
-                      });
-                    },
-                    child: scrollPhysicsZ is AlwaysScrollableScrollPhysics? Text('قف'):Text('أكمل '))),
-                    Positioned(
-                      bottom: 0,
-                      left: 10,
-                      child: ElevatedButton(
-                    onPressed: () async {
-                      Uint8List? image = await widget.ques?[index].imagePainterController!.exportImage();
-                      File fileimage = await context
-                          .read<LettersTypingViewModel>()
-                          .convertUint8ListToFile(image!, 'test');
-                      context
-                          .read<LettersTypingViewModel>()
-                          .chechLetterTracing(InputImage.fromFile(fileimage,),widget.ques?[index].text);
-                    },
-                    child: const Text('التحقق')))
-                ],
+              children: [
+                SizeHelper.verticalSpace(5.h),
+                //
+                Expanded(
+                  child: ListView.builder(
+                    physics: scrollPhysicsZ,
+                    itemCount: widget.ques?.length,
+                    shrinkWrap: true,
+                    itemBuilder: (context, index) {
+                      // final imagePainterController=ImagePainterController();
+                      return Container(
+                        padding: EdgeInsets.all(15),
+                        child: Stack(
+                          children: [
+                            ImagePainter.network(
+                                widget.ques?[index].image?.secureUrl ?? '',
+                                width: 70.w,
+                                height: 50.h,
+                                controller: widget
+                                        .ques?[index].imagePainterController ??
+                                    ImagePainterController(),
+                                scalable: true),
+                            SizeHelper.verticalSpace(5.h),
+                            Positioned(
+                                bottom: 0,
+                                right: 10,
+                                child: ElevatedButton(
+                                    onPressed: () async {
+                                      if (scrollPhysicsZ
+                                          is AlwaysScrollableScrollPhysics) {
+                                        scrollPhysicsZ =
+                                            const NeverScrollableScrollPhysics();
+                                      } else {
+                                        scrollPhysicsZ =
+                                            const AlwaysScrollableScrollPhysics();
+                                      }
+                                      setState(() {});
+                                    },
+                                    child: scrollPhysicsZ
+                                            is AlwaysScrollableScrollPhysics
+                                        ? Text('قف')
+                                        : Text('أكمل '))),
+                            Positioned(
+                              bottom: 0,
+                              left: 10,
+                              child: ElevatedButton(
+                                onPressed: () async {
+                                  Uint8List? image = await widget
+                                      .ques?[index].imagePainterController!
+                                      .exportImage();
+                                  File fileimage = await context
+                                      .read<LettersTypingViewModel>()
+                                      .convertUint8ListToFile(image!, 'test');
+                                  context
+                                      .read<LettersTypingViewModel>()
+                                      .chechLetterTracing(
+                                          InputImage.fromFile(
+                                            fileimage,
+                                          ),
+                                          widget.ques?[index].text);
+                                },
+                                child: const Text('التحقق'),
+                              ),
                             ),
-              );},
-          ),
-        ),
-      ],
-    ),
+                          ],
+                        ),
+                      );
+                    },
+                  ),
+                ),
+              ],
+            ),
           ),
         ],
       ),
@@ -213,9 +225,6 @@ class LetterText extends StatelessWidget {
       ],
     );
   }
-
 }
 
-changeScrollPhysics(ScrollPhysics scrollPhysics){
-
-}
+changeScrollPhysics(ScrollPhysics scrollPhysics) {}
