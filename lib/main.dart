@@ -63,9 +63,9 @@ class MyApp extends StatelessWidget {
                 builder: (context, snapshot) {
                   // Check if the future is completed
                   if (snapshot.connectionState == ConnectionState.done) {
-                    if (snapshot.data == null) {
+                    if (snapshot.data == 'NA') {
                       // Token is null, navigate to RegisterScreen
-                      return const RegisterScreen();
+                      return const LoginScreen();
                     } else {
                       // Token is not null, navigate to HomeScreen
                       return const SubjectsScreen();

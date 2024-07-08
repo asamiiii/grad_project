@@ -29,14 +29,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
   bool isNameValid = true;
   bool isConfirmPasswordValid = true;
 
-  String name = '';
-  String email = '';
-  String pass = '';
+  // String name = '';
+  // String email = '';
+  // String pass = '';
 
-    TextEditingController? nameController;
-  TextEditingController? mailController;
-    TextEditingController? passController;
-  // TextEditingController? passController;
+  TextEditingController? nameController=TextEditingController();
+  TextEditingController? mailController=TextEditingController();
+  TextEditingController? passController=TextEditingController();
+  TextEditingController? confirmPassController=TextEditingController();
 
   bool isEmailValid(String? value) {
     const pattern = r"(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'"
@@ -100,14 +100,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   BuildTextFormFeild(
                     controller: nameController,
                     onSaved: (data) {
-                      name = data!;
-                      setState(() {
-                        if (data.length < 7) {
-                          isNameValid = true;
-                        } else {
-                          isNameValid = false;
-                        }
-                      });
+                      // name = data!;
+                      // setState(() {
+                      //   if (data.length < 7) {
+                      //     isNameValid = true;
+                      //   } else {
+                      //     isNameValid = false;
+                      //   }
+                      // });
                     },
                     prefixIcon: Icons.person_outline,
                     keyboardType: TextInputType.name,
@@ -118,10 +118,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     height: MediaQuery.of(context).size.height / 32,
                   ),
                   BuildTextFormFeild(
-                        controller: mailController,
+                    controller: mailController,
                     onSaved: (data) {
-                      email = data!;
-
+                      // email = data!;
                     },
                     prefixIcon: Icons.email_outlined,
                     keyboardType: TextInputType.emailAddress,
@@ -132,16 +131,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     height: MediaQuery.of(context).size.height / 32,
                   ),
                   BuildTextFormFeild(
-                        controller: passController,
+                    controller: passController,
                     onSaved: (data) {
-                      pass = data!;
-                      setState(() {
-                        if (data.length < 6 && pass != confirmPass) {
-                          isPasswordValid = true;
-                        } else {
-                          isPasswordValid = false;
-                        }
-                      });
+                      // pass = data!;
+                      // setState(() {
+                      //   if (data.length < 6 && pass != confirmPass) {
+                      //     isPasswordValid = true;
+                      //   } else {
+                      //     isPasswordValid = false;
+                      //   }
+                      // });
                     },
                     prefixIcon: Icons.lock_outline,
                     keyboardType: TextInputType.visiblePassword,
@@ -160,16 +159,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     height: MediaQuery.of(context).size.height / 32,
                   ),
                   BuildTextFormFeild(
-                    controller: passController,
+                    controller: confirmPassController,
                     onSaved: (data) {
                       confirmPass = data;
-                      setState(() {
-                        if (pass != confirmPass) {
-                          isConfirmPasswordValid = true;
-                        } else {
-                          isConfirmPasswordValid = false;
-                        }
-                      });
+                      // setState(() {
+                      //   if (pass != confirmPass) {
+                      //     isConfirmPasswordValid = true;
+                      //   } else {
+                      //     isConfirmPasswordValid = false;
+                      //   }
+                      // });
                     },
                     prefixIcon: Icons.lock_outline,
                     keyboardType: TextInputType.emailAddress,
@@ -199,22 +198,27 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       width: 100.w,
                       onTap: () async {
                         if (formKey.currentState!.validate()) {
-                          if (isEmailValid(email)) {
+                          if (isEmailValid(mailController?.text)==false) {
                             Fluttertoast.showToast(
                                 msg: 'البريد الإلكتروني غير صالح');
                           } else {
-                            formKey.currentState!.save();
-                            var reqData = {
-                              "name": name,
-                              "email": email,
-                              "confirmPassword": pass,
-                              "password": pass
-                            };
-                            await context.read<RegisterViewModel>().register(reqData: reqData);
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => const LoginScreen()));
+                            if (passController?.text ==
+                                confirmPassController?.text) {
+                              formKey.currentState!.save();
+                              var reqData = {
+                                "name": nameController?.text,
+                                "email": mailController?.text,
+                                "confirmPassword": confirmPassController?.text,
+                                "password": passController?.text
+                              };
+                              await context
+                                  .read<RegisterViewModel>()
+                                  .register(reqData: reqData,ctx: context);
+                              
+                            }else{
+                              Fluttertoast.showToast(
+                                msg: 'كلمة المرور غير متطابقه');
+                            }
                           }
                         } else {
                           setState(() {

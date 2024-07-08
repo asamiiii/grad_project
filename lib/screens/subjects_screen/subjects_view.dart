@@ -1,6 +1,8 @@
 // ignore_for_file: must_be_immutable, use_full_hex_values_for_flutter_colors
 
 import 'package:flutter/material.dart';
+import 'package:grad_project/auth/auth_services/auth_services.dart';
+import 'package:grad_project/auth/login_screen/sign_in.dart';
 import 'package:grad_project/helper/build_widgets.dart';
 import 'package:grad_project/screens/subjects_screen/subject_view_model.dart';
 import 'package:grad_project/widgets/loading_widget.dart';
@@ -33,6 +35,12 @@ class _SubjectsScreenState extends State<SubjectsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xff4A4373),
+      floatingActionButton: FloatingActionButton(onPressed: ()async{
+       await AuthService.removeToken();
+       Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => const LoginScreen()), (route) => false);
+      },
+      child: const Icon(Icons.logout),
+      ),
       body: Consumer<SubjectViewModel>(
         builder: (context, subjectProvider, child) => subjectProvider
                     .isLoading ==

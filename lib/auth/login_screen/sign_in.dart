@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:grad_project/auth/auth_provider/login_provider.dart';
+import 'package:grad_project/auth/register_screen/sign_up_screen.dart';
 import 'package:grad_project/constants/constants.dart';
 import 'package:grad_project/screens/subjects_screen/subjects_view.dart';
 import 'package:grad_project/widgets/custom_button.dart';
@@ -137,7 +138,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   SizedBox(
                     height: MediaQuery.of(context).size.height / 45,
                   ),
-                  loginViewModel.isLoading == true
+                  loginViewModel.isLoading == false
                       ? BuildButton(
                           title: 'Sign in',
                           titleColor: whitColor,
@@ -151,14 +152,8 @@ class _LoginScreenState extends State<LoginScreen> {
                               var reqData = {"email": mailController?.text, "password": passController?.text};
                               await context
                                   .read<LoginViewModel>()
-                                  .login(reqData: reqData);
-                              Navigator.pushAndRemoveUntil(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) =>
-                                        const SubjectsScreen(),
-                                  ),
-                                  (route) => false);
+                                  .login(reqData: reqData,ctx: context);
+                             
                             }else{
                               formKey.currentState!.save();
                               setState(() {
@@ -291,7 +286,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                       GestureDetector(
                         onTap: () {
-                          Navigator.pop(context);
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => const RegisterScreen(),));
                         },
                         child: Text(
                           ' Sing Up',
