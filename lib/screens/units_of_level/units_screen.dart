@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_literals_to_create_immutables, use_key_in_widget_constructors
+// ignore_for_file: prefer_const_literals_to_create_immutables, use_key_in_widget_constructors, must_be_immutable
 
 import 'package:flutter/material.dart';
 import 'package:grad_project/constants/constants.dart';
@@ -33,6 +33,13 @@ class _UnitsScreenState extends State<UnitsScreen> {
     {"name": "الوحده 4", "image": "assets/images/lock.png", "number": 0.8},
   ];
 int? experiance=0;
+  // List<Map<String, dynamic>> unitData = [
+  //   {"name": "الوحده 1", "image": "assets/images/Group.png", "number": 0.1},
+  //   {"name": "الوحده 2", "image": "assets/images/lock.png", "number": 0.5},
+  //   {"name": "الوحده 3", "image": "assets/images/lock.png", "number": 0.3},
+  //   {"name": "الوحده 4", "image": "assets/images/lock.png", "number": 0.8},
+  // ];
+
   @override
   void initState() {
     var provider = context.read<UnitsViewModel>();
@@ -222,67 +229,70 @@ class UnitContainer extends StatelessWidget {
       onTap: onTap,
       child: Container(
         decoration: BoxDecoration(
-            color: const Color(0xffC4C4C4).withOpacity(.4),
-            borderRadius: BorderRadius.circular(20)),
-        child: Column(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  name,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontWeight: FontWeight.w500,
-                    fontSize: 17.sp,
-                    color: Colors.black,
+            color: const Color(0xffC4C4C4).withOpacity(.5),
+            borderRadius: BorderRadius.circular(15)),
+        child: Padding(
+          padding:  EdgeInsets.all(4.sp),
+          child: Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    name,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontWeight: FontWeight.w500,
+                      fontSize: 17.sp,
+                      color: Colors.black,
+                    ),
                   ),
-                ),
-              ],
-            ),
-            SizedBox(
-              height: 1.h,
-            ),
-            ImageFromNetwork(
-              imageUrl: mainImage,
-              width: 20.w,
-              height: 20.h,
-            ),
-            // Image.network(
-            //   mainImage,
-            //   width: 20.w,
-            //   errorBuilder: (context, error, stackTrace) => SizedBox(width: 20.w,child: Icon(Icons.error),),
-            // ),
-            const Spacer(),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Image.asset(
-                  vectorImage!,
-                  width: 8.w,
-                ),
-                LinearPercenIndicator(
-                  progressBarValue: 10,
-                  width: 22.w,
-                  lineHeight: 1.5.h,
-                  percent: 0.2,
-                  backgroundColor: Colors.grey[200],
-                  progressColor: const Color(0xffFBB237),
-                ),
-                Text(
-                  "20/20",
-                  style: TextStyle(
-                    fontWeight: FontWeight.w500,
-                    fontSize: 10.sp,
-                    color: Colors.black,
+                ],
+              ),
+              SizedBox(
+                height: 1.h,
+              ),
+              ImageFromNetwork(
+                imageUrl: mainImage,
+                width: 20.w,
+                height: 20.h,
+              ),
+              // Image.network(
+              //   mainImage,
+              //   width: 20.w,
+              //   errorBuilder: (context, error, stackTrace) => SizedBox(width: 20.w,child: Icon(Icons.error),),
+              // ),
+              const Spacer(),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Image.asset(
+                    vectorImage!,
+                    width: 8.w,
                   ),
-                ),
-              ],
-            ),
-            SizedBox(
-              height: 2.h,
-            ),
-          ],
+                  LinearPercenIndicator(
+                    progressBarValue: 10,
+                    width: 22.w,
+                    lineHeight: 1.5.h,
+                    percent: 0.2,
+                    backgroundColor: Colors.grey[200],
+                    progressColor: const Color(0xffFBB237),
+                  ),
+                  Text(
+                    "20/20",
+                    style: TextStyle(
+                      fontWeight: FontWeight.w500,
+                      fontSize: 10.sp,
+                      color: Colors.black,
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(
+                height: 2.h,
+              ),
+            ],
+          ),
         ),
       ),
     );

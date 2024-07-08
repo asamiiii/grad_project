@@ -53,8 +53,8 @@ class _LessonsScreenState extends State<LessonsScreen> {
                 EdgeInsets.only(left: 4.w, right: 4.w, top: 7.h, bottom: 4.h),
             child: const BuildAppBar(),
           ),
-          const SizedBox(
-            height: 20,
+           SizedBox(
+            height: 8.h,
           ),
           // Container(
           //   height: 71,
@@ -100,9 +100,7 @@ class _LessonsScreenState extends State<LessonsScreen> {
           //     ],
           //   ),
           // ),
-          const SizedBox(
-            height: 90,
-          ),
+
           Stack(
             alignment: Alignment.topCenter,
             clipBehavior: Clip.none,
@@ -122,7 +120,7 @@ class _LessonsScreenState extends State<LessonsScreen> {
                     Text(
                       widget.unitName ?? '',
                       textAlign: TextAlign.center,
-                      style: TextStyle(
+                      style: const TextStyle(
                           fontWeight: FontWeight.w500,
                           fontSize: 28,
                           color: Color(0xff4A4373)),

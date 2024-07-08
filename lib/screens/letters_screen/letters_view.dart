@@ -53,21 +53,21 @@ class _LettersViewState extends State<LettersView> {
                       XCloseButton(),
                       SizeHelper.expandedSpace(),
                       InkWell(
-                          onTap: () async {
-                            var soundUrl = unitsViewModel
-                                .lessonsDataResponse
-                                ?.categs?[unitsViewModel.index]
-                                .video
-                                ?.secureUrl;
-                            final player = AudioPlayer();
-                            await player.play(UrlSource(soundUrl ?? ''));
-                          },
-                          child: Image.asset('assets/images/audio.png'),
+                        onTap: () async {
+                          var soundUrl = unitsViewModel.lessonsDataResponse
+                              ?.categs?[unitsViewModel.index].video?.secureUrl;
+                          final player = AudioPlayer();
+                          await player.play(UrlSource(soundUrl ?? ''));
+                        },
+                        child: Image.asset(
+                          'assets/images/audio.png',
+                          height: 40,
+                          width: 40,
+                        ),
                       ),
                       SizeHelper.horizontalSpace(10),
-                      Image.asset('assets/images/refresh.png'),
-                      SizeHelper.horizontalSpace(10),
                       const MenuButton(),
+                      SizeHelper.horizontalSpace(10),
                     ],
                   ),
                   SizeHelper.verticalSpace(35.h),
@@ -131,7 +131,10 @@ class LetterItem extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             Text(letter?.text ?? '',
-                style: TextStyle(color: Colors.green, fontSize: 35.sp,fontWeight: FontWeight.bold)),
+                style: TextStyle(
+                    color: Colors.green,
+                    fontSize: 35.sp,
+                    fontWeight: FontWeight.bold)),
             // SizeHelper.horizontalSpace(10.w),
             // Text(
             //   letter?.text ?? '',
@@ -186,6 +189,10 @@ class MenuButton extends StatelessWidget {
             builder: (context) => MenuDialog(),
           );
         },
-        child: Image.asset('assets/images/menu.png'));
+        child: Image.asset(
+          'assets/images/menu.png',
+          height: 40,
+          width: 40,
+        ));
   }
 }

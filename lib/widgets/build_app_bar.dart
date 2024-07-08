@@ -17,10 +17,10 @@ class BuildAppBar extends StatelessWidget {
             Navigator.pop(context);
           },
         ),
-        BuildButton(
-          icon: Icons.menu,
-          onTap: () {},
-        ),
+        // BuildButton(
+        //   icon: Icons.menu,
+        //   onTap: () {},
+        // ),
       ],
     );
   }
