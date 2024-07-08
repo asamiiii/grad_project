@@ -56,15 +56,15 @@ class _ArabicScreenState extends State<LevelsOfSubject> {
                                 Navigator.pop(context);
                               },
                             ),
-                            BuildButton(
-                              icon: Icons.menu,
-                              onTap: () {},
-                            ),
+                            // BuildButton(
+                            //   icon: Icons.menu,
+                            //   onTap: () {},
+                            // ),
                           ],
                         ),
                       ),
                       SizedBox(
-                        height: 2.h,
+                        height: 1.h,
                       ),
                       Image.asset(
                         dummySubjectDetails.first.imageUrl ?? '',
@@ -72,7 +72,7 @@ class _ArabicScreenState extends State<LevelsOfSubject> {
                         height: 25.h,
                       ),
                       Text(
-                        "تعلم",
+                        "هيا نتعلم",
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontWeight: FontWeight.w500,
@@ -187,10 +187,10 @@ class _ArabicScreenState extends State<LevelsOfSubject> {
                                                 backgroundColor:
                                                     Colors.grey[200],
                                                 progressColor: index == 0
+                                                    ? Color(0xffFBB237)
+                                                    : index.isOdd
                                                     ? Color(0xff8BC34A)
-                                                    : index == 1
-                                                        ? Color(0xffFBB237)
-                                                        : Color(0xffFF4B4C),
+                                                    : Color(0xffFBB237),
                                               ),
                                             ),
                                             Text(
@@ -212,46 +212,46 @@ class _ArabicScreenState extends State<LevelsOfSubject> {
                           },
                         ),
                       ),
-                      Container(
-                        width: 60.w,
-                        height: 8.h,
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(
-                          color: Color(0xff4A4373),
-                          borderRadius: BorderRadius.circular(30),
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              "التعلم الان",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontWeight: FontWeight.w500,
-                                fontSize: 18.sp,
-                                color: Colors.white,
-                              ),
-                            ),
-                            SizedBox(
-                              width: 10.w,
-                            ),
-                            Container(
-                              width: 10.w,
-                              height: 10.h,
-                              decoration: BoxDecoration(
-                                  color: Colors.blue, shape: BoxShape.circle),
-                              child: IconButton(
-                                onPressed: () {},
-                                icon: Icon(
-                                  Icons.arrow_forward_ios,
-                                  size: 20.sp,
-                                  color: Colors.white,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
+                      // Container(
+                      //   width: 60.w,
+                      //   height: 8.h,
+                      //   alignment: Alignment.center,
+                      //   decoration: BoxDecoration(
+                      //     color: Color(0xff4A4373),
+                      //     borderRadius: BorderRadius.circular(30),
+                      //   ),
+                      //   child: Row(
+                      //     mainAxisAlignment: MainAxisAlignment.center,
+                      //     children: [
+                      //       Text(
+                      //         "التعلم الان",
+                      //         textAlign: TextAlign.center,
+                      //         style: TextStyle(
+                      //           fontWeight: FontWeight.w500,
+                      //           fontSize: 18.sp,
+                      //           color: Colors.white,
+                      //         ),
+                      //       ),
+                      //       SizedBox(
+                      //         width: 10.w,
+                      //       ),
+                      //       Container(
+                      //         width: 10.w,
+                      //         height: 10.h,
+                      //         decoration: BoxDecoration(
+                      //             color: Colors.blue, shape: BoxShape.circle),
+                      //         child: IconButton(
+                      //           onPressed: () {},
+                      //           icon: Icon(
+                      //             Icons.arrow_forward_ios,
+                      //             size: 20.sp,
+                      //             color: Colors.white,
+                      //           ),
+                      //         ),
+                      //       ),
+                      //     ],
+                      //   ),
+                      // ),
                       SizedBox(
                         height: 2.h,
                       ),
@@ -278,7 +278,7 @@ class BuildButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: 12.w,
-      height: 5.5.h,
+      height: 6.h,
       decoration: BoxDecoration(
         color: const Color(0xff4A4373),
         borderRadius: BorderRadius.circular(10),
@@ -287,10 +287,12 @@ class BuildButton extends StatelessWidget {
         onPressed: () {
           onTap();
         },
-        icon: Icon(
-          icon,
-          size: 22.sp,
-          color: Colors.white,
+        icon: Center(
+          child: Icon(
+            icon,
+            size: 20.sp,
+            color: Colors.white,
+          ),
         ),
       ),
     );

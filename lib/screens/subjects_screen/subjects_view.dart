@@ -52,7 +52,7 @@ class _SubjectsScreenState extends State<SubjectsScreen> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                "Hi, Melsayed!",
+                                "Hi, there!",
                                 style: TextStyle(
                                     fontWeight: FontWeight.w500,
                                     fontSize: 16.sp,
