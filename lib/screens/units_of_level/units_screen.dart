@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:grad_project/constants/constants.dart';
+import 'package:grad_project/experiance_shared_pref.dart';
 import 'package:grad_project/helper/build_widgets.dart';
 import 'package:grad_project/screens/units_of_level/lessons.dart';
 import 'package:grad_project/screens/units_of_level/units_view_model.dart';
@@ -12,7 +13,9 @@ import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
 class UnitsScreen extends StatefulWidget {
-  const UnitsScreen();
+   UnitsScreen({this.levelsId,this.catId});
+  String? levelsId;
+  String? catId;
 
   static String id = 'UnitsScreen';
 
@@ -22,7 +25,6 @@ class UnitsScreen extends StatefulWidget {
 
 class _UnitsScreenState extends State<UnitsScreen> {
   int? progressBarValue;
-  String? levelsId;
   // Unit
   List<Map<String, dynamic>> unitData = [
     {"name": "الوحده 1", "image": "assets/images/Group.png", "number": 0.1},
@@ -30,19 +32,20 @@ class _UnitsScreenState extends State<UnitsScreen> {
     {"name": "الوحده 3", "image": "assets/images/lock.png", "number": 0.3},
     {"name": "الوحده 4", "image": "assets/images/lock.png", "number": 0.8},
   ];
-
+int? experiance=0;
   @override
   void initState() {
     var provider = context.read<UnitsViewModel>();
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      await provider.getUnitsObject(levelId: levelsId);
+      await provider.getUnitsObject(levelId:widget.levelsId);
+      experiance = await Experiance.getExValue();
     });
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    levelsId = ModalRoute.of(context)!.settings.arguments as String?;
+    // levelsId = ModalRoute.of(context)!.settings.arguments as String?;
     return Scaffold(
       body: Consumer<UnitsViewModel>(
         builder: (context, unitsProvider, child) => unitsProvider.isLoading ==
@@ -85,7 +88,7 @@ class _UnitsScreenState extends State<UnitsScreen> {
                                   width: 8.w,
                                 ),
                                 Text(
-                                  '1432 XP',
+                                  '$experiance XP',
                                   style: TextStyle(
                                     fontSize: 20.sp,
                                     color: const Color(0xff726C90),
@@ -168,7 +171,9 @@ class _UnitsScreenState extends State<UnitsScreen> {
                                 //     context, 'LessonsScreen');
                                 Navigator.push(context, MaterialPageRoute(builder: (context) => LessonsScreen(unitId:unitsProvider.unitDataResponse
                                       ?.units?[index].id ,unitName: unitsProvider.unitDataResponse
-                                      ?.units?[index].unitName,),));
+                                      ?.units?[index].unitName,
+                                      catId: widget.catId,
+                                      ),));
                               },
                               name: unitsProvider.unitDataResponse
                                       ?.units?[index].unitName ??

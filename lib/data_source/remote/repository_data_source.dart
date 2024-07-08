@@ -69,7 +69,7 @@ class RemoteDataSource {
       //! get ques
   static Future<QuesResponse> getQues({required String? unitId}) async {
     try {
-      var response = await fetchData(url: '${RemoteConstants.quesUrl}',);
+      var response = await fetchData(url: '${RemoteConstants.quesUrl}?catId=$unitId',);
       logger.w('Units Response : $response');
       QuesResponse ques = QuesResponse.fromJson(response);
       return ques;
@@ -82,7 +82,7 @@ class RemoteDataSource {
   //! get choice ques
   static Future<ChoicesQuestionDataResponse> getChoiceQues({required String? unitId}) async {
     try {
-      var response = await fetchData(url: '${RemoteConstants.quesUrl}',);
+      var response = await fetchData(url: '${RemoteConstants.quesUrl}?catId=$unitId',);
       logger.w('Units Response : $response');
       ChoicesQuestionDataResponse choiceQues = ChoicesQuestionDataResponse.fromJson(response);
       return choiceQues;

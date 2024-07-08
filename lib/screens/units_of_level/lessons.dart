@@ -6,7 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:grad_project/screens/choice_ques_screen/choice_ques_view.dart';
 import 'package:grad_project/screens/letters_screen/letters_view.dart';
 import 'package:grad_project/screens/letters_typing_screen/letters_typing_view.dart';
-import 'package:grad_project/screens/matching/matching_view.dart';
+import 'package:grad_project/screens/matching/matching_view_1.dart';
+import 'package:grad_project/screens/matching/matching_view_2.dart';
+import 'package:grad_project/screens/matching/matching_view_num.dart';
 import 'package:grad_project/screens/units_of_level/units_view_model.dart';
 import 'package:grad_project/widgets/build_app_bar.dart';
 import 'package:provider/provider.dart';
@@ -16,8 +18,9 @@ import 'package:sizer/sizer.dart';
 
 class LessonsScreen extends StatefulWidget {
   String? unitId;
+  String? catId;
   String? unitName;
-  LessonsScreen({this.unitId, this.unitName});
+  LessonsScreen({this.unitId, this.unitName,this.catId});
 
   static String id = 'LessonsScreen';
 
@@ -32,9 +35,9 @@ class _LessonsScreenState extends State<LessonsScreen> {
     var provider = context.read<UnitsViewModel>();
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       await provider.getLessonsObject(unitId: widget.unitId);
-      await provider.getQuesObject(unitId: widget.unitId);
-      await provider.getTypingLettersQues(unitId: widget.unitId);
-      await provider.getChoiceQuesObject(unitId: widget.unitId);
+      await provider.getQuesObject(unitId: provider.lessonsDataResponse?.categs?.first.id);
+      await provider.getTypingLettersQues(unitId: provider.lessonsDataResponse?.categs?.first.id);
+      await provider.getChoiceQuesObject(unitId: provider.lessonsDataResponse?.categs?.first.id);
     });
     super.initState();
   }
@@ -168,7 +171,7 @@ class _LessonsScreenState extends State<LessonsScreen> {
           ),
           Expanded(
             child: ListView.builder(
-              itemCount: 4,
+              itemCount: 6,
               itemBuilder: (context, index) {
                 return Padding(
                   padding: EdgeInsets.symmetric(horizontal: 20.w),
@@ -201,8 +204,6 @@ class _LessonsScreenState extends State<LessonsScreen> {
                                   context,
                                   MaterialPageRoute(
                                     builder: (context) => LettersTypingView(
-                                      ques: provider
-                                          .typingLettersDataResponse!.ques,
                                     ),
                                   ));
                             } else {
@@ -229,13 +230,31 @@ class _LessonsScreenState extends State<LessonsScreen> {
                             } else {
                               Fluttertoast.showToast(msg: "لا يوجد محتوي");
                             }
-                          } else {
+                          } else if(index==3) {
                             // Fluttertoast.showToast(msg: "لا يوجد محتوي");
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) =>
-                                       MatchingView(),
+                                       const MatchingViewNum(),
+                                ));
+                          }
+                          else if(index==4) {
+                            // Fluttertoast.showToast(msg: "لا يوجد محتوي");
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                       const MatchingViewObj1(),
+                                ));
+                          }
+                          else if(index==5) {
+                            // Fluttertoast.showToast(msg: "لا يوجد محتوي");
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                       const MatchingViewObj2(),
                                 ));
                           }
                         },
@@ -286,7 +305,8 @@ class _LessonsScreenState extends State<LessonsScreen> {
                                       ? "كتابة الحروف"
                                       : index == 2
                                           ? "الأسئلة"
-                                          : "التوصيل",
+                                          : index==3 ?
+                                          "توصيل الارقام":index==4?"توصيل 1":"توصيل 2",
                               textAlign: TextAlign.center,
                               style: const TextStyle(
                                   fontSize: 18,

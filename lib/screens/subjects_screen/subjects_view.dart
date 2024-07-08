@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:grad_project/auth/auth_services/auth_services.dart';
 import 'package:grad_project/auth/login_screen/sign_in.dart';
+import 'package:grad_project/experiance_shared_pref.dart';
 import 'package:grad_project/helper/build_widgets.dart';
 import 'package:grad_project/screens/subjects_screen/subject_view_model.dart';
 import 'package:grad_project/widgets/loading_widget.dart';
@@ -22,11 +23,14 @@ class SubjectsScreen extends StatefulWidget {
 
 class _SubjectsScreenState extends State<SubjectsScreen> {
   // subject.SubjectDataResponse? subjectDataResponse;
+int? experiance=0;
+
   @override
   void initState() {
     var provider = context.read<SubjectViewModel>();
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       await provider.getSubjectObject();
+      experiance = await Experiance.getExValue();
     });
     super.initState();
   }
@@ -153,7 +157,7 @@ class _SubjectsScreenState extends State<SubjectsScreen> {
                                                 height: 0.5.h,
                                               ),
                                               Text(
-                                                "0 Level",
+                                                "$experiance Points",
                                                 style: TextStyle(
                                                     fontWeight: FontWeight.w400,
                                                     fontSize: 16.sp,

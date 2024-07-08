@@ -5,11 +5,11 @@ import 'package:grad_project/helper/build_widgets.dart';
 import 'package:grad_project/screens/levels_of_subject/levels_view_model.dart';
 import 'package:grad_project/models/dummy_data/subject_dummy.dart';
 import 'package:grad_project/models/levels_data_response.dart' as levels;
+import 'package:grad_project/screens/units_of_level/units_screen.dart';
 import 'package:grad_project/widgets/loading_widget.dart';
 import 'package:grad_project/widgets/network_image.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
-
 
 class LevelsOfSubject extends StatefulWidget {
   const LevelsOfSubject();
@@ -91,10 +91,19 @@ class _ArabicScreenState extends State<LevelsOfSubject> {
                           itemBuilder: (context, index) {
                             return InkWell(
                               onTap: () {
-                                Navigator.of(context).pushNamed(
-                                'UnitsScreen',
-                                arguments: levelsDataResponse?.levels?[index].id
-                                );
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => UnitsScreen(
+                                        levelsId: levelsDataResponse
+                                            ?.levels?[index].id,
+                                            catId: subjectId,
+                                      ),
+                                    ));
+                                // Navigator.of(context).pushNamed(
+                                // 'UnitsScreen',
+                                // arguments: levelsDataResponse?.levels?[index].id
+                                // );
                               },
                               child: Container(
                                 padding: EdgeInsets.symmetric(
@@ -122,10 +131,12 @@ class _ArabicScreenState extends State<LevelsOfSubject> {
                                       child: Column(
                                         children: [
                                           ImageFromNetwork(
-                                            imageUrl: levelsDataResponse?.levels?[index]
-                                                    .image?.secureUrl ??
+                                            imageUrl: levelsDataResponse
+                                                    ?.levels?[index]
+                                                    .image
+                                                    ?.secureUrl ??
                                                 '',
-                                                width: 14.w,
+                                            width: 14.w,
                                             height: 5.h,
                                           ),
                                           // Image.network(
@@ -162,8 +173,8 @@ class _ArabicScreenState extends State<LevelsOfSubject> {
                                           CrossAxisAlignment.start,
                                       children: [
                                         Text(
-                                          levelsDataResponse
-                                                  ?.levels?[index].subjectName ??
+                                          levelsDataResponse?.levels?[index]
+                                                  .subjectName ??
                                               '',
                                           style: TextStyle(
                                             fontWeight: FontWeight.w500,
