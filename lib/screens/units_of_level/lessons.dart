@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:grad_project/screens/choice_ques_screen/choice_ques_view.dart';
 import 'package:grad_project/screens/letters_screen/letters_view.dart';
 import 'package:grad_project/screens/letters_typing_screen/letters_typing_view.dart';
+import 'package:grad_project/screens/matching/matching_view.dart';
 import 'package:grad_project/screens/units_of_level/units_view_model.dart';
 import 'package:grad_project/widgets/build_app_bar.dart';
 import 'package:provider/provider.dart';
@@ -167,7 +168,7 @@ class _LessonsScreenState extends State<LessonsScreen> {
           ),
           Expanded(
             child: ListView.builder(
-              itemCount: 3,
+              itemCount: 4,
               itemBuilder: (context, index) {
                 return Padding(
                   padding: EdgeInsets.symmetric(horizontal: 20.w),
@@ -191,13 +192,18 @@ class _LessonsScreenState extends State<LessonsScreen> {
                             } else {
                               Fluttertoast.showToast(msg: "لا يوجد محتوي");
                             }
-                          }else if (index == 1) {
-                            if (provider.typingLettersDataResponse?.ques != null &&
-                                provider.typingLettersDataResponse!.ques!.isNotEmpty) {
+                          } else if (index == 1) {
+                            if (provider.typingLettersDataResponse?.ques !=
+                                    null &&
+                                provider.typingLettersDataResponse!.ques!
+                                    .isNotEmpty) {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) =>  LettersTypingView(ques: provider.typingLettersDataResponse!.ques ,),
+                                    builder: (context) => LettersTypingView(
+                                      ques: provider
+                                          .typingLettersDataResponse!.ques,
+                                    ),
                                   ));
                             } else {
                               Fluttertoast.showToast(msg: "لا يوجد محتوي");
@@ -207,27 +213,30 @@ class _LessonsScreenState extends State<LessonsScreen> {
                             //       MaterialPageRoute(
                             //         builder: (context) => const LettersTypingView(),
                             //       ));
-                          } 
-                          else if (index == 2) {
-                            if (provider.choiceQuesResponse?.quesChoice != null &&
-                                provider.choiceQuesResponse!.quesChoice!.isNotEmpty) {
+                          } else if (index == 2) {
+                            if (provider.choiceQuesResponse?.quesChoice !=
+                                    null &&
+                                provider.choiceQuesResponse!.quesChoice!
+                                    .isNotEmpty) {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) =>  ChoiceQuestionView(quesChoice: provider.choiceQuesResponse!.quesChoice,),
+                                    builder: (context) => ChoiceQuestionView(
+                                      quesChoice: provider
+                                          .choiceQuesResponse!.quesChoice,
+                                    ),
                                   ));
                             } else {
                               Fluttertoast.showToast(msg: "لا يوجد محتوي");
                             }
-                          }
-                          else {
-                             Fluttertoast.showToast(msg: "لا يوجد محتوي");
-                            // Navigator.push(
-                            //     context,
-                            //     MaterialPageRoute(
-                            //       builder: (context) =>
-                            //           const LettersTypingView(),
-                            //     ));
+                          } else {
+                            // Fluttertoast.showToast(msg: "لا يوجد محتوي");
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                       MatchingView(),
+                                ));
                           }
                         },
                         child: Column(
@@ -274,8 +283,10 @@ class _LessonsScreenState extends State<LessonsScreen> {
                               index == 0
                                   ? "الحروف"
                                   : index == 1
-                                      ? "كتابة الحروف" 
-                                      : index==2?"الأسئلة": "التوصيل",
+                                      ? "كتابة الحروف"
+                                      : index == 2
+                                          ? "الأسئلة"
+                                          : "التوصيل",
                               textAlign: TextAlign.center,
                               style: const TextStyle(
                                   fontSize: 18,

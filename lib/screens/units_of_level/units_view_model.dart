@@ -79,6 +79,7 @@ class UnitsViewModel extends ChangeNotifier{
 
    int index = 0;
    int quesIndex = 0;
+   int matchingIndex = 0;
 
   void setIndex({required int indexx}) {
     index = indexx;
@@ -99,6 +100,23 @@ class UnitsViewModel extends ChangeNotifier{
     if (index > 0) {
       index--;
       logger.d('Letter index : $index');
+      notifyListeners();
+    }
+  }
+
+  void increaseMatchingIndex(BuildContext ctx) {
+    // var length= ctx.read<UnitsViewModel>().lessonsDataResponse?.categs?.length;
+    if (3  != matchingIndex) {
+      matchingIndex++;
+      logger.d('matchingIndex index : $matchingIndex');
+      notifyListeners();
+    }
+  }
+
+  void decreaseMatchingIndex() {
+    if (3 > 0) {
+      matchingIndex--;
+      logger.d('matchingIndex index : $matchingIndex');
       notifyListeners();
     }
   }
